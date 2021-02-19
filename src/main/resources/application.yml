@@ -1,0 +1,12 @@
+spring:
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    generate-ddl: false
+    show-sql: false
+  output:
+    ansi:
+      enabled: always
+server:
+  address: 0.0.0.0
+  port: 6180
