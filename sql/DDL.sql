@@ -1,0 +1,80 @@
+CREATE TABLE user(
+    id VARCHAR(20) NOT NULL,
+    password VARCHAR(20) NOT NULL,
+    name VARCHAR(12) NOT NULL,
+
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE project(
+    id VARCHAR(28) NOT NULL,
+    name VARCHAR(20) NOT NULL,
+    description VARCHAR(100),
+    owner VARCHAR(20),
+
+    FOREIGN KEY (owner) REFERENCES user(id),
+
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE target(
+    nickname VARCHAR(255) NOT NULL,
+    token VARCHAR(255) NOT NULL UNIQUE,
+    name VARCHAR(12),
+
+    PRIMARY KEY (nickname)
+);
+
+CREATE TABLE team(
+    id BIGINT AUTO_INCREMENT,
+    name VARCHAR(20) NOT NULL,
+
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE target_team(
+    target_id VARCHAR(255) NOT NULL,
+    group_id BIGINT NOT NULL,
+
+    FOREIGN KEY (target_id) REFERENCES target(nickname),
+    FOREIGN KEY (group_id) REFERENCES team(id),
+
+    PRIMARY KEY (target_id, group_id)
+);
+
+CREATE TABLE push_history(
+    id BIGINT AUTO_INCREMENT,
+
+    title VARCHAR(40) NOT NULL,
+    content VARCHAR(255) NOT NULL,
+
+    create_time DATETIME NOT NULL,
+    complete_time DATETIME,
+    reservation_time DATETIME,
+
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE push_result(
+    id BIGINT AUTO_INCREMENT,
+
+    history_id BIGINT NOT NULL,
+    target_id VARCHAR(255) NOT NULL,
+    status VARCHAR(8) NOT NULL,
+
+    FOREIGN KEY (history_id) REFERENCES push_history(id),
+    FOREIGN KEY (target_id) REFERENCES target(nickname),
+
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE template(
+    id BIGINT AUTO_INCREMENT,
+    title VARCHAR(40) NOT NULL,
+    content VARCHAR(255) NOT NULL,
+
+    create_time DATETIME NOT NULL,
+    update_time DATETIME NOT NULL,
+
+    PRIMARY KEY (id)
+);
