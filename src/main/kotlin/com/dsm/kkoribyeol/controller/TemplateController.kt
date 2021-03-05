@@ -13,7 +13,7 @@ class TemplateController(
     @PostMapping("/template")
     fun createTemplate(request: TemplateRequest) =
         templateCreationService.create(
-            title = request.title,
-            body = request.body,
+            templateTitle = request.title,
+            templateBody = request.body,
         )
 }
