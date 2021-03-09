@@ -2,6 +2,7 @@ package com.dsm.kkoribyeol.service
 
 import com.dsm.kkoribyeol.domain.Template
 import com.dsm.kkoribyeol.exception.AlreadyExistTemplateException
+import com.dsm.kkoribyeol.exception.TemplateCreationException
 import com.dsm.kkoribyeol.repository.TemplateRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -14,7 +15,7 @@ class TemplateCreationService(
 
     fun create(templateTitle: String, templateBody: String) =
         if (!isDuplicated(templateTitle, templateBody))
-            save(templateTitle, templateBody)
+            save(templateTitle, templateBody) ?: throw TemplateCreationException()
         else
             throw AlreadyExistTemplateException(templateTitle, templateBody)
 
