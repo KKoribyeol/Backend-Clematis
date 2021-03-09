@@ -1,3 +1,16 @@
+DROP DATABASE IF EXISTS kkoribyeol;
+CREATE DATABASE IF NOT EXISTS kkoribyeol;
+USE kkoribyeol;
+
+DROP TABLE IF EXISTS template;
+DROP TABLE IF EXISTS affiliation;
+DROP TABLE IF EXISTS target;
+DROP TABLE IF EXISTS target_group;
+DROP TABLE IF EXISTS project;
+DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS push_result;
+DROP TABLE IF EXISTS push_history;
+
 CREATE TABLE user(
     id VARCHAR(20) NOT NULL,
     password VARCHAR(20) NOT NULL,
@@ -25,19 +38,19 @@ CREATE TABLE target(
     PRIMARY KEY (nickname)
 );
 
-CREATE TABLE team(
+CREATE TABLE target_group(
     id BIGINT AUTO_INCREMENT,
     name VARCHAR(20) NOT NULL,
 
     PRIMARY KEY (id)
 );
 
-CREATE TABLE target_team(
+CREATE TABLE affiliation(
     target_id VARCHAR(255) NOT NULL,
     group_id BIGINT NOT NULL,
 
     FOREIGN KEY (target_id) REFERENCES target(nickname),
-    FOREIGN KEY (group_id) REFERENCES team(id),
+    FOREIGN KEY (group_id) REFERENCES target_group(id),
 
     PRIMARY KEY (target_id, group_id)
 );
@@ -48,9 +61,9 @@ CREATE TABLE push_history(
     title VARCHAR(40) NOT NULL,
     content VARCHAR(255) NOT NULL,
 
-    create_time DATETIME NOT NULL,
-    complete_time DATETIME,
-    reservation_time DATETIME,
+    create_at DATETIME NOT NULL,
+    complete_at DATETIME,
+    reserve_at DATETIME,
 
     PRIMARY KEY (id)
 );
@@ -71,10 +84,10 @@ CREATE TABLE push_result(
 CREATE TABLE template(
     id BIGINT AUTO_INCREMENT,
     title VARCHAR(40) NOT NULL,
-    content VARCHAR(255) NOT NULL,
+    body VARCHAR(255) NOT NULL,
 
-    create_time DATETIME NOT NULL,
-    update_time DATETIME NOT NULL,
+    create_at DATETIME NOT NULL,
+    update_at DATETIME NOT NULL,
 
     PRIMARY KEY (id)
 );
