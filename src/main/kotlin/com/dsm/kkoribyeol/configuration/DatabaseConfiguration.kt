@@ -10,7 +10,7 @@ import javax.sql.DataSource
 class DatabaseConfiguration(
     @Value("\${DATABASE_DRIVER:com.mysql.cj.jdbc.Driver}")
     val driverClassName: String,
-    @Value("\${DATABASE_URL:jdbc:mysql://localhost:3306/kkoribyeol?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC}")
+    @Value("\${DATABASE_URL:jdbc:mysql://localhost:3306/kkoribyeol?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul}")
     val url: String,
     @Value("\${DATABASE_USERNAME:root}")
     val username: String,
