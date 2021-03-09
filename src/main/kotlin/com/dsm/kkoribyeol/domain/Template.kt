@@ -1,10 +1,14 @@
 package com.dsm.kkoribyeol.domain
 
+import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
 @Table(name = "template")
+@EntityListeners(AuditingEntityListener::class)
 class Template(
     title: String,
     body: String,
@@ -23,11 +27,14 @@ class Template(
     var body = body
         private set
 
-    @Column(name = "create_time")
-    var createTime: LocalDateTime = LocalDateTime.now()
+    @CreatedDate
+    @Column(name = "create_at")
+    var createAt: LocalDateTime = LocalDateTime.MIN
+        private set
 
-    @Column(name = "update_time")
-    var updateTime: LocalDateTime = LocalDateTime.now()
+    @LastModifiedDate
+    @Column(name = "update_at")
+    var updateAt: LocalDateTime = LocalDateTime.MIN
 
     fun modifyContent(title: String, body: String) {
         this.title = title
