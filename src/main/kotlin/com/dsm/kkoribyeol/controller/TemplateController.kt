@@ -4,6 +4,7 @@ import com.dsm.kkoribyeol.controller.request.TemplateRequest
 import com.dsm.kkoribyeol.controller.response.TemplateCreationResponse
 import com.dsm.kkoribyeol.exception.TemplateCreationException
 import com.dsm.kkoribyeol.service.TemplateCreationService
+import com.dsm.kkoribyeol.service.TemplateDeletionService
 import com.dsm.kkoribyeol.service.TemplateModificationService
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
@@ -14,8 +15,9 @@ import javax.validation.constraints.Positive
 @RestController
 @Validated
 class TemplateController(
-    private val templateCreationService: TemplateCreationService,
-    private val templateModificationService: TemplateModificationService,
+    private val creationService: TemplateCreationService,
+    private val modificationService: TemplateModificationService,
+    private val deletionService: TemplateDeletionService,
 ) {
 
     @PostMapping("/template")
@@ -23,7 +25,7 @@ class TemplateController(
         @RequestBody @Valid
         request: TemplateRequest,
     ) = TemplateCreationResponse(
-        creationNumber = templateCreationService.create(
+        creationNumber = creationService.create(
             templateTitle = request.title,
             templateBody = request.body,
         ) ?: throw TemplateCreationException()
@@ -36,9 +38,18 @@ class TemplateController(
         templateId: Long,
         @RequestBody @Valid
         request: TemplateRequest,
-    ) = templateModificationService.modify(
+    ) = modificationService.modify(
         templateId = templateId,
         templateTitle = request.title,
         templateBody = request.body,
+    )
+
+    @DeleteMapping("/template/{templateId}")
+    fun deleteTemplate(
+        @PathVariable("templateId")
+        @NotNull(message = "<NULL>") @Positive(message = "<양수가 아님>")
+        templateId: Long,
+    ) = deletionService.delete(
+        templateId = templateId,
     )
 }
