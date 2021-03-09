@@ -32,7 +32,7 @@ class ExceptionHandler {
         ResponseEntity(
             ExceptionResponse(
                 code = e.code,
-                message = e.message?: "큰 문제는 아닌데 이거 나오면 안 되긴 함",
+                message = e.message?: "이론적으로 날 수 없는 에러",
             ),
             e.status,
         )
@@ -43,7 +43,7 @@ class ExceptionHandler {
         return ResponseEntity(
             ExceptionResponse(
                 code = "INTERNAL_SERVER_ERROR",
-                message = "큰 문제긴 한데 이거 나오면 안 되긴 함",
+                message = e.message?: "알 수 없는 오류"
             ),
             HttpStatus.INTERNAL_SERVER_ERROR,
         )
