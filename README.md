@@ -1,7 +1,7 @@
 # 꼬리별 [KKo-Ri-Byeol]
-푸시 서비스가 필요해서 사용해본 NHN Cloud의 TOAST 푸시 서비스,
-TOAST 푸시 서비스를 사용하면서 불편한 점을 개선하여
-모두가 사용할 수 있는 푸시 서비스를 만드는 것이 목표인 프로젝트!
+푸시 서비스가 필요해서 사용해본 NHN Cloud의 TOAST 푸시 서비스,  
+TOAST 푸시 서비스를 사용하면서 불편한 점을 개선하여  
+모두가 사용할 수 있는 푸시 서비스를 만드는 것이 목표인 프로젝트!  
 
 ## Function
 - 푸시
@@ -26,6 +26,7 @@ TOAST 푸시 서비스를 사용하면서 불편한 점을 개선하여
 - Retrofit 2.9.0
 - Kotlin Coroutine 1.4.2
 - Spring Data JPA
+- Firebase Admin 6.8.1
 
 ## Database
 - MySQL
