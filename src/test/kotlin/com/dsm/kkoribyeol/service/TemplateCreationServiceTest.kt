@@ -1,8 +1,7 @@
-package com.dsm.kkoribyeol
+package com.dsm.kkoribyeol.service
 
 import com.dsm.kkoribyeol.domain.Template
 import com.dsm.kkoribyeol.repository.TemplateRepository
-import com.dsm.kkoribyeol.service.TemplateCreationService
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import org.assertj.core.api.Assertions.assertThat
