@@ -1,6 +1,6 @@
 package com.dsm.kkoribyeol.service
 
-import com.dsm.kkoribyeol.exception.NonExistTemplateException
+import com.dsm.kkoribyeol.exception.TemplateNotFoundException
 import com.dsm.kkoribyeol.repository.TemplateRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -15,7 +15,7 @@ class TemplateDeletionService(
         if (isExist(templateId))
             templateRepository.deleteById(templateId)
         else
-            throw NonExistTemplateException(templateId)
+            throw TemplateNotFoundException(templateId)
 
     private fun isExist(templateId: Long) =
         templateRepository.existsById(templateId)

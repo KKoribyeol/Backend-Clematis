@@ -1,6 +1,6 @@
 package com.dsm.kkoribyeol.service
 
-import com.dsm.kkoribyeol.exception.NonExistTemplateException
+import com.dsm.kkoribyeol.exception.TemplateNotFoundException
 import com.dsm.kkoribyeol.repository.TemplateRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -16,5 +16,5 @@ class TemplateModificationService(
         findTemplateById(templateId).modifyContent(templateTitle, templateBody)
 
     private fun findTemplateById(templateId: Long) =
-        templateRepository.findByIdOrNull(templateId)?: throw NonExistTemplateException(templateId)
+        templateRepository.findByIdOrNull(templateId)?: throw TemplateNotFoundException(templateId)
 }

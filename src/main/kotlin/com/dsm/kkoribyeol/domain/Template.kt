@@ -35,6 +35,7 @@ class Template(
     @LastModifiedDate
     @Column(name = "updated_at")
     var updatedAt: LocalDateTime = LocalDateTime.MIN
+        private set
 
     fun modifyContent(title: String, body: String) {
         this.title = title
