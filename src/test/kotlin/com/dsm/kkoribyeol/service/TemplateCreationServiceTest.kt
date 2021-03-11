@@ -3,50 +3,49 @@ package com.dsm.kkoribyeol.service
 import com.dsm.kkoribyeol.domain.Template
 import com.dsm.kkoribyeol.exception.AlreadyExistTemplateException
 import com.dsm.kkoribyeol.repository.TemplateRepository
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.mockito.Mockito.*
 
 internal class TemplateCreationServiceTest {
-    private val templateRepository = mock(TemplateRepository::class.java)
+    private val templateRepository = mockk<TemplateRepository>()
     private val testService = TemplateCreationService(templateRepository)
 
-    private val alreadyExistTemplate = Template("already exist title", "already exist body")
-    private val returnedTemplate = Template("title", "body")
+    private val savedTemplate = Template("saved title", "saved body")
+    private val newTemplate = Template("title", "body")
 
     @BeforeEach
     fun setup() {
-        returnedTemplate.id = 2
+        savedTemplate.id = 1
+        newTemplate.id = 2
     }
 
     @Test
     fun `푸시 템플릿 생성하기 - 200 OK`() {
-        whenever(templateRepository.existsByTitleAndBody(returnedTemplate.title, returnedTemplate.body)).thenReturn(false)
-        whenever(templateRepository.existsByTitleAndBody(alreadyExistTemplate.title, alreadyExistTemplate.body)).thenReturn(true)
-        whenever(templateRepository.save(any(Template::class.java))).thenReturn(returnedTemplate)
+        every { templateRepository.existsByTitleAndBody(savedTemplate.title, savedTemplate.body) } returns true
+        every { templateRepository.existsByTitleAndBody(newTemplate.title, newTemplate.body) } returns false
+        every { templateRepository.save(any()) } returns newTemplate
 
         val creationNumber = testService.create("title", "body")
 
         assertThat(creationNumber).isEqualTo(2)
-        verify(templateRepository, times(1)).existsByTitleAndBody(anyString(), anyString())
-        verify(templateRepository, times(1)).save(any(Template::class.java))
+        verify(exactly = 1) { templateRepository.existsByTitleAndBody(newTemplate.title, newTemplate.body) }
+        verify(exactly = 1) { templateRepository.save(any()) }
     }
 
     @Test
     fun `푸시 템플릿 생성하기 - 400 ALREADY_EXIST_TEMPLATE`() {
-        whenever(templateRepository.existsByTitleAndBody(returnedTemplate.title, returnedTemplate.body)).thenReturn(false)
-        whenever(templateRepository.existsByTitleAndBody(alreadyExistTemplate.title, alreadyExistTemplate.body)).thenReturn(true)
-        whenever(templateRepository.save(any(Template::class.java))).thenReturn(returnedTemplate)
+        every { templateRepository.existsByTitleAndBody(savedTemplate.title, savedTemplate.body) } returns true
+        every { templateRepository.existsByTitleAndBody(newTemplate.title, newTemplate.body) } returns false
+        every { templateRepository.save(any()) } returns newTemplate
 
-        assertThrows<AlreadyExistTemplateException> {
-            testService.create("already exist title", "already exist body")
-        }
-        verify(templateRepository, times(1)).existsByTitleAndBody(anyString(), anyString())
-        verify(templateRepository, never()).save(any())
+        assertThrows<AlreadyExistTemplateException> { testService.create("saved title", "saved body") }
+
+        verify(exactly = 1) { templateRepository.existsByTitleAndBody(savedTemplate.title, savedTemplate.body) }
+        verify(exactly = 0) { templateRepository.save(any()) }
     }
 }
