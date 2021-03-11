@@ -28,13 +28,14 @@ class Template(
         private set
 
     @CreatedDate
-    @Column(name = "create_at")
-    var createAt: LocalDateTime = LocalDateTime.MIN
+    @Column(name = "created_at")
+    var createdAt: LocalDateTime = LocalDateTime.MIN
         private set
 
     @LastModifiedDate
-    @Column(name = "update_at")
-    var updateAt: LocalDateTime = LocalDateTime.MIN
+    @Column(name = "updated_at")
+    var updatedAt: LocalDateTime = LocalDateTime.MIN
+        private set
 
     fun modifyContent(title: String, body: String) {
         this.title = title

@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional
 class TemplateCreationService(
-    private val templateRepository: TemplateRepository,
+    val templateRepository: TemplateRepository,
 ) {
 
     fun create(templateTitle: String, templateBody: String) =
@@ -25,11 +25,15 @@ class TemplateCreationService(
             body = templateBody,
         )
 
-    private fun save(templateTitle: String, templateBody: String) =
-        templateRepository.save(
+    private fun save(templateTitle: String, templateBody: String): Long? {
+        println("title: $templateTitle")
+        println("body: $templateBody")
+
+        return templateRepository.save(
             Template(
                 title = templateTitle,
                 body = templateBody,
             )
         ).id
+    }
 }
