@@ -11,7 +11,7 @@ internal class TemplateDeletionServiceTest {
     private val testService = TemplateDeletionService(templateRepository)
 
     @Test
-    fun `푸시 템플릿 삭제하기 - 200 OK`() {
+    fun `푸시 템플릿 삭제하기`() {
         every { templateRepository.existsById(1) } returns true
         every { templateRepository.deleteById(1) } just Runs
 
@@ -22,7 +22,7 @@ internal class TemplateDeletionServiceTest {
     }
 
     @Test
-    fun `푸시 템플릿 삭제하기 - 404 TEMPLATE_NOT_FOUND`() {
+    fun `푸시 템플릿 삭제하기 - throw TemplateNotFoundException`() {
         every { templateRepository.existsById(1) } returns true
         every { templateRepository.existsById(any()) } returns false
 

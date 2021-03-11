@@ -13,7 +13,7 @@ import org.mockito.Mockito.anyLong
 import org.springframework.data.repository.findByIdOrNull
 
 class TemplateModificationServiceTest {
-    private val templateRepository = mockk<TemplateRepository>(relaxed = true)
+    private val templateRepository = mockk<TemplateRepository>()
     private val testService = TemplateModificationService(templateRepository)
 
     private val savedTemplate = Template("saved title", "saved body")
@@ -24,7 +24,7 @@ class TemplateModificationServiceTest {
     }
 
     @Test
-    fun `푸시 템플릿 수정하기 - 200 OK`() {
+    fun `푸시 템플릿 수정하기`() {
         every { templateRepository.findByIdOrNull(1) } returns savedTemplate
         every { templateRepository.findByIdOrNull(anyLong()) } returns null
 
@@ -34,7 +34,7 @@ class TemplateModificationServiceTest {
     }
 
     @Test
-    fun `푸시 템플릿 수정하기 - 404 TEMPLATE_NOT_FOUND`() {
+    fun `푸시 템플릿 수정하기 - throw TemplateNotFoundException`() {
         every { templateRepository.findByIdOrNull(1) } returns savedTemplate
         every { templateRepository.findByIdOrNull(2) } returns null
 
