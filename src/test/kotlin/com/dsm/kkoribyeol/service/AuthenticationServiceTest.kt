@@ -5,6 +5,7 @@ import com.dsm.kkoribyeol.exception.AccountNotFoundException
 import com.dsm.kkoribyeol.exception.AlreadyExistAccountException
 import com.dsm.kkoribyeol.exception.PasswordMismatchException
 import com.dsm.kkoribyeol.repository.AccountRepository
+import com.dsm.kkoribyeol.service.attribute.Token
 import com.dsm.kkoribyeol.service.provider.AuthenticationProvider
 import com.dsm.kkoribyeol.service.provider.TokenProvider
 import io.mockk.every
@@ -42,6 +43,9 @@ internal class AuthenticationServiceTest {
         password = "invalidPassword",
         name = "savedName",
     )
+
+    private val accessToken = "this-is-access-token"
+    private val refreshToken = "this-is-refresh-token"
 
     @Test
     fun `계정 생성하기`() {
@@ -142,5 +146,27 @@ internal class AuthenticationServiceTest {
 
         verify(exactly = 1) { accountRepository.findByIdOrNull(invalidPasswordAccount.id) }
         verify(exactly = 1) { passwordEncoder.matches(invalidPasswordAccount.password, savedAccount.password) }
+    }
+
+    @Test
+    fun `엑세스 토큰 생성하기`() {
+        every { tokenProvider.createToken(savedAccount.id, Token.ACCESS) } returns accessToken
+
+        val accessToken = testService.createAccessToken(savedAccount.id)
+
+        assertThat(accessToken).isEqualTo(this.accessToken)
+
+        verify(exactly = 1) { tokenProvider.createToken(savedAccount.id, Token.ACCESS) }
+    }
+
+    @Test
+    fun `리프레시 토큰 생성하기`() {
+        every { tokenProvider.createToken(savedAccount.id, Token.REFRESH) } returns refreshToken
+
+        val refreshToken = testService.createRefreshToken(savedAccount.id)
+
+        assertThat(refreshToken).isEqualTo(this.refreshToken)
+
+        verify(exactly = 1) { tokenProvider.createToken(savedAccount.id, Token.REFRESH) }
     }
 }
