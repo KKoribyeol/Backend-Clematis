@@ -1,5 +1,6 @@
 package com.dsm.kkoribyeol.service.provider
 
+import com.dsm.kkoribyeol.service.attribute.Token
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Value
@@ -18,10 +19,10 @@ class TokenProvider(
 ) {
     private val encodedSecretKey = Base64.getEncoder().encodeToString(secretKey.toByteArray())
 
-    fun createToken(accountId: String, roles: List<String>, millisecondOfExpirationTime: Long) =
+    fun createToken(accountId: String, tokenType: Token): String =
         Jwts.builder()
             .setSubject(accountId)
-            .setExpiration(Date(System.currentTimeMillis() + millisecondOfExpirationTime))
+            .setExpiration(Date(System.currentTimeMillis() + tokenType.millisecondOfExpirationTime))
             .signWith(SignatureAlgorithm.HS384, encodedSecretKey)
             .compact()
 
@@ -40,7 +41,7 @@ class TokenProvider(
         )
     }
 
-    fun extractToken(request: HttpServletRequest) = request.getHeader("Authorization")
+    fun extractToken(request: HttpServletRequest): String = request.getHeader("Authorization")
 
     fun validateToken(token: String) =
         try {
