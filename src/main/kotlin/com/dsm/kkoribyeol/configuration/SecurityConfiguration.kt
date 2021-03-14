@@ -23,7 +23,7 @@ class SecurityConfiguration(
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
-            .antMatchers("/join", "/**/login").permitAll()
+            .antMatchers("/auth/join", "/auth/login").permitAll()
             .antMatchers(HttpMethod.GET, "/hello/**").permitAll()
             .anyRequest().authenticated()
             .and()

@@ -8,7 +8,6 @@ import com.dsm.kkoribyeol.repository.AccountRepository
 import com.dsm.kkoribyeol.service.attribute.Token
 import com.dsm.kkoribyeol.service.provider.TokenProvider
 import org.springframework.data.repository.findByIdOrNull
-import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
@@ -17,13 +16,16 @@ class AuthenticationService(
     private val accountRepository: AccountRepository,
     private val tokenProvider: TokenProvider,
     private val passwordEncoder: PasswordEncoder,
-) : UserDetailsService {
+) {
 
     fun createAccount(accountId: String, accountPassword: String, accountName: String) =
-        if (isExistAccount(accountId))
+        if (isExistAccount(accountId)) {
+            println("여기 들왔다.")
             throw AlreadyExistAccountException(accountId)
-        else
+        } else {
+            println("여기 들어옴.")
             saveAccount(accountId, accountPassword, accountName)
+        }
 
     private fun isExistAccount(accountId: String) =
         accountRepository.existsById(accountId)
@@ -60,7 +62,4 @@ class AuthenticationService(
             accountId = accountId,
             tokenType = Token.REFRESH,
         )
-
-    override fun loadUserByUsername(username: String) =
-        accountRepository.findByIdOrNull(username) ?: throw AccountNotFoundException(username)
 }

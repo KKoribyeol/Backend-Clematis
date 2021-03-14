@@ -4,6 +4,7 @@ import com.dsm.kkoribyeol.controller.request.JoinRequest
 import com.dsm.kkoribyeol.controller.request.LoginRequest
 import com.dsm.kkoribyeol.controller.response.LoginResponse
 import com.dsm.kkoribyeol.service.AuthenticationService
+import com.dsm.kkoribyeol.service.provider.AuthenticationProvider
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
