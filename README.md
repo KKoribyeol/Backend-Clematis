@@ -1,4 +1,7 @@
 # 꼬리별 [KKo-Ri-Byeol]
+## 백엔드 (Clematis)
+![Clematis](https://user-images.githubusercontent.com/48639421/111264452-e1ed1b00-866a-11eb-98a1-9fc39db9aaee.png)  
+
 푸시 서비스가 필요해서 사용해본 NHN Cloud의 TOAST 푸시 서비스,  
 TOAST 푸시 서비스를 사용하면서 느꼈던 불편한 점을 개선하여  
 모두가 사용할 수 있는 푸시 서비스를 만드는 것이 목표인 프로젝트!  
@@ -56,9 +59,11 @@ TOAST 푸시 서비스를 사용하면서 느꼈던 불편한 점을 개선하�
 - Spring Boot 2.4.1
 - Kotlin 1.4.21
 - Gradle 6.7.1
+- Spring Security
+- Spring Data JPA
+- Spring Data Mongo
 - Retrofit 2.9.0
 - Kotlin Coroutine 1.4.2
-- Spring Data JPA
 - Firebase Admin 6.8.1
 
 ## Database
