@@ -21,6 +21,9 @@ class AccountModificationService(
         else
             throw PasswordMismatchException(accountPassword, accountConfirmPassword)
 
+    fun modifyName(accountId: String, accountName: String) =
+        findAccountById(accountId).modifyName(accountName)
+
     private fun findAccountById(accountId: String) =
         accountRepository.findByIdOrNull(accountId) ?: throw AccountNotFoundException(accountId)
 }

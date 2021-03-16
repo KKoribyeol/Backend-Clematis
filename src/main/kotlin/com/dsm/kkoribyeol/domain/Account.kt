@@ -18,11 +18,15 @@ class Account(
     private var password: String,
 
     @Column(name = "name")
-    val name: String,
+    private var name: String,
 ) : UserDetails {
 
     fun modifyPassword(newPassword: String) {
         this.password = newPassword
+    }
+
+    fun modifyName(newName: String) {
+        this.name = newName
     }
 
     override fun getAuthorities() = mutableListOf<SimpleGrantedAuthority>()

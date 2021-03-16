@@ -2,6 +2,7 @@ package com.dsm.kkoribyeol.controller
 
 import com.dsm.kkoribyeol.controller.request.JoinRequest
 import com.dsm.kkoribyeol.controller.request.LoginRequest
+import com.dsm.kkoribyeol.controller.request.NameModificationRequest
 import com.dsm.kkoribyeol.controller.request.PasswordModificationRequest
 import com.dsm.kkoribyeol.controller.response.LoginResponse
 import com.dsm.kkoribyeol.service.AccountModificationService
@@ -20,15 +21,18 @@ class AccountController(
 ) {
 
     @PostMapping("/join")
-    fun join(@RequestBody @Valid request: JoinRequest) =
-        authenticationService.createAccount(
-            accountId = request.accountId,
-            accountPassword = request.accountPassword,
-            accountName = request.accountName,
-        )
+    fun join(
+        @RequestBody @Valid request: JoinRequest
+    ) = authenticationService.createAccount(
+        accountId = request.accountId,
+        accountPassword = request.accountPassword,
+        accountName = request.accountName,
+    )
 
     @PostMapping("/login")
-    fun login(@RequestBody @Valid request: LoginRequest): LoginResponse {
+    fun login(
+        @RequestBody @Valid request: LoginRequest
+    ): LoginResponse {
         authenticationService.validateAccount(
             accountId = request.accountId,
             accountPassword = request.accountPassword,
@@ -44,8 +48,16 @@ class AccountController(
     fun modifyPassword(
         @RequestBody @Valid request: PasswordModificationRequest,
     ) = accountModificationService.modifyPassword(
-            accountId = authenticationProvider.getAccountIdByAuthentication(),
-            accountPassword = request.newPassword,
-            accountConfirmPassword = request.confirmNewPassword,
-        )
+        accountId = authenticationProvider.getAccountIdByAuthentication(),
+        accountPassword = request.newPassword,
+        accountConfirmPassword = request.confirmNewPassword,
+    )
+
+    @PatchMapping("/name")
+    fun modifyName(
+        @RequestBody @Valid request: NameModificationRequest,
+    ) = accountModificationService.modifyName(
+        accountId = authenticationProvider.getAccountIdByAuthentication(),
+        accountName = request.newName,
+    )
 }
