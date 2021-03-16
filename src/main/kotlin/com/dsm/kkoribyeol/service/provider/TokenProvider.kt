@@ -37,11 +37,13 @@ class TokenProvider(
         val userDetails = userDetailsService.loadUserByUsername(getData(token))
         return UsernamePasswordAuthenticationToken(
             userDetails,
-            ""
+            null,
+            userDetails.authorities,
         )
     }
 
-    fun extractToken(request: HttpServletRequest): String = request.getHeader("Authorization")
+    fun extractToken(request: HttpServletRequest): String? =
+        request.getHeader("Authorization")
 
     fun validateToken(token: String) =
         try {

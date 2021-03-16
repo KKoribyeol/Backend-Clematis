@@ -5,10 +5,8 @@ import com.dsm.kkoribyeol.controller.request.LoginRequest
 import com.dsm.kkoribyeol.controller.response.LoginResponse
 import com.dsm.kkoribyeol.service.AuthenticationService
 import com.dsm.kkoribyeol.service.provider.AuthenticationProvider
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
 @RestController

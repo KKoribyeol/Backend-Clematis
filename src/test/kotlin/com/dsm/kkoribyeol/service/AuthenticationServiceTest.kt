@@ -55,15 +55,11 @@ internal class AuthenticationServiceTest {
         every { passwordEncoder.encode(savedAccount.password) } returns savedAccount.password
         every { passwordEncoder.encode(nonExistAccount.password) } returns nonExistAccount.password
 
-        val account = testService.createAccount(
+        testService.createAccount(
             accountId = "idIdIdId",
             accountPassword = "password",
             accountName = "nameName",
         )
-
-        assertThat(account.id).isEqualTo(nonExistAccount.id)
-        assertThat(account.password).isEqualTo(nonExistAccount.password)
-        assertThat(account.name).isEqualTo(nonExistAccount.name)
 
         verify(exactly = 1) { accountRepository.existsById(nonExistAccount.id) }
         verify(exactly = 1) { accountRepository.save(any()) }

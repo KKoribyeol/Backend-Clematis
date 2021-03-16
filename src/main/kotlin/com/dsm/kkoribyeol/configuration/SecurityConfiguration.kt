@@ -1,33 +1,56 @@
 package com.dsm.kkoribyeol.configuration
 
 import com.dsm.kkoribyeol.controller.filter.AuthenticationFilter
+import com.dsm.kkoribyeol.exception.entrypoint.InvalidTokenExceptionEntryPoint
+import com.dsm.kkoribyeol.service.provider.AuthenticationProvider
 import com.dsm.kkoribyeol.service.provider.TokenProvider
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
 @Configuration
 @EnableWebSecurity
 class SecurityConfiguration(
+    private val authenticationProvider: AuthenticationProvider,
+    private val invalidTokenExceptionEntryPoint: InvalidTokenExceptionEntryPoint,
     private val tokenProvider: TokenProvider,
 ) : WebSecurityConfigurerAdapter() {
 
+    @Bean
+    fun authenticationFilter() = AuthenticationFilter(tokenProvider)
+
+    @Bean
+    fun passwordEncoder() = BCryptPasswordEncoder()
+
+    override fun configure(auth: AuthenticationManagerBuilder) {
+        auth.userDetailsService(authenticationProvider)
+            .passwordEncoder(passwordEncoder())
+    }
+
     override fun configure(http: HttpSecurity) {
-        http.httpBasic().disable()
+        http
+            .cors()
+                .and()
             .csrf().disable()
+            .exceptionHandling().authenticationEntryPoint(invalidTokenExceptionEntryPoint)
+                .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
+                .and()
             .authorizeRequests()
-            .antMatchers("/auth/join", "/auth/login").permitAll()
-            .antMatchers(HttpMethod.GET, "/hello/**").permitAll()
-            .anyRequest().authenticated()
-            .and()
-            .addFilterBefore(AuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter::class.java)
+                .antMatchers(HttpMethod.POST, "/auth/join").permitAll()
+                .antMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                .anyRequest().authenticated()
+
+        http
+            .addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter::class.java)
     }
 
     override fun configure(web: WebSecurity) {

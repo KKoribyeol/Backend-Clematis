@@ -18,14 +18,12 @@ class AuthenticationService(
     private val passwordEncoder: PasswordEncoder,
 ) {
 
-    fun createAccount(accountId: String, accountPassword: String, accountName: String) =
-        if (isExistAccount(accountId)) {
-            println("여기 들왔다.")
+    fun createAccount(accountId: String, accountPassword: String, accountName: String) {
+        if (isExistAccount(accountId))
             throw AlreadyExistAccountException(accountId)
-        } else {
-            println("여기 들어옴.")
+        else
             saveAccount(accountId, accountPassword, accountName)
-        }
+    }
 
     private fun isExistAccount(accountId: String) =
         accountRepository.existsById(accountId)
