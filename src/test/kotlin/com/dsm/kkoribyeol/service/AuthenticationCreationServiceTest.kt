@@ -6,7 +6,6 @@ import com.dsm.kkoribyeol.exception.AlreadyExistAccountException
 import com.dsm.kkoribyeol.exception.PasswordMismatchException
 import com.dsm.kkoribyeol.repository.AccountRepository
 import com.dsm.kkoribyeol.service.attribute.Token
-import com.dsm.kkoribyeol.service.provider.AuthenticationProvider
 import com.dsm.kkoribyeol.service.provider.TokenProvider
 import io.mockk.every
 import io.mockk.mockk
@@ -15,14 +14,13 @@ import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.data.repository.findByIdOrNull
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 
-internal class AuthenticationServiceTest {
+internal class AuthenticationCreationServiceTest {
     private val accountRepository = mockk<AccountRepository>()
     private val tokenProvider = mockk<TokenProvider>()
     private val passwordEncoder = mockk<PasswordEncoder>()
-    private val testService = AuthenticationService(
+    private val testService = AuthenticationCreationService(
         accountRepository = accountRepository,
         tokenProvider = tokenProvider,
         passwordEncoder = passwordEncoder,
