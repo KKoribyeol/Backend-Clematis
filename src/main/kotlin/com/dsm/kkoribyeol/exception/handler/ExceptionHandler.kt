@@ -2,6 +2,7 @@ package com.dsm.kkoribyeol.exception.handler
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.core.AuthenticationException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
@@ -10,6 +11,14 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 @RestControllerAdvice
 class ExceptionHandler {
+
+    @ExceptionHandler(AuthenticationException::class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    fun authenticationExceptionHandler(e: AuthenticationException) =
+        ExceptionResponse(
+            code = "INVALID_TOKEN",
+            message = "토큰이 잘못되었습니다.",
+        )
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -32,7 +41,7 @@ class ExceptionHandler {
         ResponseEntity(
             ExceptionResponse(
                 code = e.code,
-                message = e.message?: "이론적으로 날 수 없는 에러",
+                message = e.message?: "알 수 없는 오류",
             ),
             e.status,
         )
@@ -43,7 +52,7 @@ class ExceptionHandler {
         return ResponseEntity(
             ExceptionResponse(
                 code = "INTERNAL_SERVER_ERROR",
-                message = e.message?: "알 수 없는 오류"
+                message = e.message?: "알 수 없는 오류",
             ),
             HttpStatus.INTERNAL_SERVER_ERROR,
         )
