@@ -15,7 +15,7 @@ class ExceptionHandler {
     @ExceptionHandler(AuthenticationException::class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     fun authenticationExceptionHandler(e: AuthenticationException) =
-        ExceptionResponse(
+        CommonExceptionResponse(
             code = "INVALID_TOKEN",
             message = "토큰이 잘못되었습니다.",
         )
@@ -23,7 +23,7 @@ class ExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun notValidateExceptionHandler(e: MethodArgumentNotValidException) =
-        ExceptionResponse(
+        CommonExceptionResponse(
             code = "INVALID_REQUEST_BODY",
             message = "클라이언트의 요청이 잘못되었습니다. [${e.bindingResult.allErrors.first().defaultMessage}]",
         )
@@ -31,7 +31,7 @@ class ExceptionHandler {
     @ExceptionHandler(MethodArgumentTypeMismatchException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun notValidateExceptionHandler(e: MethodArgumentTypeMismatchException) =
-        ExceptionResponse(
+        CommonExceptionResponse(
             code = "INVALID_REQUEST_BODY",
             message = "${e.mostSpecificCause.message}",
         )
@@ -39,7 +39,7 @@ class ExceptionHandler {
     @ExceptionHandler(CommonException::class)
     fun commonExceptionHandler(e: CommonException) =
         ResponseEntity(
-            ExceptionResponse(
+            CommonExceptionResponse(
                 code = e.code,
                 message = e.message?: "알 수 없는 오류",
             ),
@@ -47,10 +47,10 @@ class ExceptionHandler {
         )
 
     @ExceptionHandler(RuntimeException::class)
-    fun runtimeExceptionHandler(e: RuntimeException): ResponseEntity<ExceptionResponse> {
+    fun runtimeExceptionHandler(e: RuntimeException): ResponseEntity<CommonExceptionResponse> {
         e.printStackTrace()
         return ResponseEntity(
-            ExceptionResponse(
+            CommonExceptionResponse(
                 code = "INTERNAL_SERVER_ERROR",
                 message = e.message?: "알 수 없는 오류",
             ),

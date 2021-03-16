@@ -1,6 +1,6 @@
 package com.dsm.kkoribyeol.exception.entrypoint
 
-import com.dsm.kkoribyeol.exception.handler.ExceptionResponse
+import com.dsm.kkoribyeol.exception.handler.CommonExceptionResponse
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.web.AuthenticationEntryPoint
@@ -19,7 +19,7 @@ class InvalidTokenExceptionEntryPoint : AuthenticationEntryPoint {
 
         val objectMapper = jacksonObjectMapper().findAndRegisterModules()
         val exceptionResponse = objectMapper.writeValueAsString(
-            ExceptionResponse(
+            CommonExceptionResponse(
                 code = "INVALID_TOKEN",
                 message = "Invalid Token",
             )

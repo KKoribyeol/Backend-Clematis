@@ -13,7 +13,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.http.SessionCreationPolicy
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
 @Configuration
@@ -22,17 +22,15 @@ class SecurityConfiguration(
     private val authenticationProvider: AuthenticationProvider,
     private val invalidTokenExceptionEntryPoint: InvalidTokenExceptionEntryPoint,
     private val tokenProvider: TokenProvider,
+    private val passwordEncoder: PasswordEncoder,
 ) : WebSecurityConfigurerAdapter() {
 
     @Bean
     fun authenticationFilter() = AuthenticationFilter(tokenProvider)
 
-    @Bean
-    fun passwordEncoder() = BCryptPasswordEncoder()
-
     override fun configure(auth: AuthenticationManagerBuilder) {
         auth.userDetailsService(authenticationProvider)
-            .passwordEncoder(passwordEncoder())
+            .passwordEncoder(passwordEncoder)
     }
 
     override fun configure(http: HttpSecurity) {
