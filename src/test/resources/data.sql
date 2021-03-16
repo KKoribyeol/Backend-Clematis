@@ -1,0 +1,1 @@
+INSERT INTO account (id, password, name) VALUES('savedIdId', 'savedPassword', 'savedName');

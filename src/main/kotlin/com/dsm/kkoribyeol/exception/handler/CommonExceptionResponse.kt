@@ -1,6 +1,6 @@
 package com.dsm.kkoribyeol.exception.handler
 
-class ExceptionResponse(
+class CommonExceptionResponse(
     val code: String,
     val message: String,
 )
