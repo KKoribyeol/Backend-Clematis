@@ -1,6 +1,5 @@
 package com.dsm.kkoribyeol.domain
 
-import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import javax.persistence.Column
@@ -16,11 +15,15 @@ class Account(
     val id: String,
 
     @Column(name = "password")
-    private val password: String,
+    private var password: String,
 
     @Column(name = "name")
     val name: String,
 ) : UserDetails {
+
+    fun modifyPassword(newPassword: String) {
+        this.password = newPassword
+    }
 
     override fun getAuthorities() = mutableListOf<SimpleGrantedAuthority>()
 
