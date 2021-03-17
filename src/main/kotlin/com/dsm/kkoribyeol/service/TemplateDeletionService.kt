@@ -11,7 +11,7 @@ class TemplateDeletionService(
     private val templateRepository: TemplateRepository,
 ) {
 
-    fun delete(templateId: Long) =
+    fun deleteTemplate(templateId: Long) =
         if (isExist(templateId))
             templateRepository.deleteById(templateId)
         else

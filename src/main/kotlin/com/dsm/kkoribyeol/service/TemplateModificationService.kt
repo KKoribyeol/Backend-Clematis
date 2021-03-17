@@ -12,7 +12,7 @@ class TemplateModificationService(
     private val templateRepository: TemplateRepository,
 ) {
 
-    fun modify(templateId: Long, templateTitle: String, templateBody: String) =
+    fun modifyTemplate(templateId: Long, templateTitle: String, templateBody: String) =
         findTemplateById(templateId).modifyContent(templateTitle, templateBody)
 
     private fun findTemplateById(templateId: Long) =

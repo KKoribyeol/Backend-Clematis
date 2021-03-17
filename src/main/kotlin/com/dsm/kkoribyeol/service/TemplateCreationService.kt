@@ -13,13 +13,13 @@ class TemplateCreationService(
     val templateRepository: TemplateRepository,
 ) {
 
-    fun create(templateTitle: String, templateBody: String) =
-        if (!isDuplicated(templateTitle, templateBody))
+    fun createTemplate(templateTitle: String, templateBody: String) =
+        if (!isDuplicate(templateTitle, templateBody))
             save(templateTitle, templateBody) ?: throw TemplateCreationException()
         else
             throw AlreadyExistTemplateException(templateTitle, templateBody)
 
-    private fun isDuplicated(templateTitle: String, templateBody: String) =
+    private fun isDuplicate(templateTitle: String, templateBody: String) =
         templateRepository.existsByTitleAndBody(
             title = templateTitle,
             body = templateBody,

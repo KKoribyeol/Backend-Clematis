@@ -30,7 +30,7 @@ class TemplateController(
         @RequestBody @Valid
         request: TemplateRequest,
     ) = TemplateCreationResponse(
-        creationNumber = creationService.create(
+        creationNumber = creationService.createTemplate(
             templateTitle = request.title,
             templateBody = request.body,
         )
@@ -38,12 +38,12 @@ class TemplateController(
 
     @PatchMapping("/{templateId}")
     fun modifyTemplate(
-        @PathVariable("templateId")
         @NotNull(message = "<NULL>") @Positive(message = "<양수가 아님>")
+        @PathVariable("templateId")
         templateId: Long,
         @RequestBody @Valid
         request: TemplateRequest,
-    ) = modificationService.modify(
+    ) = modificationService.modifyTemplate(
         templateId = templateId,
         templateTitle = request.title,
         templateBody = request.body,
@@ -51,17 +51,17 @@ class TemplateController(
 
     @DeleteMapping("/{templateId}")
     fun deleteTemplate(
-        @PathVariable("templateId")
         @NotNull(message = "<NULL>") @Positive(message = "<양수가 아님>")
+        @PathVariable("templateId")
         templateId: Long,
-    ) = deletionService.delete(
+    ) = deletionService.deleteTemplate(
         templateId = templateId,
     )
 
     @GetMapping
     fun searchTemplate() =
         TemplateListSearchResponse(
-            templates = searchService.searchAll()
+            templates = searchService.searchAllTemplate()
                 .map {
                     TemplateSearchResponse(
                         templateId = it.id ?: throw TemplateSearchException(),
@@ -73,11 +73,11 @@ class TemplateController(
 
     @GetMapping("/{templateId}")
     fun searchTemplateDetail(
-        @PathVariable("templateId")
         @NotNull(message = "<NULL>") @Positive(message = "<양수가 아님>")
+        @PathVariable("templateId")
         templateId: Long,
     ): TemplateSearchResponse {
-        val findTemplate = searchService.search(templateId)
+        val findTemplate = searchService.searchTemplate(templateId)
         return TemplateSearchResponse(
             templateId = findTemplate.id ?: throw TemplateSearchException(),
             templateTitle = findTemplate.title,
