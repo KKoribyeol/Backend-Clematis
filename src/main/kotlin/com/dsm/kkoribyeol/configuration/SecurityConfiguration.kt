@@ -43,8 +43,8 @@ class SecurityConfiguration(
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
             .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/auth/join").permitAll()
-                .antMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/account").permitAll()
+                .antMatchers(HttpMethod.POST, "/account/login").permitAll()
                 .anyRequest().authenticated()
 
         http
