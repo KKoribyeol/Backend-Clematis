@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
-class AuthenticationService(
+class AuthenticationCreationService(
     private val accountRepository: AccountRepository,
     private val tokenProvider: TokenProvider,
     private val passwordEncoder: PasswordEncoder,

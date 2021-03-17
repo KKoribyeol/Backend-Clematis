@@ -5,25 +5,29 @@ import com.dsm.kkoribyeol.controller.request.LoginRequest
 import com.dsm.kkoribyeol.controller.request.NameModificationRequest
 import com.dsm.kkoribyeol.controller.request.PasswordModificationRequest
 import com.dsm.kkoribyeol.controller.response.LoginResponse
+import com.dsm.kkoribyeol.repository.AccountRepository
+import com.dsm.kkoribyeol.service.AccountDeletionService
 import com.dsm.kkoribyeol.service.AccountModificationService
-import com.dsm.kkoribyeol.service.AuthenticationService
+import com.dsm.kkoribyeol.service.AuthenticationCreationService
 import com.dsm.kkoribyeol.service.provider.AuthenticationProvider
-import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/account")
 class AccountController(
-    private val authenticationService: AuthenticationService,
+    private val authenticationCreationService: AuthenticationCreationService,
     private val accountModificationService: AccountModificationService,
+    private val accountDeletionService: AccountDeletionService,
     private val authenticationProvider: AuthenticationProvider,
+
+    private val accountRepository: AccountRepository,
 ) {
 
-    @PostMapping("/join")
+    @PostMapping
     fun join(
         @RequestBody @Valid request: JoinRequest
-    ) = authenticationService.createAccount(
+    ) = authenticationCreationService.createAccount(
         accountId = request.accountId,
         accountPassword = request.accountPassword,
         accountName = request.accountName,
@@ -33,14 +37,14 @@ class AccountController(
     fun login(
         @RequestBody @Valid request: LoginRequest
     ): LoginResponse {
-        authenticationService.validateAccount(
+        authenticationCreationService.validateAccount(
             accountId = request.accountId,
             accountPassword = request.accountPassword,
         )
 
         return LoginResponse(
-            accessToken = authenticationService.createAccessToken(request.accountId),
-            refreshToken = authenticationService.createRefreshToken(request.accountId),
+            accessToken = authenticationCreationService.createAccessToken(request.accountId),
+            refreshToken = authenticationCreationService.createRefreshToken(request.accountId),
         )
     }
 
@@ -60,4 +64,15 @@ class AccountController(
         accountId = authenticationProvider.getAccountIdByAuthentication(),
         accountName = request.newName,
     )
+
+    @DeleteMapping
+    fun accountWithdrawal() =
+        accountDeletionService.deleteAccount(
+            accountId = authenticationProvider.getAccountIdByAuthentication(),
+        )
+
+    @GetMapping("/test")
+    fun a() {
+        accountRepository.deleteById("aa")
+    }
 }

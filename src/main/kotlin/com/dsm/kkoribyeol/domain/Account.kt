@@ -17,9 +17,12 @@ class Account(
     @Column(name = "password")
     private var password: String,
 
-    @Column(name = "name")
-    private var name: String,
+    name: String,
 ) : UserDetails {
+
+    @Column(name = "name")
+    var name = name
+        private set
 
     fun modifyPassword(newPassword: String) {
         this.password = newPassword
