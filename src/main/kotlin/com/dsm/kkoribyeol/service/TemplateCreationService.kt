@@ -25,15 +25,11 @@ class TemplateCreationService(
             body = templateBody,
         )
 
-    private fun save(templateTitle: String, templateBody: String): Long? {
-        println("title: $templateTitle")
-        println("body: $templateBody")
-
-        return templateRepository.save(
+    private fun save(templateTitle: String, templateBody: String) =
+        templateRepository.save(
             Template(
                 title = templateTitle,
                 body = templateBody,
             )
         ).id
-    }
 }

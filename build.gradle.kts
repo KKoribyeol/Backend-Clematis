@@ -27,6 +27,9 @@ dependencies {
 
     implementation("com.google.firebase:firebase-admin:6.8.1")
 
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("io.jsonwebtoken:jjwt:0.9.1")
+
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")
