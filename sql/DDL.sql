@@ -11,9 +11,9 @@ DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS push_result;
 DROP TABLE IF EXISTS push_history;
 
-CREATE TABLE user(
+CREATE TABLE account(
     id VARCHAR(20) NOT NULL,
-    password VARCHAR(20) NOT NULL,
+    password VARCHAR(120) NOT NULL,
     name VARCHAR(12) NOT NULL,
 
     PRIMARY KEY (id)
@@ -25,7 +25,7 @@ CREATE TABLE project(
     description VARCHAR(100),
     owner VARCHAR(20),
 
-    FOREIGN KEY (owner) REFERENCES user(id),
+    FOREIGN KEY (owner) REFERENCES account(id),
 
     PRIMARY KEY (id)
 );
@@ -86,8 +86,8 @@ CREATE TABLE template(
     title VARCHAR(40) NOT NULL,
     body VARCHAR(255) NOT NULL,
 
-    create_at DATETIME NOT NULL,
-    update_at DATETIME NOT NULL,
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL,
 
     PRIMARY KEY (id)
 );
