@@ -5,21 +5,19 @@ import com.dsm.kkoribyeol.controller.request.LoginRequest
 import com.dsm.kkoribyeol.controller.request.NameModificationRequest
 import com.dsm.kkoribyeol.controller.request.PasswordModificationRequest
 import com.dsm.kkoribyeol.controller.response.LoginResponse
-import com.dsm.kkoribyeol.exception.PasswordMismatchException
 import com.dsm.kkoribyeol.exception.handler.CommonExceptionResponse
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.assertj.core.api.Assertions.*
+import com.fasterxml.jackson.module.kotlin.readValue
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.context.TestConstructor
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.transaction.annotation.Transactional
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import com.fasterxml.jackson.module.kotlin.readValue
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.transaction.annotation.Transactional
 
 @Suppress("DEPRECATION")
 @SpringBootTest

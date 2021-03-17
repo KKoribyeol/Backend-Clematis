@@ -5,6 +5,7 @@ import com.dsm.kkoribyeol.controller.request.LoginRequest
 import com.dsm.kkoribyeol.controller.request.NameModificationRequest
 import com.dsm.kkoribyeol.controller.request.PasswordModificationRequest
 import com.dsm.kkoribyeol.controller.response.LoginResponse
+import com.dsm.kkoribyeol.repository.AccountRepository
 import com.dsm.kkoribyeol.service.AccountDeletionService
 import com.dsm.kkoribyeol.service.AccountModificationService
 import com.dsm.kkoribyeol.service.AuthenticationCreationService
@@ -19,6 +20,8 @@ class AccountController(
     private val accountModificationService: AccountModificationService,
     private val accountDeletionService: AccountDeletionService,
     private val authenticationProvider: AuthenticationProvider,
+
+    private val accountRepository: AccountRepository,
 ) {
 
     @PostMapping
@@ -67,4 +70,9 @@ class AccountController(
         accountDeletionService.deleteAccount(
             accountId = authenticationProvider.getAccountIdByAuthentication(),
         )
+
+    @GetMapping("/test")
+    fun a() {
+        accountRepository.deleteById("aa")
+    }
 }
