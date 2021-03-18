@@ -30,7 +30,7 @@ internal class TemplateCreationServiceTest {
         every { templateRepository.existsByTitleAndBody(newTemplate.title, newTemplate.body) } returns false
         every { templateRepository.save(any()) } returns newTemplate
 
-        val creationNumber = testService.create("title", "body")
+        val creationNumber = testService.createTemplate("title", "body")
 
         assertThat(creationNumber).isEqualTo(2)
         verify(exactly = 1) { templateRepository.existsByTitleAndBody(newTemplate.title, newTemplate.body) }
@@ -43,7 +43,7 @@ internal class TemplateCreationServiceTest {
         every { templateRepository.existsByTitleAndBody(newTemplate.title, newTemplate.body) } returns false
         every { templateRepository.save(any()) } returns newTemplate
 
-        assertThrows<AlreadyExistTemplateException> { testService.create("saved title", "saved body") }
+        assertThrows<AlreadyExistTemplateException> { testService.createTemplate("saved title", "saved body") }
 
         verify(exactly = 1) { templateRepository.existsByTitleAndBody(savedTemplate.title, savedTemplate.body) }
         verify(exactly = 0) { templateRepository.save(any()) }

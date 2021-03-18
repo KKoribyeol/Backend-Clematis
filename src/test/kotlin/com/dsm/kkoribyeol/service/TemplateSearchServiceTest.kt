@@ -29,7 +29,7 @@ internal class TemplateSearchServiceTest {
         every { templateRepository.findByIdOrNull(1) } returns savedTemplate
         every { templateRepository.findByIdOrNull(anyLong()) } returns null
 
-        val findTemplate = testService.search(1)
+        val findTemplate = testService.searchTemplate(1)
 
         assertThat(findTemplate.id).isEqualTo(savedTemplate.id)
         assertThat(findTemplate.title).isEqualTo(savedTemplate.title)
@@ -44,7 +44,7 @@ internal class TemplateSearchServiceTest {
         every { templateRepository.findByIdOrNull(1) } returns savedTemplate
         every { templateRepository.findByIdOrNull(2) } returns null
 
-        assertThrows<TemplateNotFoundException> { testService.search(2) }
+        assertThrows<TemplateNotFoundException> { testService.searchTemplate(2) }
 
         verify(exactly = 1) { templateRepository.findByIdOrNull(2) }
         verify(exactly = 0) { templateRepository.findAll() }
@@ -54,7 +54,7 @@ internal class TemplateSearchServiceTest {
     fun `푸시 템플릿 전체 조회하기`() {
         every { templateRepository.findAll() } returns listOf(savedTemplate)
 
-        val findTemplates = testService.searchAll()
+        val findTemplates = testService.searchAllTemplate()
 
         assertThat(findTemplates).map<String>{ it.title }.containsAll(listOf(savedTemplate.title))
         assertThat(findTemplates).map<String>{ it.body }.containsAll(listOf(savedTemplate.body))
