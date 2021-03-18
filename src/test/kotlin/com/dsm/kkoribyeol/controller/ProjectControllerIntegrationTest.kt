@@ -1,6 +1,6 @@
 package com.dsm.kkoribyeol.controller
 
-import com.dsm.kkoribyeol.controller.request.ProjectRequest
+import com.dsm.kkoribyeol.controller.request.ProjectCreationRequest
 import com.dsm.kkoribyeol.controller.response.ProjectCreationResponse
 import com.dsm.kkoribyeol.exception.handler.CommonExceptionResponse
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -29,7 +29,7 @@ class ProjectControllerIntegrationTest(
     @Test
     fun `프로젝트 생성하기 - 200`() {
         val requestBody = objectMapper.writeValueAsString(
-            ProjectRequest(
+            ProjectCreationRequest(
                 name = "project",
                 description = "description",
             )
@@ -54,7 +54,7 @@ class ProjectControllerIntegrationTest(
     @Test
     fun `프로젝트 생성하기 - 401 INVALID_TOKEN`() {
         val requestBody = objectMapper.writeValueAsString(
-            ProjectRequest(
+            ProjectCreationRequest(
                 name = "project",
                 description = "description",
             )
@@ -79,7 +79,7 @@ class ProjectControllerIntegrationTest(
     @Test
     fun `프로젝트 생성하기 - 400 ALREADY_EXIST_PROJECT`() {
         val requestBody = objectMapper.writeValueAsString(
-            ProjectRequest(
+            ProjectCreationRequest(
                 name = "savedProject",
                 description = "savedDescription",
             )

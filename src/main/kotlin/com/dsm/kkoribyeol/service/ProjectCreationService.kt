@@ -26,7 +26,7 @@ class ProjectCreationService(
                 accountId = accountId,
                 projectName = projectName,
                 projectDescription = projectDescription,
-            ).id
+            ).code
 
     private fun isExistProject(projectName: String) =
         projectRepository.existsByName(projectName)
@@ -34,14 +34,14 @@ class ProjectCreationService(
     private fun save(accountId: String, projectName: String, projectDescription: String?) =
         projectRepository.save(
             Project(
-                id = generateProjectId(projectName),
+                code = generateProjectCode(projectName),
                 name = projectName,
                 description = projectDescription,
                 owner = findProjectById(accountId),
             )
         )
 
-    private fun generateProjectId(projectName: String) =
+    private fun generateProjectCode(projectName: String) =
         "$projectName-${randomProjectCodeProvider.generateRandomCode()}"
 
     private fun findProjectById(accountId: String) =

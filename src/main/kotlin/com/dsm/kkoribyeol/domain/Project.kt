@@ -7,16 +7,27 @@ import javax.persistence.*
 class Project(
 
     @Id
-    @Column(name = "id")
-    val id: String,
+    @Column(name = "code")
+    val code: String,
 
-    @Column(name = "name")
-    var name: String,
-
-    @Column(name = "description")
-    var description: String?,
+    name: String,
+    description: String?,
 
     @ManyToOne
     @JoinColumn(name = "owner", referencedColumnName = "id")
     val owner: Account,
-)
+) {
+
+    @Column(name = "name")
+    var name = name
+        private set
+
+    @Column(name = "description")
+    var description = description
+        private set
+
+    fun modifyContent(name: String?, description: String?) {
+        this.name = name ?: this.name
+        this.description = description ?: this.description
+    }
+}

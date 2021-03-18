@@ -20,8 +20,6 @@ class AccountController(
     private val accountModificationService: AccountModificationService,
     private val accountDeletionService: AccountDeletionService,
     private val authenticationProvider: AuthenticationProvider,
-
-    private val accountRepository: AccountRepository,
 ) {
 
     @PostMapping
@@ -54,7 +52,7 @@ class AccountController(
     fun modifyPassword(
         @RequestBody @Valid
         request: PasswordModificationRequest,
-    ) = accountModificationService.modifyPassword(
+    ) = accountModificationService.modifyAccountPassword(
         accountId = authenticationProvider.getAccountIdByAuthentication(),
         accountPassword = request.newPassword,
         accountConfirmPassword = request.confirmNewPassword,
@@ -64,7 +62,7 @@ class AccountController(
     fun modifyName(
         @RequestBody @Valid
         request: NameModificationRequest,
-    ) = accountModificationService.modifyName(
+    ) = accountModificationService.modifyAccountName(
         accountId = authenticationProvider.getAccountIdByAuthentication(),
         accountName = request.newName,
     )
