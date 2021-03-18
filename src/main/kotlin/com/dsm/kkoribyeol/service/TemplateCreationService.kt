@@ -14,12 +14,12 @@ class TemplateCreationService(
 ) {
 
     fun createTemplate(templateTitle: String, templateBody: String) =
-        if (!isDuplicate(templateTitle, templateBody))
+        if (!isDuplicateTemplate(templateTitle, templateBody))
             save(templateTitle, templateBody) ?: throw TemplateCreationException()
         else
             throw AlreadyExistTemplateException(templateTitle, templateBody)
 
-    private fun isDuplicate(templateTitle: String, templateBody: String) =
+    private fun isDuplicateTemplate(templateTitle: String, templateBody: String) =
         templateRepository.existsByTitleAndBody(
             title = templateTitle,
             body = templateBody,

@@ -12,11 +12,11 @@ class TemplateDeletionService(
 ) {
 
     fun deleteTemplate(templateId: Long) =
-        if (isExist(templateId))
+        if (isExistTemplate(templateId))
             templateRepository.deleteById(templateId)
         else
             throw TemplateNotFoundException(templateId)
 
-    private fun isExist(templateId: Long) =
+    private fun isExistTemplate(templateId: Long) =
         templateRepository.existsById(templateId)
 }
