@@ -2,8 +2,9 @@ package com.dsm.kkoribyeol.controller
 
 import com.dsm.kkoribyeol.controller.request.TemplateRequest
 import com.dsm.kkoribyeol.controller.response.TemplateCreationResponse
-import com.dsm.kkoribyeol.controller.response.TemplateListSearchResponse
-import com.dsm.kkoribyeol.controller.response.TemplateListSearchResponse.TemplateSearchResponse
+import com.dsm.kkoribyeol.controller.response.TemplateSearchAllResponse
+import com.dsm.kkoribyeol.controller.response.TemplateSearchAllResponse.TemplateSearchResponse
+import com.dsm.kkoribyeol.controller.response.TemplateSearchDetailResponse
 import com.dsm.kkoribyeol.exception.handler.CommonExceptionResponse
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.Test
@@ -217,7 +218,7 @@ internal class TemplateControllerIntegrationTest(
 
     @Test
     fun `템플릿 전체 조회하기 - 200`() {
-        val responseBody = objectMapper.readValue<TemplateListSearchResponse>(
+        val responseBody = objectMapper.readValue<TemplateSearchAllResponse>(
             mock.perform(get("/template")
                 .header("Authorization", "this-is-test-token")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -261,7 +262,7 @@ internal class TemplateControllerIntegrationTest(
 
     @Test
     fun `템플릿 조회하기 - 200`() {
-        val responseBody = objectMapper.readValue<TemplateSearchResponse>(
+        val responseBody = objectMapper.readValue<TemplateSearchDetailResponse>(
             mock.perform(get("/template/1")
                 .header("Authorization", "this-is-test-token")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
