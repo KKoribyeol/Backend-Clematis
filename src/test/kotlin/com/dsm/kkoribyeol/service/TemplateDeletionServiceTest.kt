@@ -15,7 +15,7 @@ internal class TemplateDeletionServiceTest {
         every { templateRepository.existsById(1) } returns true
         every { templateRepository.deleteById(1) } just Runs
 
-        testService.delete(1)
+        testService.deleteTemplate(1)
 
         verify(exactly = 1) { templateRepository.existsById(1) }
         verify(exactly = 1) { templateRepository.deleteById(1) }
@@ -26,7 +26,7 @@ internal class TemplateDeletionServiceTest {
         every { templateRepository.existsById(1) } returns true
         every { templateRepository.existsById(any()) } returns false
 
-        assertThrows<TemplateNotFoundException> { testService.delete(2) }
+        assertThrows<TemplateNotFoundException> { testService.deleteTemplate(2) }
 
         verify(exactly = 1) { templateRepository.existsById(2) }
         verify(exactly = 0) { templateRepository.deleteById(any()) }
