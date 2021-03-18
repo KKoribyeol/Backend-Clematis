@@ -1,12 +1,14 @@
 package com.dsm.kkoribyeol.controller
 
-import com.dsm.kkoribyeol.controller.request.TemplateRequest
-import com.dsm.kkoribyeol.controller.response.TemplateCreationResponse
-import com.dsm.kkoribyeol.controller.response.TemplateSearchAllResponse
-import com.dsm.kkoribyeol.controller.response.TemplateSearchAllResponse.TemplateSearchResponse
-import com.dsm.kkoribyeol.controller.response.TemplateSearchDetailResponse
+import com.dsm.kkoribyeol.controller.request.ProjectCreationRequest
+import com.dsm.kkoribyeol.controller.request.ProjectModificationRequest
+import com.dsm.kkoribyeol.controller.response.ProjectCreationResponse
+import com.dsm.kkoribyeol.controller.response.ProjectSearchAllResponse
+import com.dsm.kkoribyeol.controller.response.ProjectSearchDetailResponse
 import com.dsm.kkoribyeol.exception.handler.CommonExceptionResponse
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
@@ -14,32 +16,30 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.TestConstructor
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.transaction.annotation.Transactional
-import com.fasterxml.jackson.module.kotlin.readValue
-import org.assertj.core.api.Assertions.*
 
 @Suppress("DEPRECATION")
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @Transactional
-internal class TemplateControllerIntegrationTest(
+class ProjectControllerIntegrationTest(
     private val mock: MockMvc,
     private val objectMapper: ObjectMapper,
 ) {
 
     @Test
-    fun `템플릿 생성하기 - 200`() {
+    fun `프로젝트 생성하기 - 200`() {
         val requestBody = objectMapper.writeValueAsString(
-            TemplateRequest(
-                title = "nonExistTitle",
-                body = "nonExistBody",
+            ProjectCreationRequest(
+                name = "project",
+                description = "description",
             )
         )
 
-        val responseBody = objectMapper.readValue<TemplateCreationResponse>(
-            mock.perform(post("/template")
+        val responseBody = objectMapper.readValue<ProjectCreationResponse>(
+            mock.perform(post("/project")
                 .header("Authorization", "this-is-test-token")
                 .content(requestBody)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -51,20 +51,20 @@ internal class TemplateControllerIntegrationTest(
                 .contentAsString
         )
 
-        assertThat(responseBody.creationNumber).isEqualTo(2)
+        assertThat(responseBody.projectId.substring(0, responseBody.projectId.length - 8)).isEqualTo("project")
     }
 
     @Test
-    fun `템플릿 생성하기 - 401 INVALID_TOKEN`() {
+    fun `프로젝트 생성하기 - 401 INVALID_TOKEN`() {
         val requestBody = objectMapper.writeValueAsString(
-            TemplateRequest(
-                title = "nonExistTitle",
-                body = "nonExistBody",
+            ProjectCreationRequest(
+                name = "project",
+                description = "description",
             )
         )
 
         val responseBody = objectMapper.readValue<CommonExceptionResponse>(
-            mock.perform(post("/template")
+            mock.perform(post("/project")
                 .header("Authorization", "this-is-invalid-token")
                 .content(requestBody)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -80,16 +80,16 @@ internal class TemplateControllerIntegrationTest(
     }
 
     @Test
-    fun `템플릿 생성하기 - 400 ALREDAY_EXIST_TEMPLATE`() {
+    fun `프로젝트 생성하기 - 400 ALREADY_EXIST_PROJECT`() {
         val requestBody = objectMapper.writeValueAsString(
-            TemplateRequest(
-                title = "savedTitle",
-                body = "savedBody",
+            ProjectCreationRequest(
+                name = "savedProject",
+                description = "savedDescription",
             )
         )
 
         val responseBody = objectMapper.readValue<CommonExceptionResponse>(
-            mock.perform(post("/template")
+            mock.perform(post("/project")
                 .header("Authorization", "this-is-test-token")
                 .content(requestBody)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -101,19 +101,19 @@ internal class TemplateControllerIntegrationTest(
                 .contentAsString
         )
 
-        assertThat(responseBody.code).isEqualTo("ALREADY_EXIST_TEMPLATE")
+        assertThat(responseBody.code).isEqualTo("ALREADY_EXIST_PROJECT")
     }
 
     @Test
-    fun `템플릿 수정하기 - 200`() {
+    fun `프로젝트 수정하기 - 200`() {
         val requestBody = objectMapper.writeValueAsString(
-            TemplateRequest(
-                title = "nonExistTitle",
-                body = "nonExistBody",
+            ProjectModificationRequest(
+                name = "newProject",
+                description = "newDescription",
             )
         )
 
-        mock.perform(patch("/template/1")
+        mock.perform(patch("/project/savedProject-finally")
             .header("Authorization", "this-is-test-token")
             .content(requestBody)
             .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -123,16 +123,16 @@ internal class TemplateControllerIntegrationTest(
     }
 
     @Test
-    fun `템플릿 수정하기 - 401 INVALID_TOKEN`() {
+    fun `프로젝트 수정하기 - 401 INVALID_TOKEN`() {
         val requestBody = objectMapper.writeValueAsString(
-            TemplateRequest(
-                title = "nonExistTitle",
-                body = "nonExistBody",
+            ProjectModificationRequest(
+                name = "newProject",
+                description = "newDescription",
             )
         )
 
         val responseBody = objectMapper.readValue<CommonExceptionResponse>(
-            mock.perform(patch("/template/1")
+            mock.perform(patch("/project/savedProject-finally")
                 .header("Authorization", "this-is-invalid-token")
                 .content(requestBody)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -148,16 +148,16 @@ internal class TemplateControllerIntegrationTest(
     }
 
     @Test
-    fun `템플릿 수정하기 - 404 TEMPLATE_NOT_FOUND`() {
+    fun `프로젝트 수정하기 - 404 PROJECT_NOT_FOUND`() {
         val requestBody = objectMapper.writeValueAsString(
-            TemplateRequest(
-                title = "savedTitle",
-                body = "savedBody",
+            ProjectModificationRequest(
+                name = "newProject",
+                description = "newDescription",
             )
         )
 
         val responseBody = objectMapper.readValue<CommonExceptionResponse>(
-            mock.perform(patch("/template/2")
+            mock.perform(patch("/project/nonExistProject-finally")
                 .header("Authorization", "this-is-test-token")
                 .content(requestBody)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -169,12 +169,12 @@ internal class TemplateControllerIntegrationTest(
                 .contentAsString
         )
 
-        assertThat(responseBody.code).isEqualTo("TEMPLATE_NOT_FOUND")
+        assertThat(responseBody.code).isEqualTo("PROJECT_NOT_FOUND")
     }
 
     @Test
-    fun `템플릿 삭제하기 - 200`() {
-        mock.perform(delete("/template/1")
+    fun `프로젝트 삭제하기 - 200`() {
+        mock.perform(delete("/project/savedProject-finally")
             .header("Authorization", "this-is-test-token")
             .contentType(MediaType.APPLICATION_JSON_UTF8)
             .accept(MediaType.APPLICATION_JSON_UTF8)
@@ -183,26 +183,9 @@ internal class TemplateControllerIntegrationTest(
     }
 
     @Test
-    fun `템플릿 삭제하기 - 404 TEMPLATE_NOT_FOUND`() {
+    fun `프로젝트 삭제하기 - 401 INVALID_TOKEN`() {
         val responseBody = objectMapper.readValue<CommonExceptionResponse>(
-            mock.perform(delete("/template/2")
-                .header("Authorization", "this-is-test-token")
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .accept(MediaType.APPLICATION_JSON_UTF8)
-                .characterEncoding("UTF-8"))
-                .andExpect(status().isNotFound)
-                .andReturn()
-                .response
-                .contentAsString
-        )
-
-        assertThat(responseBody.code).isEqualTo("TEMPLATE_NOT_FOUND")
-    }
-
-    @Test
-    fun `템플릿 삭제하기 - 401 INVALID_TOKEN`() {
-        val responseBody = objectMapper.readValue<CommonExceptionResponse>(
-            mock.perform(delete("/template/1")
+            mock.perform(delete("/project/savedProject-finally")
                 .header("Authorization", "this-is-invalid-token")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
@@ -217,9 +200,26 @@ internal class TemplateControllerIntegrationTest(
     }
 
     @Test
-    fun `템플릿 전체 조회하기 - 200`() {
-        val responseBody = objectMapper.readValue<TemplateSearchAllResponse>(
-            mock.perform(get("/template")
+    fun `프로젝트 삭제하기 - 404 PROJECT_NOT_FOUND`() {
+        val responseBody = objectMapper.readValue<CommonExceptionResponse>(
+            mock.perform(delete("/project/nonExistProject-finally")
+                .header("Authorization", "this-is-test-token")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .characterEncoding("UTF-8"))
+                .andExpect(status().isNotFound)
+                .andReturn()
+                .response
+                .contentAsString
+        )
+
+        assertThat(responseBody.code).isEqualTo("PROJECT_NOT_FOUND")
+    }
+
+    @Test
+    fun `프로젝트 단일 조회하기 - 200`() {
+        val responseBody = objectMapper.readValue<ProjectSearchDetailResponse>(
+            mock.perform(get("/project/savedProject-finally")
                 .header("Authorization", "this-is-test-token")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
@@ -230,23 +230,15 @@ internal class TemplateControllerIntegrationTest(
                 .contentAsString
         )
 
-        assertThat(responseBody.templates)
-            .map<Long> { it.templateId }
-            .containsAll(listOf(1))
-
-        assertThat(responseBody.templates)
-            .map<String> { it.templateTitle }
-            .containsAll(listOf("savedTitle"))
-
-        assertThat(responseBody.templates)
-            .map<String> { it.templateBody }
-            .containsAll(listOf("savedBody"))
+        assertThat(responseBody.projectCode).isEqualTo("savedProject-finally")
+        assertThat(responseBody.projectName).isEqualTo("savedProject")
+        assertThat(responseBody.projectDescription).isEqualTo("savedDescription")
     }
 
     @Test
-    fun `템플릿 전체 조회하기 - 401 INVALID_TOKEN`() {
+    fun `프로젝트 단일 조회하기 - 401 INVALID_TOKEN`() {
         val responseBody = objectMapper.readValue<CommonExceptionResponse>(
-            mock.perform(get("/template")
+            mock.perform(get("/project/savedProject-finally")
                 .header("Authorization", "this-is-invalid-token")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
@@ -261,28 +253,9 @@ internal class TemplateControllerIntegrationTest(
     }
 
     @Test
-    fun `템플릿 조회하기 - 200`() {
-        val responseBody = objectMapper.readValue<TemplateSearchDetailResponse>(
-            mock.perform(get("/template/1")
-                .header("Authorization", "this-is-test-token")
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .accept(MediaType.APPLICATION_JSON_UTF8)
-                .characterEncoding("UTF-8"))
-                .andExpect(status().isOk)
-                .andReturn()
-                .response
-                .contentAsString
-        )
-
-        assertThat(responseBody.templateId).isEqualTo(1)
-        assertThat(responseBody.templateTitle).isEqualTo("savedTitle")
-        assertThat(responseBody.templateBody).isEqualTo("savedBody")
-    }
-
-    @Test
-    fun `템플릿 조회하기 - 404 TEMPLATE_NOT_FOUND`() {
+    fun `프로젝트 단일 조회하기 - 404 PROJECT_NOT_FOUND`() {
         val responseBody = objectMapper.readValue<CommonExceptionResponse>(
-            mock.perform(get("/template/2")
+            mock.perform(get("/project/nonExistProject-finally")
                 .header("Authorization", "this-is-test-token")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
@@ -293,13 +266,35 @@ internal class TemplateControllerIntegrationTest(
                 .contentAsString
         )
 
-        assertThat(responseBody.code).isEqualTo("TEMPLATE_NOT_FOUND")
+        assertThat(responseBody.code).isEqualTo("PROJECT_NOT_FOUND")
     }
 
     @Test
-    fun `템플릿 조회하기 - 401 INVALID_TOKEN`() {
+    fun `프로젝트 전체 조회하기 - 200`() {
+        val responseBody = objectMapper.readValue<ProjectSearchAllResponse>(
+            mock.perform(get("/project")
+                .header("Authorization", "this-is-test-token")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .characterEncoding("UTF-8"))
+                .andExpect(status().isOk)
+                .andReturn()
+                .response
+                .contentAsString
+        )
+
+        assertThat(responseBody.projects)
+            .map<String> { it.projectCode }
+            .isEqualTo(listOf("savedProject-finally"))
+        assertThat(responseBody.projects)
+            .map<String> { it.projectName }
+            .isEqualTo(listOf("savedProject"))
+    }
+
+    @Test
+    fun `프로젝트 전체 조회하기 - 401 INVALID_TOKEN`() {
         val responseBody = objectMapper.readValue<CommonExceptionResponse>(
-            mock.perform(get("/template/1")
+            mock.perform(get("/project")
                 .header("Authorization", "this-is-invalid-token")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .accept(MediaType.APPLICATION_JSON_UTF8)

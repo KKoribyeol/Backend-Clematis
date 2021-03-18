@@ -20,13 +20,12 @@ class AccountController(
     private val accountModificationService: AccountModificationService,
     private val accountDeletionService: AccountDeletionService,
     private val authenticationProvider: AuthenticationProvider,
-
-    private val accountRepository: AccountRepository,
 ) {
 
     @PostMapping
     fun join(
-        @RequestBody @Valid request: JoinRequest
+        @RequestBody @Valid
+        request: JoinRequest
     ) = authenticationCreationService.createAccount(
         accountId = request.accountId,
         accountPassword = request.accountPassword,
@@ -35,7 +34,8 @@ class AccountController(
 
     @PostMapping("/login")
     fun login(
-        @RequestBody @Valid request: LoginRequest
+        @RequestBody @Valid
+        request: LoginRequest
     ): LoginResponse {
         authenticationCreationService.validateAccount(
             accountId = request.accountId,
@@ -50,8 +50,9 @@ class AccountController(
 
     @PatchMapping("/password")
     fun modifyPassword(
-        @RequestBody @Valid request: PasswordModificationRequest,
-    ) = accountModificationService.modifyPassword(
+        @RequestBody @Valid
+        request: PasswordModificationRequest,
+    ) = accountModificationService.modifyAccountPassword(
         accountId = authenticationProvider.getAccountIdByAuthentication(),
         accountPassword = request.newPassword,
         accountConfirmPassword = request.confirmNewPassword,
@@ -59,8 +60,9 @@ class AccountController(
 
     @PatchMapping("/name")
     fun modifyName(
-        @RequestBody @Valid request: NameModificationRequest,
-    ) = accountModificationService.modifyName(
+        @RequestBody @Valid
+        request: NameModificationRequest,
+    ) = accountModificationService.modifyAccountName(
         accountId = authenticationProvider.getAccountIdByAuthentication(),
         accountName = request.newName,
     )
@@ -70,9 +72,4 @@ class AccountController(
         accountDeletionService.deleteAccount(
             accountId = authenticationProvider.getAccountIdByAuthentication(),
         )
-
-    @GetMapping("/test")
-    fun a() {
-        accountRepository.deleteById("aa")
-    }
 }

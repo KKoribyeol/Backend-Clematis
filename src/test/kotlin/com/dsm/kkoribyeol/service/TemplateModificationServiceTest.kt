@@ -28,7 +28,7 @@ class TemplateModificationServiceTest {
         every { templateRepository.findByIdOrNull(1) } returns savedTemplate
         every { templateRepository.findByIdOrNull(anyLong()) } returns null
 
-        testService.modify(1, "modified title", "modified body")
+        testService.modifyTemplate(1, "modified title", "modified body")
 
         verify(exactly = 1) { templateRepository.findByIdOrNull(1) }
     }
@@ -38,7 +38,7 @@ class TemplateModificationServiceTest {
         every { templateRepository.findByIdOrNull(1) } returns savedTemplate
         every { templateRepository.findByIdOrNull(2) } returns null
 
-        assertThrows<TemplateNotFoundException> { testService.modify(2, "anyString", "anyString") }
+        assertThrows<TemplateNotFoundException> { testService.modifyTemplate(2, "anyString", "anyString") }
 
         verify(exactly = 1) { templateRepository.findByIdOrNull(2) }
     }

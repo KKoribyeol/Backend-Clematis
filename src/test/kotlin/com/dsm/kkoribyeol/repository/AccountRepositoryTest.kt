@@ -5,6 +5,6 @@ import org.springframework.test.context.TestConstructor
 
 @DataJpaTest
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-class AccountRepositoryTest(
+internal class AccountRepositoryTest(
     private val accountRepository: AccountRepository,
 )

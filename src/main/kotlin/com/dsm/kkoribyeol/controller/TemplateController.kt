@@ -2,8 +2,9 @@ package com.dsm.kkoribyeol.controller
 
 import com.dsm.kkoribyeol.controller.request.TemplateRequest
 import com.dsm.kkoribyeol.controller.response.TemplateCreationResponse
-import com.dsm.kkoribyeol.controller.response.TemplateListSearchResponse
-import com.dsm.kkoribyeol.controller.response.TemplateListSearchResponse.TemplateSearchResponse
+import com.dsm.kkoribyeol.controller.response.TemplateSearchAllResponse
+import com.dsm.kkoribyeol.controller.response.TemplateSearchAllResponse.TemplateSearchResponse
+import com.dsm.kkoribyeol.controller.response.TemplateSearchDetailResponse
 import com.dsm.kkoribyeol.exception.TemplateSearchException
 import com.dsm.kkoribyeol.service.TemplateCreationService
 import com.dsm.kkoribyeol.service.TemplateDeletionService
@@ -30,7 +31,7 @@ class TemplateController(
         @RequestBody @Valid
         request: TemplateRequest,
     ) = TemplateCreationResponse(
-        creationNumber = creationService.create(
+        creationNumber = creationService.createTemplate(
             templateTitle = request.title,
             templateBody = request.body,
         )
@@ -38,12 +39,12 @@ class TemplateController(
 
     @PatchMapping("/{templateId}")
     fun modifyTemplate(
-        @PathVariable("templateId")
         @NotNull(message = "<NULL>") @Positive(message = "<양수가 아님>")
+        @PathVariable("templateId")
         templateId: Long,
         @RequestBody @Valid
         request: TemplateRequest,
-    ) = modificationService.modify(
+    ) = modificationService.modifyTemplate(
         templateId = templateId,
         templateTitle = request.title,
         templateBody = request.body,
@@ -51,17 +52,17 @@ class TemplateController(
 
     @DeleteMapping("/{templateId}")
     fun deleteTemplate(
-        @PathVariable("templateId")
         @NotNull(message = "<NULL>") @Positive(message = "<양수가 아님>")
+        @PathVariable("templateId")
         templateId: Long,
-    ) = deletionService.delete(
+    ) = deletionService.deleteTemplate(
         templateId = templateId,
     )
 
     @GetMapping
     fun searchTemplate() =
-        TemplateListSearchResponse(
-            templates = searchService.searchAll()
+        TemplateSearchAllResponse(
+            templates = searchService.searchAllTemplate()
                 .map {
                     TemplateSearchResponse(
                         templateId = it.id ?: throw TemplateSearchException(),
@@ -73,15 +74,17 @@ class TemplateController(
 
     @GetMapping("/{templateId}")
     fun searchTemplateDetail(
-        @PathVariable("templateId")
         @NotNull(message = "<NULL>") @Positive(message = "<양수가 아님>")
+        @PathVariable("templateId")
         templateId: Long,
-    ): TemplateSearchResponse {
-        val findTemplate = searchService.search(templateId)
-        return TemplateSearchResponse(
+    ): TemplateSearchDetailResponse {
+        val findTemplate = searchService.searchTemplate(templateId)
+        return TemplateSearchDetailResponse(
             templateId = findTemplate.id ?: throw TemplateSearchException(),
             templateTitle = findTemplate.title,
             templateBody = findTemplate.body,
+            templateCreatedAt = findTemplate.createdAt,
+            templateUpdatedAt = findTemplate.updatedAt,
         )
     }
 }
