@@ -4,6 +4,7 @@ import com.dsm.kkoribyeol.controller.request.ProjectCreationRequest
 import com.dsm.kkoribyeol.controller.request.ProjectModificationRequest
 import com.dsm.kkoribyeol.controller.response.ProjectCreationResponse
 import com.dsm.kkoribyeol.service.ProjectCreationService
+import com.dsm.kkoribyeol.service.ProjectDeletionService
 import com.dsm.kkoribyeol.service.ProjectModificationService
 import com.dsm.kkoribyeol.service.provider.AuthenticationProvider
 import org.springframework.web.bind.annotation.*
@@ -14,6 +15,7 @@ import javax.validation.Valid
 class ProjectController(
     private val creationService: ProjectCreationService,
     private val modificationService: ProjectModificationService,
+    private val deletionService: ProjectDeletionService,
     private val authenticationProvider: AuthenticationProvider,
 ) {
 
@@ -39,5 +41,13 @@ class ProjectController(
         projectCode = projectCode,
         newProjectName = request.name,
         newProjectDescription = request.description,
+    )
+
+    @DeleteMapping("/{projectCode}")
+    fun deleteProject(
+        @PathVariable("projectCode")
+        projectCode: String,
+    ) = deletionService.deleteProject(
+        projectCode = projectCode,
     )
 }
