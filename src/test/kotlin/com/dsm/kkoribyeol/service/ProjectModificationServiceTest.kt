@@ -1,4 +1,4 @@
-package com.dsm.kkoribyeol
+package com.dsm.kkoribyeol.service
 
 import com.dsm.kkoribyeol.domain.Account
 import com.dsm.kkoribyeol.domain.Project
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.assertThrows
 import org.springframework.data.repository.findByIdOrNull
 
 
-class ProjectModificationServiceTest {
+internal class ProjectModificationServiceTest {
     private val projectRepository = mockk<ProjectRepository>()
     private val testService = ProjectModificationService(
         projectRepository = projectRepository,
