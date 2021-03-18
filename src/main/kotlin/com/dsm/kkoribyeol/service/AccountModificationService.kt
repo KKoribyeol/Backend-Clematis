@@ -15,15 +15,15 @@ class AccountModificationService(
     private val passwordEncoder: PasswordEncoder,
 ) {
 
-    fun modifyPassword(accountId: String, accountPassword: String, accountConfirmPassword: String) =
+    fun modifyAccountPassword(accountId: String, accountPassword: String, accountConfirmPassword: String) =
         if (accountPassword == accountConfirmPassword)
-            findAccountById(accountId).modifyPassword(passwordEncoder.encode(accountPassword))
+            findAccountByCode(accountId).modifyPassword(passwordEncoder.encode(accountPassword))
         else
             throw PasswordMismatchException(accountPassword, accountConfirmPassword)
 
-    fun modifyName(accountId: String, accountName: String) =
-        findAccountById(accountId).modifyName(accountName)
+    fun modifyAccountName(accountId: String, accountName: String) =
+        findAccountByCode(accountId).modifyName(accountName)
 
-    private fun findAccountById(accountId: String) =
+    private fun findAccountByCode(accountId: String) =
         accountRepository.findByIdOrNull(accountId) ?: throw AccountNotFoundException(accountId)
 }

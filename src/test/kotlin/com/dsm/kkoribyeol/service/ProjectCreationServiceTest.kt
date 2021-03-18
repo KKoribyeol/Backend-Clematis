@@ -36,13 +36,13 @@ internal class ProjectCreationServiceTest {
         name = "nameName",
     )
     private val savedProject = Project(
-        id = "savedProject-finally",
+        code = "savedProject-finally",
         name = "savedProject",
         description = "savedDescription",
         owner = savedAccount,
     )
     private val nonExistProject = Project(
-        id = "project-finally",
+        code = "project-finally",
         name = "project",
         description = "description",
         owner = savedAccount,
@@ -62,7 +62,7 @@ internal class ProjectCreationServiceTest {
             projectDescription = "description",
         )
 
-        assertThat(projectId).isEqualTo(nonExistProject.id)
+        assertThat(projectId).isEqualTo(nonExistProject.code)
 
         verify(exactly = 1) { projectRepository.existsByName(nonExistProject.name) }
         verify(exactly = 1) { projectRepository.save(any()) }

@@ -37,7 +37,7 @@ internal class AccountModificationServiceTest {
         every { accountRepository.findByIdOrNull(nonExistAccount.id) } returns null
         every { passwordEncoder.encode(nonExistAccount.password) } returns nonExistAccount.password
 
-        testService.modifyPassword(
+        testService.modifyAccountPassword(
             accountId = savedAccount.id,
             accountPassword = nonExistAccount.password,
             accountConfirmPassword = nonExistAccount.password,
@@ -54,7 +54,7 @@ internal class AccountModificationServiceTest {
         every { passwordEncoder.encode(nonExistAccount.password) } returns nonExistAccount.password
 
         assertThrows<AccountNotFoundException> {
-            testService.modifyPassword(
+            testService.modifyAccountPassword(
                 accountId = nonExistAccount.id,
                 accountPassword = nonExistAccount.password,
                 accountConfirmPassword = nonExistAccount.password,
@@ -72,7 +72,7 @@ internal class AccountModificationServiceTest {
         every { passwordEncoder.encode(nonExistAccount.password) } returns nonExistAccount.password
 
         assertThrows<PasswordMismatchException> {
-            testService.modifyPassword(
+            testService.modifyAccountPassword(
                 accountId = savedAccount.id,
                 accountPassword = savedAccount.password,
                 accountConfirmPassword = nonExistAccount.password,
@@ -88,7 +88,7 @@ internal class AccountModificationServiceTest {
         every { accountRepository.findByIdOrNull(savedAccount.id) } returns savedAccount
         every { accountRepository.findByIdOrNull(nonExistAccount.id) } returns null
 
-        testService.modifyName(
+        testService.modifyAccountName(
             accountId = savedAccount.id,
             accountName = nonExistAccount.name,
         )
@@ -102,7 +102,7 @@ internal class AccountModificationServiceTest {
         every { accountRepository.findByIdOrNull(nonExistAccount.id) } returns null
 
         assertThrows<AccountNotFoundException> {
-            testService.modifyName(
+            testService.modifyAccountName(
                 accountId = nonExistAccount.id,
                 accountName = nonExistAccount.name,
             )
