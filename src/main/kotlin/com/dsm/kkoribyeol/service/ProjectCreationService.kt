@@ -6,18 +6,16 @@ import com.dsm.kkoribyeol.exception.AlreadyExistAccountException
 import com.dsm.kkoribyeol.exception.AlreadyExistProjectException
 import com.dsm.kkoribyeol.repository.AccountRepository
 import com.dsm.kkoribyeol.repository.ProjectRepository
+import com.dsm.kkoribyeol.service.provider.RandomProjectCodeProvider
 import org.apache.commons.lang3.RandomStringUtils
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-
-private const val RANDOM_CODE_LENGTH = 7
-private const val IS_INCLUDE_LETTER = true
-private const val IS_INCLUDE_NUMBER = true
 
 @Service
 class ProjectCreationService(
     private val projectRepository: ProjectRepository,
     private val accountRepository: AccountRepository,
+    private val randomProjectCodeProvider: RandomProjectCodeProvider,
 ) {
 
     fun createProject(accountId: String, projectName: String, projectDescription: String?) =
@@ -44,10 +42,7 @@ class ProjectCreationService(
         )
 
     private fun generateProjectId(projectName: String) =
-        "$projectName-${generateRandomCode()}"
-
-    private fun generateRandomCode() =
-        RandomStringUtils.random(RANDOM_CODE_LENGTH, IS_INCLUDE_LETTER, IS_INCLUDE_NUMBER)
+        "$projectName-${randomProjectCodeProvider.generateRandomCode()}"
 
     private fun findProjectById(accountId: String) =
         accountRepository.findByIdOrNull(accountId) ?: throw AccountNotFoundException(accountId)

@@ -6,6 +6,7 @@ import com.dsm.kkoribyeol.exception.AccountNotFoundException
 import com.dsm.kkoribyeol.exception.AlreadyExistProjectException
 import com.dsm.kkoribyeol.repository.AccountRepository
 import com.dsm.kkoribyeol.repository.ProjectRepository
+import com.dsm.kkoribyeol.service.provider.RandomProjectCodeProvider
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -17,9 +18,11 @@ import org.springframework.data.repository.findByIdOrNull
 internal class ProjectCreationServiceTest {
     private val projectRepository = mockk<ProjectRepository>()
     private val accountRepository = mockk<AccountRepository>()
+    private val projectCodeProvider = RandomProjectCodeProvider()
     private val testService = ProjectCreationService(
         projectRepository = projectRepository,
         accountRepository = accountRepository,
+        randomProjectCodeProvider = projectCodeProvider,
     )
 
     private val savedAccount = Account(
