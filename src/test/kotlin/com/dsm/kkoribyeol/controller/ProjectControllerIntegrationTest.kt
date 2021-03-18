@@ -3,6 +3,8 @@ package com.dsm.kkoribyeol.controller
 import com.dsm.kkoribyeol.controller.request.ProjectCreationRequest
 import com.dsm.kkoribyeol.controller.request.ProjectModificationRequest
 import com.dsm.kkoribyeol.controller.response.ProjectCreationResponse
+import com.dsm.kkoribyeol.controller.response.ProjectSearchAllResponse
+import com.dsm.kkoribyeol.controller.response.ProjectSearchDetailResponse
 import com.dsm.kkoribyeol.exception.handler.CommonExceptionResponse
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -13,8 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.context.TestConstructor
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.transaction.annotation.Transactional
 
@@ -169,5 +170,141 @@ class ProjectControllerIntegrationTest(
         )
 
         assertThat(responseBody.code).isEqualTo("PROJECT_NOT_FOUND")
+    }
+
+    @Test
+    fun `프로젝트 삭제하기 - 200`() {
+        mock.perform(delete("/project/savedProject-finally")
+            .header("Authorization", "this-is-test-token")
+            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .accept(MediaType.APPLICATION_JSON_UTF8)
+            .characterEncoding("UTF-8"))
+            .andExpect(status().isOk)
+    }
+
+    @Test
+    fun `프로젝트 삭제하기 - 401 INVALID_TOKEN`() {
+        val responseBody = objectMapper.readValue<CommonExceptionResponse>(
+            mock.perform(delete("/project/savedProject-finally")
+                .header("Authorization", "this-is-invalid-token")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .characterEncoding("UTF-8"))
+                .andExpect(status().isUnauthorized)
+                .andReturn()
+                .response
+                .contentAsString
+        )
+
+        assertThat(responseBody.code).isEqualTo("INVALID_TOKEN")
+    }
+
+    @Test
+    fun `프로젝트 삭제하기 - 404 PROJECT_NOT_FOUND`() {
+        val responseBody = objectMapper.readValue<CommonExceptionResponse>(
+            mock.perform(delete("/project/nonExistProject-finally")
+                .header("Authorization", "this-is-test-token")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .characterEncoding("UTF-8"))
+                .andExpect(status().isNotFound)
+                .andReturn()
+                .response
+                .contentAsString
+        )
+
+        assertThat(responseBody.code).isEqualTo("PROJECT_NOT_FOUND")
+    }
+
+    @Test
+    fun `프로젝트 단일 조회하기 - 200`() {
+        val responseBody = objectMapper.readValue<ProjectSearchDetailResponse>(
+            mock.perform(get("/project/savedProject-finally")
+                .header("Authorization", "this-is-test-token")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .characterEncoding("UTF-8"))
+                .andExpect(status().isOk)
+                .andReturn()
+                .response
+                .contentAsString
+        )
+
+        assertThat(responseBody.projectCode).isEqualTo("savedProject-finally")
+        assertThat(responseBody.projectName).isEqualTo("savedProject")
+        assertThat(responseBody.projectDescription).isEqualTo("savedDescription")
+    }
+
+    @Test
+    fun `프로젝트 단일 조회하기 - 401 INVALID_TOKEN`() {
+        val responseBody = objectMapper.readValue<CommonExceptionResponse>(
+            mock.perform(get("/project/savedProject-finally")
+                .header("Authorization", "this-is-invalid-token")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .characterEncoding("UTF-8"))
+                .andExpect(status().isUnauthorized)
+                .andReturn()
+                .response
+                .contentAsString
+        )
+
+        assertThat(responseBody.code).isEqualTo("INVALID_TOKEN")
+    }
+
+    @Test
+    fun `프로젝트 단일 조회하기 - 404 PROJECT_NOT_FOUND`() {
+        val responseBody = objectMapper.readValue<CommonExceptionResponse>(
+            mock.perform(get("/project/nonExistProject-finally")
+                .header("Authorization", "this-is-test-token")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .characterEncoding("UTF-8"))
+                .andExpect(status().isNotFound)
+                .andReturn()
+                .response
+                .contentAsString
+        )
+
+        assertThat(responseBody.code).isEqualTo("PROJECT_NOT_FOUND")
+    }
+
+    @Test
+    fun `프로젝트 전체 조회하기 - 200`() {
+        val responseBody = objectMapper.readValue<ProjectSearchAllResponse>(
+            mock.perform(get("/project")
+                .header("Authorization", "this-is-test-token")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .characterEncoding("UTF-8"))
+                .andExpect(status().isOk)
+                .andReturn()
+                .response
+                .contentAsString
+        )
+
+        assertThat(responseBody.projects)
+            .map<String> { it.projectCode }
+            .isEqualTo(listOf("savedProject-finally"))
+        assertThat(responseBody.projects)
+            .map<String> { it.projectName }
+            .isEqualTo(listOf("savedProject"))
+    }
+
+    @Test
+    fun `프로젝트 전체 조회하기 - 401 INVALID_TOKEN`() {
+        val responseBody = objectMapper.readValue<CommonExceptionResponse>(
+            mock.perform(get("/project")
+                .header("Authorization", "this-is-invalid-token")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .characterEncoding("UTF-8"))
+                .andExpect(status().isUnauthorized)
+                .andReturn()
+                .response
+                .contentAsString
+        )
+
+        assertThat(responseBody.code).isEqualTo("INVALID_TOKEN")
     }
 }

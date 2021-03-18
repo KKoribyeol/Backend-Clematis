@@ -2,7 +2,7 @@ package com.dsm.kkoribyeol.controller.response
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class TemplateListSearchResponse(
+data class TemplateSearchAllResponse(
     val templates: List<TemplateSearchResponse>,
 ) {
 

@@ -2,8 +2,9 @@ package com.dsm.kkoribyeol.controller
 
 import com.dsm.kkoribyeol.controller.request.TemplateRequest
 import com.dsm.kkoribyeol.controller.response.TemplateCreationResponse
-import com.dsm.kkoribyeol.controller.response.TemplateListSearchResponse
-import com.dsm.kkoribyeol.controller.response.TemplateListSearchResponse.TemplateSearchResponse
+import com.dsm.kkoribyeol.controller.response.TemplateSearchAllResponse
+import com.dsm.kkoribyeol.controller.response.TemplateSearchAllResponse.TemplateSearchResponse
+import com.dsm.kkoribyeol.controller.response.TemplateSearchDetailResponse
 import com.dsm.kkoribyeol.exception.TemplateSearchException
 import com.dsm.kkoribyeol.service.TemplateCreationService
 import com.dsm.kkoribyeol.service.TemplateDeletionService
@@ -60,7 +61,7 @@ class TemplateController(
 
     @GetMapping
     fun searchTemplate() =
-        TemplateListSearchResponse(
+        TemplateSearchAllResponse(
             templates = searchService.searchAllTemplate()
                 .map {
                     TemplateSearchResponse(
@@ -76,12 +77,14 @@ class TemplateController(
         @NotNull(message = "<NULL>") @Positive(message = "<양수가 아님>")
         @PathVariable("templateId")
         templateId: Long,
-    ): TemplateSearchResponse {
+    ): TemplateSearchDetailResponse {
         val findTemplate = searchService.searchTemplate(templateId)
-        return TemplateSearchResponse(
+        return TemplateSearchDetailResponse(
             templateId = findTemplate.id ?: throw TemplateSearchException(),
             templateTitle = findTemplate.title,
             templateBody = findTemplate.body,
+            templateCreatedAt = findTemplate.createdAt,
+            templateUpdatedAt = findTemplate.updatedAt,
         )
     }
 }
