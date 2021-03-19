@@ -2,12 +2,10 @@ package com.dsm.kkoribyeol.service
 
 import com.dsm.kkoribyeol.domain.Project
 import com.dsm.kkoribyeol.exception.AccountNotFoundException
-import com.dsm.kkoribyeol.exception.AlreadyExistAccountException
 import com.dsm.kkoribyeol.exception.AlreadyExistProjectException
 import com.dsm.kkoribyeol.repository.AccountRepository
 import com.dsm.kkoribyeol.repository.ProjectRepository
 import com.dsm.kkoribyeol.service.provider.RandomProjectCodeProvider
-import org.apache.commons.lang3.RandomStringUtils
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 

@@ -13,7 +13,6 @@ import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.springframework.data.repository.findByIdOrNull
 
 internal class ProjectCreationServiceTest {
     private val projectRepository = mockk<ProjectRepository>()

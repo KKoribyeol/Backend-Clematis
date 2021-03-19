@@ -1,15 +1,17 @@
 package com.dsm.kkoribyeol.service.provider
 
-import org.apache.commons.lang3.RandomStringUtils
 import org.springframework.stereotype.Component
+import kotlin.random.Random
 
-private const val RANDOM_CODE_LENGTH = 7
-private const val IS_INCLUDE_LETTER = true
-private const val IS_INCLUDE_NUMBER = true
+private const val PROJECT_CODE_LENGTH = 7
 
 @Component
 class RandomProjectCodeProvider : ProjectCodeProvider {
+    private val codeCharacterPool = ('a'..'z') + ('A'..'Z') + ('0'..'9')
 
     override fun generateRandomCode(): String =
-        RandomStringUtils.random(RANDOM_CODE_LENGTH, IS_INCLUDE_LETTER, IS_INCLUDE_NUMBER)
+        (1..PROJECT_CODE_LENGTH)
+            .map { Random.nextInt(0, codeCharacterPool.size) }
+            .map { codeCharacterPool[it] }
+            .joinToString { "" }
 }
