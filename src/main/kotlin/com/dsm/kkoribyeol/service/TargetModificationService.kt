@@ -3,13 +3,15 @@ package com.dsm.kkoribyeol.service
 import com.dsm.kkoribyeol.exception.TargetNotFoundException
 import com.dsm.kkoribyeol.repository.TargetRepository
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
+@Transactional
 class TargetModificationService(
     private val targetRepository: TargetRepository,
 ) {
 
-    fun modifyTarget(projectCode: String, targetToken: String, newNickname: String, newName: String) =
+    fun modifyTarget(projectCode: String, targetToken: String, newNickname: String?, newName: String?) =
         findTarget(
             projectCode = projectCode,
             targetToken = targetToken

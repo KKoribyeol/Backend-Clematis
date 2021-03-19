@@ -12,19 +12,11 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 @RestControllerAdvice
 class ExceptionHandler {
 
-    @ExceptionHandler(AuthenticationException::class)
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    fun authenticationExceptionHandler(e: AuthenticationException) =
-        CommonExceptionResponse(
-            code = "INVALID_TOKEN",
-            message = "토큰이 잘못되었습니다.",
-        )
-
     @ExceptionHandler(MethodArgumentNotValidException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun notValidateExceptionHandler(e: MethodArgumentNotValidException) =
         CommonExceptionResponse(
-            code = "INVALID_REQUEST_BODY",
+            code = "INVALID_REQUEST",
             message = "클라이언트의 요청이 잘못되었습니다. [${e.bindingResult.allErrors.first().defaultMessage}]",
         )
 
@@ -32,7 +24,7 @@ class ExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun notValidateExceptionHandler(e: MethodArgumentTypeMismatchException) =
         CommonExceptionResponse(
-            code = "INVALID_REQUEST_BODY",
+            code = "INVALID_REQUEST",
             message = "${e.mostSpecificCause.message}",
         )
 

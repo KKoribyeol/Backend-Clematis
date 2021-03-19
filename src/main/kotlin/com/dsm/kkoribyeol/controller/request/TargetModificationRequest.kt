@@ -7,8 +7,8 @@ data class TargetModificationRequest(
 
     @get:NotBlank(message = "<NULL> <EMPTY> <BLANK>")
     @get:Size(min = 1, max = 255, message = "<1~255>")
-    val nickname: String,
+    val nickname: String?,
 
     @get:Size(max = 12, message = "<~12>")
-    val name: String,
+    val name: String?,
 )

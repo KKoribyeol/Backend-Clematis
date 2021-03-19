@@ -13,7 +13,7 @@ class Target(
     name: String?,
 
     @ManyToOne
-    @JoinColumn(name = "project_id", referencedColumnName = "code")
+    @JoinColumn(name = "project_code", referencedColumnName = "code")
     val project: Project,
 ) {
 

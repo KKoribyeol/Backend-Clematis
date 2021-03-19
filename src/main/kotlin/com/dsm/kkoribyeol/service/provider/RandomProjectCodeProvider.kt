@@ -13,5 +13,5 @@ class RandomProjectCodeProvider : ProjectCodeProvider {
         (1..PROJECT_CODE_LENGTH)
             .map { Random.nextInt(0, codeCharacterPool.size) }
             .map { codeCharacterPool[it] }
-            .joinToString { "" }
+            .joinToString("")
 }
