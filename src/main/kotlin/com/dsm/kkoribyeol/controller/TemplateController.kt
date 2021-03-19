@@ -28,7 +28,8 @@ class TemplateController(
 
     @PostMapping
     fun createTemplate(
-        @RequestBody @Valid
+        @Valid
+        @RequestBody
         request: TemplateRequest,
     ) = TemplateCreationResponse(
         creationNumber = creationService.createTemplate(
@@ -39,10 +40,12 @@ class TemplateController(
 
     @PatchMapping("/{templateId}")
     fun modifyTemplate(
-        @NotNull(message = "<NULL>") @Positive(message = "<양수가 아님>")
+        @NotNull(message = "<NULL>")
+        @Positive(message = "<양수가 아님>")
         @PathVariable("templateId")
         templateId: Long,
-        @RequestBody @Valid
+        @Valid
+        @RequestBody
         request: TemplateRequest,
     ) = modificationService.modifyTemplate(
         templateId = templateId,
@@ -52,7 +55,8 @@ class TemplateController(
 
     @DeleteMapping("/{templateId}")
     fun deleteTemplate(
-        @NotNull(message = "<NULL>") @Positive(message = "<양수가 아님>")
+        @NotNull(message = "<NULL>")
+        @Positive(message = "<양수가 아님>")
         @PathVariable("templateId")
         templateId: Long,
     ) = deletionService.deleteTemplate(
@@ -74,7 +78,8 @@ class TemplateController(
 
     @GetMapping("/{templateId}")
     fun searchTemplateDetail(
-        @NotNull(message = "<NULL>") @Positive(message = "<양수가 아님>")
+        @NotNull(message = "<NULL>")
+        @Positive(message = "<양수가 아님>")
         @PathVariable("templateId")
         templateId: Long,
     ): TemplateSearchDetailResponse {

@@ -29,7 +29,8 @@ class ProjectController(
 
     @PostMapping
     fun createProject(
-        @RequestBody @Valid
+        @Valid
+        @RequestBody
         creationRequest: ProjectCreationRequest,
     ) = ProjectCreationResponse(
         projectId = creationService.createProject(
@@ -41,10 +42,11 @@ class ProjectController(
 
     @PatchMapping("/{projectCode}")
     fun modifyProject(
-        @RequestBody @Valid
+        @Valid
+        @RequestBody
         request: ProjectModificationRequest,
-        @PathVariable("projectCode")
         @Size(min = 9, max = 28, message = "<9~28>")
+        @PathVariable("projectCode")
         projectCode: String,
     ) = modificationService.modifyProject(
         projectCode = projectCode,
