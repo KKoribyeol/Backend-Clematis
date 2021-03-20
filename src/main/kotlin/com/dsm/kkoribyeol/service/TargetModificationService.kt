@@ -20,7 +20,7 @@ class TargetModificationService(
             name = newName,
         )
 
-    fun findTarget(projectCode: String, targetToken: String) =
+    private fun findTarget(projectCode: String, targetToken: String) =
         targetRepository.findByProjectCodeAndToken(
             code = projectCode,
             token = targetToken,

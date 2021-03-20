@@ -17,19 +17,26 @@ class TargetRegistrationService(
 ) {
 
     fun registerTarget(projectCode: String, targets: List<TargetRegistrationRequest>) {
-        val isAlreadyExist = isExistTarget(
+        val isExistTarget = isExistTarget(
             projectCode = projectCode,
-            tokens = targets.map { it.targetToken }
+            tokens = targets.map { it.targetToken },
+            nicknames = targets.map { it.targetNickname },
         )
 
-        if (isAlreadyExist)
+        if (isExistTarget)
             throw AlreadyExistTargetException()
         else
             save(projectCode, targets)
     }
 
-    private fun isExistTarget(projectCode: String, tokens: List<String>) =
+    private fun isExistTarget(projectCode: String, tokens: List<String>, nicknames: List<String>) =
+        isExistTargetToken(projectCode, tokens) || isExistTargetNickname(projectCode, nicknames)
+
+    private fun isExistTargetToken(projectCode: String, tokens: List<String>) =
         targetRepository.existsByProjectCodeAndTokenIn(projectCode, tokens)
+
+    private fun isExistTargetNickname(projectCode: String, nicknames: List<String>) =
+        targetRepository.existsByProjectCodeAndNicknameIn(projectCode, nicknames)
 
     private fun save(projectCode: String, targets: List<TargetRegistrationRequest>) {
         targetRepository.saveAll(
@@ -44,13 +51,13 @@ class TargetRegistrationService(
         )
     }
 
-    @Transactional
-    fun unregisterTarget(projectCode: String, targets: List<String>) =
-        targetRepository.deleteByProjectCodeAndTokenIn(
-            code = projectCode,
-            tokens = targets,
-        )
-
     private fun findProjectByCode(projectCode: String) =
         projectRepository.findByIdOrNull(projectCode) ?: throw ProjectNotFoundException(projectCode)
+
+    @Transactional
+    fun unregisterTarget(projectCode: String, tokens: List<String>) =
+        targetRepository.deleteByProjectCodeAndTokenIn(
+            code = projectCode,
+            tokens = tokens,
+        )
 }
