@@ -2,12 +2,14 @@ package com.dsm.kkoribyeol.exception.handler
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.security.core.AuthenticationException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
+import javax.validation.ConstraintViolationException
 
 @RestControllerAdvice
 class ExceptionHandler {
@@ -28,12 +30,12 @@ class ExceptionHandler {
             message = "클라이언트의 요청이 잘못되었습니다. [${e.bindingResult.allErrors.first().defaultMessage}]",
         )
 
-    @ExceptionHandler(MethodArgumentTypeMismatchException::class)
+    @ExceptionHandler(ConstraintViolationException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    fun notValidateExceptionHandler(e: MethodArgumentTypeMismatchException) =
+    fun notValidationExceptionHandler(e: ConstraintViolationException) =
         CommonExceptionResponse(
             code = "INVALID_REQUEST_BODY",
-            message = "${e.mostSpecificCause.message}",
+            message = e.localizedMessage,
         )
 
     @ExceptionHandler(CommonException::class)
