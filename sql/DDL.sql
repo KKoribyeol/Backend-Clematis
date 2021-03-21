@@ -40,6 +40,7 @@ CREATE TABLE target(
     name VARCHAR(12),
 
     UNIQUE (token, project_code),
+    UNIQUE (nickname, project_code),
 
     FOREIGN KEY (project_code) REFERENCES project(code) ON DELETE CASCADE,
 
