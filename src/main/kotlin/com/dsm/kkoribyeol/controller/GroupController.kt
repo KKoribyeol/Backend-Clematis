@@ -34,6 +34,7 @@ class GroupController(
         @NotNull(message = "Request Body 는 null 이 될 수 없습니다.")
         @RequestBody
         request: GroupRequest?,
+
     ) = groupCreationService.createGroup(
         projectCode = projectCode!!,
         groupName = request!!.groupName!!,
@@ -58,6 +59,7 @@ class GroupController(
         @NotNull(message = "Request Body 는 null 이 될 수 없습니다.")
         @RequestBody
         request: GroupRequest?,
+
     ) = groupModificationService.modifyGroupName(
         projectCode = projectCode!!,
         groupName = groupName!!,
