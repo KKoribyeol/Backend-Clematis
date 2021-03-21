@@ -1,9 +1,14 @@
 package com.dsm.kkoribyeol.controller
 
 import com.dsm.kkoribyeol.controller.request.GroupRequest
+import com.dsm.kkoribyeol.controller.response.MultipleGroupResponse
+import com.dsm.kkoribyeol.controller.response.MultipleGroupResponse.GroupResponse
+import com.dsm.kkoribyeol.controller.response.SingleGroupResponse
+import com.dsm.kkoribyeol.controller.response.SingleGroupResponse.TargetInGroup
 import com.dsm.kkoribyeol.service.GroupCreationService
 import com.dsm.kkoribyeol.service.GroupDeletionService
 import com.dsm.kkoribyeol.service.GroupModificationService
+import com.dsm.kkoribyeol.service.GroupSearchService
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
@@ -19,6 +24,7 @@ class GroupController(
     private val groupCreationService: GroupCreationService,
     private val groupModificationService: GroupModificationService,
     private val groupDeletionService: GroupDeletionService,
+    private val groupSearchService: GroupSearchService,
 ) {
 
     @PostMapping
@@ -86,5 +92,53 @@ class GroupController(
     ) = groupDeletionService.deleteGroup(
         projectCode = projectCode!!,
         groupName = groupName!!,
+    )
+
+    @GetMapping("/{groupName}")
+    fun singleSearchGroup(
+        @Pattern(
+            regexp = "[a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}",
+            message = "정규표현식: [a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}"
+        )
+        @NotBlank(message = "<NULL> <EMPTY> <BLANK>")
+        @RequestHeader("projectCode")
+        projectCode: String?,
+
+        @Size(min = 1, max = 20, message = "<1~20>")
+        @NotBlank(message = "<NULL> <EMPTY> <BLANK>")
+        @PathVariable("groupName")
+        groupName: String?,
+
+    ) = SingleGroupResponse(
+        groupName = groupName!!,
+        targets = groupSearchService.searchTargetInGroup(
+            projectCode = projectCode!!,
+            groupName = groupName,
+        ).map {
+            TargetInGroup(
+                targetToken = it.target.token,
+                targetNickname = it.target.nickname,
+            )
+        }
+    )
+
+    @GetMapping
+    fun multipleSearchGroup(
+        @Pattern(
+            regexp = "[a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}",
+            message = "정규표현식: [a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}"
+        )
+        @NotBlank(message = "<NULL> <EMPTY> <BLANK>")
+        @RequestHeader("projectCode")
+        projectCode: String?,
+
+    ) = MultipleGroupResponse(
+        groups = groupSearchService.searchAllGroup(
+            projectCode = projectCode!!,
+        ).map {
+            GroupResponse(
+               groupName = it.groupName
+            )
+        }
     )
 }

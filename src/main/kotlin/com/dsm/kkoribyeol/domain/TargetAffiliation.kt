@@ -8,11 +8,11 @@ class TargetAffiliation(
 
     @ManyToOne
     @JoinColumn(name = "target_id", referencedColumnName = "id")
-    val targetId: Target,
+    val target: Target,
 
     @ManyToOne
     @JoinColumn(name = "group_id", referencedColumnName = "id")
-    val groupId: TargetGroup,
+    val group: TargetGroup,
 ) {
 
     @Id
