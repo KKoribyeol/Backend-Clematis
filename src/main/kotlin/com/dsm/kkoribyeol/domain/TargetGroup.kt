@@ -6,8 +6,7 @@ import javax.persistence.*
 @Table(name = "target_group")
 class TargetGroup(
 
-    @Column(name = "name")
-    val groupName: String,
+    groupName: String,
 
     @ManyToOne
     @JoinColumn(name = "project_code", referencedColumnName = "code")
@@ -18,4 +17,11 @@ class TargetGroup(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     var id: Long? = null
+
+    @Column(name = "name")
+    var groupName = groupName
+
+    fun modifyName(newGroupName: String) {
+        this.groupName = newGroupName
+    }
 }

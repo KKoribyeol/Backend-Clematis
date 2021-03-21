@@ -14,7 +14,7 @@ class GroupCreationService(
     private val projectRepository: ProjectRepository,
 ) {
 
-    fun createGroup(projectCode: String, groupName: String) =
+    fun createGroup(projectCode: String, groupName: String) {
         if (isExistGroup(projectCode, groupName))
             throw AlreadyExistGroupException(projectCode, groupName)
         else
@@ -22,6 +22,7 @@ class GroupCreationService(
                 projectCode = projectCode,
                 groupName = groupName,
             )
+    }
 
     private fun isExistGroup(projectCode: String, groupName: String) =
         groupRepository.existsByProjectCodeAndGroupName(

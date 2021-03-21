@@ -1,5 +1,6 @@
 package com.dsm.kkoribyeol.exception.handler
 
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
@@ -8,7 +9,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
 import javax.validation.ConstraintViolationException
 
 @RestControllerAdvice
@@ -36,6 +36,14 @@ class ExceptionHandler {
         CommonExceptionResponse(
             code = "INVALID_REQUEST_BODY",
             message = e.localizedMessage,
+        )
+
+    @ExceptionHandler(HttpMessageNotReadableException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun notValidationExceptionHandler(e: HttpMessageNotReadableException) =
+        CommonExceptionResponse(
+            code = "INVALID_REQUEST_BODY",
+            message = "이상한 필드가 존재합니다. [${e.mostSpecificCause.localizedMessage}]"
         )
 
     @ExceptionHandler(CommonException::class)
