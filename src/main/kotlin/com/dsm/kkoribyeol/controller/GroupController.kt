@@ -2,6 +2,7 @@ package com.dsm.kkoribyeol.controller
 
 import com.dsm.kkoribyeol.controller.request.GroupRequest
 import com.dsm.kkoribyeol.service.GroupCreationService
+import com.dsm.kkoribyeol.service.GroupDeletionService
 import com.dsm.kkoribyeol.service.GroupModificationService
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
@@ -17,6 +18,7 @@ import javax.validation.constraints.Size
 class GroupController(
     private val groupCreationService: GroupCreationService,
     private val groupModificationService: GroupModificationService,
+    private val groupDeletionService: GroupDeletionService,
 ) {
 
     @PostMapping
@@ -64,5 +66,25 @@ class GroupController(
         projectCode = projectCode!!,
         groupName = groupName!!,
         newGroupName = request!!.groupName!!
+    )
+
+    @DeleteMapping("/{groupName}")
+    fun deleteGroup(
+        @Pattern(
+            regexp = "[a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}",
+            message = "정규표현식: [a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}"
+        )
+        @NotBlank(message = "<NULL> <EMPTY> <BLANK>")
+        @RequestHeader("projectCode")
+        projectCode: String?,
+
+        @Size(min = 1, max = 20, message = "<1~20>")
+        @NotBlank(message = "<NULL> <EMPTY> <BLANK>")
+        @PathVariable("groupName")
+        groupName: String?,
+
+    ) = groupDeletionService.deleteGroup(
+        projectCode = projectCode!!,
+        groupName = groupName!!,
     )
 }
