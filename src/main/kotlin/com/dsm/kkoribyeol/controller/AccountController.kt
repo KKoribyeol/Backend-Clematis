@@ -2,10 +2,9 @@ package com.dsm.kkoribyeol.controller
 
 import com.dsm.kkoribyeol.controller.request.JoinRequest
 import com.dsm.kkoribyeol.controller.request.LoginRequest
-import com.dsm.kkoribyeol.controller.request.NameModificationRequest
-import com.dsm.kkoribyeol.controller.request.PasswordModificationRequest
+import com.dsm.kkoribyeol.controller.request.AccountNameModificationRequest
+import com.dsm.kkoribyeol.controller.request.AccountPasswordModificationRequest
 import com.dsm.kkoribyeol.controller.response.LoginResponse
-import com.dsm.kkoribyeol.repository.AccountRepository
 import com.dsm.kkoribyeol.service.AccountDeletionService
 import com.dsm.kkoribyeol.service.AccountModificationService
 import com.dsm.kkoribyeol.service.AuthenticationCreationService
@@ -51,7 +50,7 @@ class AccountController(
     @PatchMapping("/password")
     fun modifyPassword(
         @RequestBody @Valid
-        request: PasswordModificationRequest,
+        request: AccountPasswordModificationRequest,
     ) = accountModificationService.modifyAccountPassword(
         accountId = authenticationProvider.getAccountIdByAuthentication(),
         accountPassword = request.newPassword,
@@ -61,7 +60,7 @@ class AccountController(
     @PatchMapping("/name")
     fun modifyName(
         @RequestBody @Valid
-        request: NameModificationRequest,
+        request: AccountNameModificationRequest,
     ) = accountModificationService.modifyAccountName(
         accountId = authenticationProvider.getAccountIdByAuthentication(),
         accountName = request.newName,

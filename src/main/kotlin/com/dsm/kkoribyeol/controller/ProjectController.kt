@@ -14,6 +14,8 @@ import com.dsm.kkoribyeol.service.provider.AuthenticationProvider
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.Pattern
 import javax.validation.constraints.Size
 
 @RestController
@@ -29,8 +31,10 @@ class ProjectController(
 
     @PostMapping
     fun createProject(
-        @RequestBody @Valid
+        @Valid
+        @RequestBody
         creationRequest: ProjectCreationRequest,
+
     ) = ProjectCreationResponse(
         projectId = creationService.createProject(
             accountId = authenticationProvider.getAccountIdByAuthentication(),
@@ -41,11 +45,18 @@ class ProjectController(
 
     @PatchMapping("/{projectCode}")
     fun modifyProject(
-        @RequestBody @Valid
+        @Valid
+        @RequestBody
         request: ProjectModificationRequest,
+
+        @Pattern(
+            regexp = "[a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}",
+            message = "정규표현식: [a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}"
+        )
+        @NotBlank(message = "<NULL> <EMPTY> <BLANK>")
         @PathVariable("projectCode")
-        @Size(min = 9, max = 28, message = "<9~28>")
         projectCode: String,
+
     ) = modificationService.modifyProject(
         projectCode = projectCode,
         newProjectName = request.name,
@@ -54,9 +65,14 @@ class ProjectController(
 
     @DeleteMapping("/{projectCode}")
     fun deleteProject(
-        @Size(min = 9, max = 28, message = "<9~28>")
+        @Pattern(
+            regexp = "[a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}",
+            message = "정규표현식: [a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}"
+        )
+        @NotBlank(message = "<NULL> <EMPTY> <BLANK>")
         @PathVariable("projectCode")
         projectCode: String,
+
     ) = deletionService.deleteProject(
         projectCode = projectCode,
     )
@@ -75,9 +91,14 @@ class ProjectController(
 
     @GetMapping("/{projectCode}")
     fun searchProjectDetail(
-        @Size(min = 9, max = 28, message = "<9~28>")
+        @Pattern(
+            regexp = "[a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}",
+            message = "정규표현식: [a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}"
+        )
+        @NotBlank(message = "<NULL> <EMPTY> <BLANK>")
         @PathVariable("projectCode")
         projectCode: String,
+
     ): ProjectSearchDetailResponse {
         val findProject = searchService.searchProject(projectCode)
         return ProjectSearchDetailResponse(

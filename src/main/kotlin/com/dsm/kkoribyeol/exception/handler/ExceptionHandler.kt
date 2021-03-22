@@ -1,6 +1,5 @@
 package com.dsm.kkoribyeol.exception.handler
 
-import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException

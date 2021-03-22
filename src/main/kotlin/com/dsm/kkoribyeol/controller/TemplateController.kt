@@ -28,8 +28,10 @@ class TemplateController(
 
     @PostMapping
     fun createTemplate(
-        @RequestBody @Valid
+        @Valid
+        @RequestBody
         request: TemplateRequest,
+
     ) = TemplateCreationResponse(
         creationNumber = creationService.createTemplate(
             templateTitle = request.title,
@@ -39,11 +41,14 @@ class TemplateController(
 
     @PatchMapping("/{templateId}")
     fun modifyTemplate(
-        @NotNull(message = "<NULL>") @Positive(message = "<양수가 아님>")
+        @NotNull(message = "<NULL>")
+        @Positive(message = "<양수가 아님>")
         @PathVariable("templateId")
         templateId: Long,
+
         @RequestBody @Valid
         request: TemplateRequest,
+
     ) = modificationService.modifyTemplate(
         templateId = templateId,
         templateTitle = request.title,

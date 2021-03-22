@@ -53,6 +53,6 @@ class SecurityConfiguration(
 
     override fun configure(web: WebSecurity) {
         web.ignoring()
-            .antMatchers("/swagger-ui.html", "/webjars/**", "/swagger/**", "/v2/api-docs", "/swagger-resources/**")
+            .antMatchers("/**/swagger-ui.html/**", "/webjars/**", "/swagger/**", "/v2/api-docs", "/swagger-resources/**")
     }
 }

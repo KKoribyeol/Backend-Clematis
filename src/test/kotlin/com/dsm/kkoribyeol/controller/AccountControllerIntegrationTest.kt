@@ -2,8 +2,8 @@ package com.dsm.kkoribyeol.controller
 
 import com.dsm.kkoribyeol.controller.request.JoinRequest
 import com.dsm.kkoribyeol.controller.request.LoginRequest
-import com.dsm.kkoribyeol.controller.request.NameModificationRequest
-import com.dsm.kkoribyeol.controller.request.PasswordModificationRequest
+import com.dsm.kkoribyeol.controller.request.AccountNameModificationRequest
+import com.dsm.kkoribyeol.controller.request.AccountPasswordModificationRequest
 import com.dsm.kkoribyeol.controller.response.LoginResponse
 import com.dsm.kkoribyeol.exception.handler.CommonExceptionResponse
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -148,7 +148,7 @@ internal class AccountControllerIntegrationTest(
     @Test
     fun `비밀번호 변경 - 200`() {
         val requestBody = objectMapper.writeValueAsString(
-            PasswordModificationRequest(
+            AccountPasswordModificationRequest(
                 newPassword = "newPassword",
                 confirmNewPassword = "newPassword",
             )
@@ -166,7 +166,7 @@ internal class AccountControllerIntegrationTest(
     @Test
     fun `비밀번호 변경 - 400 PASSWORD_MISMATCH`() {
         val requestBody = objectMapper.writeValueAsString(
-            PasswordModificationRequest(
+            AccountPasswordModificationRequest(
                 newPassword = "newPassword",
                 confirmNewPassword = "invalidPassword",
             )
@@ -191,7 +191,7 @@ internal class AccountControllerIntegrationTest(
     @Test
     fun `비밀번호 변경 - 401 INVALID_TOKEN`() {
         val requestBody = objectMapper.writeValueAsString(
-            PasswordModificationRequest(
+            AccountPasswordModificationRequest(
                 newPassword = "newPassword",
                 confirmNewPassword = "newPassword",
             )
@@ -216,7 +216,7 @@ internal class AccountControllerIntegrationTest(
     @Test
     fun `이름 변경 - 200`() {
         val requestBody = objectMapper.writeValueAsString(
-            NameModificationRequest(
+            AccountNameModificationRequest(
                 newName = "newName",
             )
         )
@@ -233,7 +233,7 @@ internal class AccountControllerIntegrationTest(
     @Test
     fun `이름 변경 - 401 INVALID_TOKEN`() {
         val requestBody = objectMapper.writeValueAsString(
-            NameModificationRequest(
+            AccountNameModificationRequest(
                 newName = "newName",
             )
         )

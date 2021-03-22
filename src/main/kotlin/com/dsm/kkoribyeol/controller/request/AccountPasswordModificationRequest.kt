@@ -3,7 +3,7 @@ package com.dsm.kkoribyeol.controller.request
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Pattern
 
-data class PasswordModificationRequest(
+data class AccountPasswordModificationRequest(
 
     @get:NotBlank(message = "<NULL> <EMPTY> <BLANK>")
     @get:Pattern(regexp = "^[a-zA-Z0-9!@#$%^&*]{8,20}$", message = "정규표현식 = ^[a-zA-Z0-9!@#$%^&*]{8,20}$")
