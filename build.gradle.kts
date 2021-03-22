@@ -38,9 +38,6 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-jackson:2.9.0")
 
-    implementation("io.springfox:springfox-swagger2:2.9.2")
-    implementation("io.springfox:springfox-swagger-ui:2.9.2")
-
     testImplementation("io.mockk:mockk:1.9.3")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")

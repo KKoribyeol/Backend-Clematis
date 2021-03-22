@@ -125,7 +125,7 @@ class GroupController(
     @GetMapping
     fun multipleSearchGroup(
         @Pattern(
-            regexp = "[a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}",
+            regexp = "^[a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}$",
             message = "정규표현식: [a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}"
         )
         @NotBlank(message = "<NULL> <EMPTY> <BLANK>")

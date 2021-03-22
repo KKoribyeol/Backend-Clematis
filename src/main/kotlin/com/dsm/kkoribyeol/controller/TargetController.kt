@@ -6,6 +6,7 @@ import com.dsm.kkoribyeol.controller.request.TargetRegistrationAllRequest
 import com.dsm.kkoribyeol.controller.request.TargetUnregisterRequest
 import com.dsm.kkoribyeol.controller.response.TargetSearchAllResponse
 import com.dsm.kkoribyeol.controller.response.TargetSearchAllResponse.TargetSearchResponse
+import com.dsm.kkoribyeol.service.TargetGroupingService
 import com.dsm.kkoribyeol.service.TargetModificationService
 import com.dsm.kkoribyeol.service.TargetRegistrationService
 import com.dsm.kkoribyeol.service.TargetSearchService
@@ -24,6 +25,7 @@ class TargetController(
     private val registrationService: TargetRegistrationService,
     private val modificationService: TargetModificationService,
     private val searchService: TargetSearchService,
+    private val groupingService: TargetGroupingService,
 ) {
 
     @PostMapping
@@ -138,7 +140,7 @@ class TargetController(
     }
 
     @PostMapping("/group")
-    fun divideIntoTargetGroup(
+    fun groupTarget(
         @Pattern(
             regexp = "[a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}",
             message = "정규표현식: [a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}"
@@ -150,8 +152,10 @@ class TargetController(
         @Valid
         @NotNull(message = "<NULL>")
         @RequestBody
-        request: TargetOfGroupingRequest?,
-    ) {
-
-    }
+        request: TargetOfGroupingRequest,
+    ) = groupingService.groupTarget(
+        projectCode = projectCode,
+        groupName = request.groupName,
+        targetTokens = request.targetTokens,
+    )
 }
