@@ -57,10 +57,6 @@ internal class TargetGroupingServiceTest {
         name = "affiliatedName",
         project = savedProject,
     )
-    private val savedAffiliation = TargetAffiliation(
-        target = affiliatedTarget,
-        group = savedGroup,
-    )
     private val nonExistAffiliation = TargetAffiliation(
         target = unaffiliatedTarget,
         group = savedGroup,
@@ -70,16 +66,16 @@ internal class TargetGroupingServiceTest {
     fun `타겟을 그룹에 소속시키기`() {
         every {
             affiliationRepository.existsByGroupProjectCodeAndGroupGroupNameAndTargetTokenIn(
-                savedProject.code,
-                savedGroup.groupName,
-                listOf(affiliatedTarget.token),
+                projectCode = savedProject.code,
+                groupName = savedGroup.groupName,
+                targetTokens = listOf(affiliatedTarget.token),
             )
         } returns true
         every {
             affiliationRepository.existsByGroupProjectCodeAndGroupGroupNameAndTargetTokenIn(
-                any(),
-                any(),
-                listOf(unaffiliatedTarget.token),
+                projectCode = any(),
+                groupName = any(),
+                targetTokens = listOf(unaffiliatedTarget.token),
             )
         } returns false
         every { affiliationRepository.saveAll(listOf(nonExistAffiliation)) } returns listOf(nonExistAffiliation)
@@ -109,16 +105,16 @@ internal class TargetGroupingServiceTest {
     fun `타겟을 그룹에 소속시키기 - throw AlreadyExistAffiliationException`() {
         every {
             affiliationRepository.existsByGroupProjectCodeAndGroupGroupNameAndTargetTokenIn(
-                savedProject.code,
-                savedGroup.groupName,
-                listOf(affiliatedTarget.token),
+                projectCode = savedProject.code,
+                groupName = savedGroup.groupName,
+                targetTokens = listOf(affiliatedTarget.token),
             )
         } returns true
         every {
             affiliationRepository.existsByGroupProjectCodeAndGroupGroupNameAndTargetTokenIn(
-                any(),
-                any(),
-                listOf(unaffiliatedTarget.token),
+                projectCode = any(),
+                groupName = any(),
+                targetTokens = listOf(unaffiliatedTarget.token),
             )
         } returns false
         every { affiliationRepository.saveAll(listOf(nonExistAffiliation)) } returns listOf(nonExistAffiliation)
@@ -150,16 +146,16 @@ internal class TargetGroupingServiceTest {
     fun `타겟을 그룹에 소속시키기 - throw GroupNotFoundException`() {
         every {
             affiliationRepository.existsByGroupProjectCodeAndGroupGroupNameAndTargetTokenIn(
-                savedProject.code,
-                savedGroup.groupName,
-                listOf(affiliatedTarget.token),
+                projectCode = savedProject.code,
+                groupName = savedGroup.groupName,
+                targetTokens = listOf(affiliatedTarget.token),
             )
         } returns true
         every {
             affiliationRepository.existsByGroupProjectCodeAndGroupGroupNameAndTargetTokenIn(
-                any(),
-                any(),
-                listOf(unaffiliatedTarget.token),
+                projectCode = any(),
+                groupName = any(),
+                targetTokens = listOf(unaffiliatedTarget.token),
             )
         } returns false
         every { affiliationRepository.saveAll(listOf(nonExistAffiliation)) } returns listOf(nonExistAffiliation)
