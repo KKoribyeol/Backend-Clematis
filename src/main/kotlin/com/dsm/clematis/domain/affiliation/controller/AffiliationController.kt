@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull
 import javax.validation.constraints.Pattern
 
 @RestController
-@RequestMapping("/target-group")
+@RequestMapping("/affiliation")
 class AffiliationController(
     private val groupingService: TargetGroupingService,
     private val ungroupingService: TargetUngroupingService,
