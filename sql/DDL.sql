@@ -35,11 +35,12 @@ CREATE TABLE target(
 
     token VARCHAR(255) NOT NULL,
     project_code VARCHAR(28) NOT NULL,
-
     nickname VARCHAR(255) NOT NULL,
+
     name VARCHAR(12),
 
     UNIQUE (token, project_code),
+    UNIQUE (nickname, project_code),
 
     FOREIGN KEY (project_code) REFERENCES project(code) ON DELETE CASCADE,
 
@@ -47,12 +48,26 @@ CREATE TABLE target(
 );
 
 CREATE TABLE target_group(
-    id BIGINT NOT NULL,
+    id BIGINT AUTO_INCREMENT,
     name VARCHAR(20) NOT NULL,
+    project_code VARCHAR(28) NOT NULL,
 
-    FOREIGN KEY (id) REFERENCES target(id),
+    UNIQUE (name, project_code),
 
-    PRIMARY KEY (id, name)
+    FOREIGN KEY (project_code) REFERENCES project(code) ON DELETE CASCADE,
+
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE affiliation(
+    id BIGINT AUTO_INCREMENT,
+    target_id BIGINT NOT NULL,
+    group_id BIGINT NOT NULL,
+
+    FOREIGN KEY (target_id) REFERENCES target(id) ON DELETE CASCADE,
+    FOREIGN KEY (group_id) REFERENCES target_group(id) ON DELETE CASCADE,
+
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE push_history(
