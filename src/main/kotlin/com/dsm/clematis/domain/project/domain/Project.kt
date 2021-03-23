@@ -53,4 +53,8 @@ class Project(
         result = 31 * result + (description?.hashCode() ?: 0)
         return result
     }
+
+    override fun toString(): String {
+        return "Project(code='$code', owner=$owner, name='$name', description=$description)"
+    }
 }

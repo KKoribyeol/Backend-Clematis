@@ -25,4 +25,26 @@ class TargetGroup(
     fun modifyName(newGroupName: String) {
         this.groupName = newGroupName
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as TargetGroup
+
+        if (project != other.project) return false
+        if (groupName != other.groupName) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = project.hashCode()
+        result = 31 * result + groupName.hashCode()
+        return result
+    }
+
+    override fun toString(): String {
+        return "TargetGroup(project=$project, id=$id, groupName='$groupName')"
+    }
 }

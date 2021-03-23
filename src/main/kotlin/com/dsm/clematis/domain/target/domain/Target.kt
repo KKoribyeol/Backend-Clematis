@@ -44,7 +44,6 @@ class Target(
 
         if (token != other.token) return false
         if (project != other.project) return false
-        if (id != other.id) return false
         if (nickname != other.nickname) return false
         if (name != other.name) return false
 
@@ -54,11 +53,12 @@ class Target(
     override fun hashCode(): Int {
         var result = token.hashCode()
         result = 31 * result + project.hashCode()
-        result = 31 * result + (id?.hashCode() ?: 0)
         result = 31 * result + nickname.hashCode()
         result = 31 * result + (name?.hashCode() ?: 0)
         return result
     }
 
-
+    override fun toString(): String {
+        return "Target(token='$token', project=$project, id=$id, nickname='$nickname', name=$name)"
+    }
 }

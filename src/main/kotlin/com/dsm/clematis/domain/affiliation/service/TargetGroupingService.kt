@@ -21,9 +21,9 @@ class TargetGroupingService(
         targetTokens: List<String>,
     ) {
         if (isExistAffiliation(projectCode, groupName, targetTokens))
-            save(projectCode, groupName, targetTokens)
-        else
             throw AlreadyExistAffiliationException()
+        else
+            save(projectCode, groupName, targetTokens)
     }
 
     private fun isExistAffiliation(
