@@ -43,7 +43,7 @@ class GroupController(
         @RequestBody
         request: GroupRequest?,
 
-        ) = groupCreationService.createGroup(
+    ) = groupCreationService.createGroup(
         projectCode = projectCode!!,
         groupName = request!!.groupName!!,
     )
@@ -68,7 +68,7 @@ class GroupController(
         @RequestBody
         request: GroupRequest?,
 
-        ) = groupModificationService.modifyGroupName(
+    ) = groupModificationService.modifyGroupName(
         projectCode = projectCode!!,
         groupName = groupName!!,
         newGroupName = request!!.groupName!!
