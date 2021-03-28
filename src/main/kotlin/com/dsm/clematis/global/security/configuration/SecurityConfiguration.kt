@@ -21,12 +21,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 class SecurityConfiguration(
     private val authenticationProvider: AuthenticationProvider,
     private val invalidTokenExceptionEntryPoint: InvalidTokenExceptionEntryPoint,
-    private val tokenProvider: TokenProvider,
     private val passwordEncoder: PasswordEncoder,
+    private val authenticationFilter: AuthenticationFilter,
 ) : WebSecurityConfigurerAdapter() {
-
-    @Bean
-    fun authenticationFilter() = AuthenticationFilter(tokenProvider)
 
     override fun configure(auth: AuthenticationManagerBuilder) {
         auth.userDetailsService(authenticationProvider)
@@ -48,11 +45,11 @@ class SecurityConfiguration(
                 .anyRequest().authenticated()
 
         http
-            .addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter::class.java)
+            .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
     }
 
     override fun configure(web: WebSecurity) {
         web.ignoring()
-            .antMatchers("/**/swagger-ui.html/**", "/webjars/**", "/swagger/**", "/v2/api-docs", "/swagger-resources/**")
+            .antMatchers("/swagger-ui.html/**", "/webjars/**", "/swagger/**", "/v2/api-docs", "/swagger-resources/**")
     }
 }
