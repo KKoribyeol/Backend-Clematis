@@ -37,8 +37,7 @@ class TargetController(
         @Valid
         @RequestBody
         request: TargetRegistrationAllRequest,
-
-        ) = registrationService.registerTarget(
+    ) = registrationService.registerTarget(
         projectCode = projectCode,
         targets = request.targets
     )
@@ -60,8 +59,7 @@ class TargetController(
         @Valid
         @RequestBody
         request: TargetModificationRequest,
-
-        ) = modificationService.modifyTarget(
+    ) = modificationService.modifyTarget(
         projectCode = projectCode,
         targetToken = targetToken,
         newNickname = request.nickname,
@@ -81,8 +79,7 @@ class TargetController(
         @Valid
         @RequestBody
         request: TargetUnregisterRequest,
-
-        ) = registrationService.unregisterTarget(
+    ) = registrationService.unregisterTarget(
         projectCode = projectCode,
         tokens = request.tokens,
     )
