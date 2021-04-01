@@ -37,7 +37,7 @@ class ExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun httpMessageNotReadableExceptionHandler(e: HttpMessageNotReadableException) =
         CommonExceptionResponse(
-            code = "INVALID_REQUEST",
+            code = "INVALID_JSON",
             message = "JSON 형식이 잘못되었습니다.",
         )
 }
