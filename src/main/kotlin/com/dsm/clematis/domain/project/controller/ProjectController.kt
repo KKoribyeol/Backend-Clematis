@@ -84,6 +84,7 @@ class ProjectController(
                     ProjectSearchResponse(
                         projectCode = it.code,
                         projectName = it.name,
+                        projectDescription = it.description,
                     )
                 }
         )
