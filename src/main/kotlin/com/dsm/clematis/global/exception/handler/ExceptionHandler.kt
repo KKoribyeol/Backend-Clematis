@@ -24,4 +24,20 @@ class ExceptionHandler {
             ),
             e.status,
         )
+
+    @ExceptionHandler(MethodArgumentNotValidException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun methodArgumentNotValidExceptionHandler(e: MethodArgumentNotValidException) =
+        CommonExceptionResponse(
+            code = "INVALID_REQUEST",
+            message = e.bindingResult.fieldError?.defaultMessage ?: "알 수 없는 에러",
+        )
+
+    @ExceptionHandler(HttpMessageNotReadableException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun httpMessageNotReadableExceptionHandler(e: HttpMessageNotReadableException) =
+        CommonExceptionResponse(
+            code = "INVALID_JSON",
+            message = "JSON 형식이 잘못되었습니다.",
+        )
 }
