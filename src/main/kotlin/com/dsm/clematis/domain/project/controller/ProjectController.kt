@@ -33,8 +33,7 @@ class ProjectController(
         @Valid
         @RequestBody
         creationRequest: ProjectCreationRequest,
-
-        ) = ProjectCreationResponse(
+    ) = ProjectCreationResponse(
         projectId = creationService.createProject(
             accountId = authenticationProvider.getAccountIdByAuthentication(),
             projectName = creationRequest.name,
@@ -55,8 +54,7 @@ class ProjectController(
         @NotBlank(message = "<NULL> <EMPTY> <BLANK>")
         @PathVariable("projectCode")
         projectCode: String,
-
-        ) = modificationService.modifyProject(
+    ) = modificationService.modifyProject(
         projectCode = projectCode,
         newProjectName = request.name,
         newProjectDescription = request.description,
@@ -71,7 +69,6 @@ class ProjectController(
         @NotBlank(message = "<NULL> <EMPTY> <BLANK>")
         @PathVariable("projectCode")
         projectCode: String,
-
     ) = deletionService.deleteProject(
         projectCode = projectCode,
     )
@@ -82,9 +79,9 @@ class ProjectController(
             projects = searchService.searchAllProject()
                 .map {
                     ProjectSearchResponse(
-                        projectCode = it.code,
-                        projectName = it.name,
-                        projectDescription = it.description,
+                        code = it.code,
+                        name = it.name,
+                        description = it.description,
                     )
                 }
         )

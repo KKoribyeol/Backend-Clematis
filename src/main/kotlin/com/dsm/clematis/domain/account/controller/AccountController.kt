@@ -4,6 +4,7 @@ import com.dsm.clematis.domain.account.controller.request.JoinRequest
 import com.dsm.clematis.domain.account.controller.request.LoginRequest
 import com.dsm.clematis.domain.account.controller.request.AccountNameModificationRequest
 import com.dsm.clematis.domain.account.controller.request.AccountPasswordModificationRequest
+import com.dsm.clematis.domain.account.controller.response.AccountNameResponse
 import com.dsm.clematis.domain.account.controller.response.LoginResponse
 import com.dsm.clematis.domain.account.service.AccountDeletionService
 import com.dsm.clematis.domain.account.service.AccountModificationService
@@ -70,5 +71,11 @@ class AccountController(
     fun accountWithdrawal() =
         accountDeletionService.deleteAccount(
             accountId = authenticationProvider.getAccountIdByAuthentication(),
+        )
+
+    @GetMapping("/name")
+    fun getAccountName() =
+        AccountNameResponse(
+            name = authenticationProvider.getAccountName()
         )
 }
