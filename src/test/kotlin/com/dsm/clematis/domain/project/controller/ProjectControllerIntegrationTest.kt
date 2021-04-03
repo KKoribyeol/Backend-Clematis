@@ -284,10 +284,10 @@ class ProjectControllerIntegrationTest(
         )
 
         assertThat(responseBody.projects)
-            .map<String> { it.projectCode }
+            .map<String> { it.code }
             .isEqualTo(listOf("savedProject-finally"))
         assertThat(responseBody.projects)
-            .map<String> { it.projectName }
+            .map<String> { it.name }
             .isEqualTo(listOf("savedProject"))
     }
 
