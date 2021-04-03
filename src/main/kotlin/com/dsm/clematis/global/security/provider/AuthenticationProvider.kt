@@ -18,4 +18,7 @@ class AuthenticationProvider(
 
     fun getAccountIdByAuthentication() =
         (SecurityContextHolder.getContext().authentication.principal as Account).id
+
+    fun getAccountName() =
+        (SecurityContextHolder.getContext().authentication.principal as Account).name
 }

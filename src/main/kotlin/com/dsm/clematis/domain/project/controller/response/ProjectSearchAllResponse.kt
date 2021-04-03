@@ -5,8 +5,8 @@ data class ProjectSearchAllResponse(
 ) {
 
     data class ProjectSearchResponse(
-        val projectCode: String,
-        val projectName: String,
-        val projectDescription: String?,
+        val code: String,
+        val name: String,
+        val description: String?,
     )
 }

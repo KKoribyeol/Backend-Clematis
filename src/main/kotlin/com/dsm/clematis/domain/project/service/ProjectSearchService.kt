@@ -14,5 +14,6 @@ class ProjectSearchService(
     fun searchProject(projectCode: String) =
         projectRepository.findByIdOrNull(projectCode) ?: throw ProjectNotFoundException(projectCode)
 
-    fun searchAllProject(): List<Project> = projectRepository.findAll()
+    fun searchAllProject(): List<Project> =
+        projectRepository.findAll()
 }
