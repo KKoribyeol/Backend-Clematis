@@ -28,7 +28,7 @@ jobs:
         run: ./gradlew clean build -x test
   CD:
     runs-on: ubuntu-latest
-    needs: CI
+#     needs: CI
 
     steps:
       - uses: actions/checkout@v2
