@@ -22,6 +22,9 @@ class AccountController(
     private val authenticationProvider: AuthenticationProvider,
 ) {
 
+    @PostMapping("/test")
+    fun testController() = "hello"
+
     @PostMapping
     fun join(
         @RequestBody @Valid
