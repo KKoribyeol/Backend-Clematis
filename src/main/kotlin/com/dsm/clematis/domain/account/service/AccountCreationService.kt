@@ -6,7 +6,7 @@ import com.dsm.clematis.domain.account.exception.AlreadyExistAccountException
 import com.dsm.clematis.global.exception.PasswordMismatchException
 import com.dsm.clematis.domain.account.repository.AccountRepository
 import com.dsm.clematis.global.attribute.Token
-import com.dsm.clematis.global.security.provider.TokenProvider
+//import com.dsm.clematis.global.security.provider.TokenProvider
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service
 @Service
 class AccountCreationService(
     private val accountRepository: AccountRepository,
-    private val tokenProvider: TokenProvider,
+//    private val tokenProvider: TokenProvider,
     private val passwordEncoder: PasswordEncoder,
 ) {
 
@@ -50,14 +50,16 @@ class AccountCreationService(
         accountRepository.findByIdOrNull(accountId) ?: throw AccountNotFoundException(accountId)
 
     fun createAccessToken(accountId: String) =
-        tokenProvider.createToken(
-            accountId = accountId,
-            tokenType = Token.ACCESS,
-        )
+//        tokenProvider.createToken(
+//            accountId = accountId,
+//            tokenType = Token.ACCESS,
+//        )
+        "aa"
 
     fun createRefreshToken(accountId: String) =
-        tokenProvider.createToken(
-            accountId = accountId,
-            tokenType = Token.REFRESH,
-        )
+//        tokenProvider.createToken(
+//            accountId = accountId,
+//            tokenType = Token.REFRESH,
+//        )
+        "aa"
 }
