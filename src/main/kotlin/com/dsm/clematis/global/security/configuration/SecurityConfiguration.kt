@@ -40,7 +40,7 @@ class SecurityConfiguration(
             .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/account").permitAll()
                 .antMatchers(HttpMethod.POST, "/account/login").permitAll()
-                .antMatchers(HttpMethod.POST, "/account/test").permitAll()
+//                .antMatchers(HttpMethod.POST, "/account/test").permitAll()
                 .anyRequest().authenticated()
 
         http
