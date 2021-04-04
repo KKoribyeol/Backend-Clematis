@@ -1,4 +1,4 @@
-# 꼬리별 [KKo-Ri-Byeol]
+# 꼬리별 [KKoribyeol]
 ## 백엔드 (Clematis)
 ![Clematis](https://user-images.githubusercontent.com/48639421/111264452-e1ed1b00-866a-11eb-98a1-9fc39db9aaee.png)  
 
