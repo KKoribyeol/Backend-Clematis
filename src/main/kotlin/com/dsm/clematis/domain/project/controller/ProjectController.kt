@@ -10,7 +10,7 @@ import com.dsm.clematis.domain.project.service.ProjectCreationService
 import com.dsm.clematis.domain.project.service.ProjectDeletionService
 import com.dsm.clematis.domain.project.service.ProjectModificationService
 import com.dsm.clematis.domain.project.service.ProjectSearchService
-//import com.dsm.clematis.global.security.provider.AuthenticationProvider
+import com.dsm.clematis.global.security.provider.AuthenticationProvider
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
@@ -25,7 +25,7 @@ class ProjectController(
     private val modificationService: ProjectModificationService,
     private val deletionService: ProjectDeletionService,
     private val searchService: ProjectSearchService,
-//    private val authenticationProvider: AuthenticationProvider,
+    private val authenticationProvider: AuthenticationProvider,
 ) {
 
     @PostMapping
@@ -35,8 +35,7 @@ class ProjectController(
         creationRequest: ProjectCreationRequest,
     ) = ProjectCreationResponse(
         projectId = creationService.createProject(
-//            accountId = authenticationProvider.getAccountIdByAuthentication(),
-            accountId = "ad",
+            accountId = authenticationProvider.getAccountIdByAuthentication(),
             projectName = creationRequest.name,
             projectDescription = creationRequest.description,
         ),
