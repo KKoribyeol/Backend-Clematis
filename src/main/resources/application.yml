@@ -10,3 +10,7 @@ spring:
 server:
   address: 0.0.0.0
   port: 6180
+  tomcat:
+    threads:
+      max: 100
+    max-connections: 4000
