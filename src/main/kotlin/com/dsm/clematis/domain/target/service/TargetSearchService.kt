@@ -10,7 +10,8 @@ class TargetSearchService(
     private val targetRepository: TargetRepository,
 ) {
 
-    fun searchAllTarget(): List<Target> = targetRepository.findAll()
+    fun searchAllTarget(projectCode: String): List<Target> =
+        targetRepository.findByProjectCode(projectCode)
 
     fun searchTarget(projectCode: String, targetToken: String) =
         targetRepository.findByProjectCodeAndToken(

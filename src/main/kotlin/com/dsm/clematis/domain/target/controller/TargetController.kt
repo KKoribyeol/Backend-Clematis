@@ -95,14 +95,15 @@ class TargetController(
         projectCode: String,
 
     ) = TargetSearchAllResponse(
-        targets = searchService.searchAllTarget()
-            .map {
+        targets = searchService.searchAllTarget(
+            projectCode = projectCode,
+        ).map {
                 TargetSearchResponse(
                     token = it.token,
                     nickname = it.nickname,
                     name = it.name,
-                )
-            }
+            )
+        }
     )
 
     @GetMapping("/{targetToken}")
