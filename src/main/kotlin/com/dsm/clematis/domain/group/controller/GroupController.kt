@@ -116,8 +116,8 @@ class GroupController(
             groupName = groupName,
         ).map {
             TargetInGroup(
-                targetToken = it.target.token,
-                targetNickname = it.target.nickname,
+                token = it.target.token,
+                nickname = it.target.nickname,
             )
         }
     )
@@ -131,13 +131,12 @@ class GroupController(
         @NotBlank(message = "<NULL> <EMPTY> <BLANK>")
         @RequestHeader("projectCode")
         projectCode: String?,
-
     ) = MultipleGroupResponse(
         groups = groupSearchService.searchAllGroup(
             projectCode = projectCode!!,
         ).map {
             GroupResponse(
-               groupName = it.groupName
+               name = it.groupName
             )
         }
     )

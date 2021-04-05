@@ -6,7 +6,7 @@ data class SingleGroupResponse(
 ) {
 
     data class TargetInGroup(
-        val targetToken: String,
-        val targetNickname: String,
+        val token: String,
+        val nickname: String,
     )
 }

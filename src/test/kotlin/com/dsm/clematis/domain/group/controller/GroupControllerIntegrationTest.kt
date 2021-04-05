@@ -251,8 +251,8 @@ internal class GroupControllerIntegrationTest(
         )
 
         assertThat(responseBody.groupName).isEqualTo("savedName")
-        assertThat(responseBody.targets).map<String> { it.targetToken }.isEqualTo(listOf("savedToken"))
-        assertThat(responseBody.targets).map<String> { it.targetNickname }.isEqualTo(listOf("savedNickname"))
+        assertThat(responseBody.targets).map<String> { it.token }.isEqualTo(listOf("savedToken"))
+        assertThat(responseBody.targets).map<String> { it.nickname }.isEqualTo(listOf("savedNickname"))
     }
 
     @Test
@@ -306,7 +306,7 @@ internal class GroupControllerIntegrationTest(
                 .contentAsString
         )
 
-        assertThat(responseBody.groups).map<String> { it.groupName }.containsAll(listOf("savedName"))
+        assertThat(responseBody.groups).map<String> { it.name }.containsAll(listOf("savedName"))
     }
 
     @Test
