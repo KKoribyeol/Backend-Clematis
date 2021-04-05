@@ -63,6 +63,7 @@ internal class TargetSearchServiceTest {
     @Test
     fun `타겟 단일 조회하기 - TargetNotFoundException`() {
         every { targetRepository.findByProjectCodeAndToken(savedProject.code, savedTarget.token) } returns savedTarget
+        every { targetRepository.findByProjectCodeAndToken(any(), any()) } returns null
         every { targetRepository.findByProjectCodeAndToken(savedProject.code, nonExistTarget.token) } returns null
 
         assertThrows<TargetNotFoundException> {

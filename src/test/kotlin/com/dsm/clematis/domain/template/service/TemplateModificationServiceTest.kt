@@ -40,9 +40,12 @@ class TemplateModificationServiceTest {
     @Test
     fun `푸시 템플릿 수정하기 - throw TemplateNotFoundException`() {
         every { templateRepository.findByIdAndProjectCode(1, savedProject.code) } returns savedTemplate
+        every { templateRepository.findByIdAndProjectCode(any(), any()) } returns null
         every { templateRepository.findByIdAndProjectCode(anyLong(), any()) } returns null
 
-        assertThrows<TemplateNotFoundException> { testService.modifyTemplate(2, "anyString", "anyString", "savedProject-finally") }
+        assertThrows<TemplateNotFoundException> {
+            testService.modifyTemplate(2, "anyString", "anyString", "savedProject-finally")
+        }
 
         verify(exactly = 1) { templateRepository.findByIdAndProjectCode(2, savedProject.code) }
     }
