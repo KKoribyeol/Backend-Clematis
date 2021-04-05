@@ -179,4 +179,16 @@ internal class TargetRegistrationServiceTest {
 
         verify(exactly = 1) { targetRepository.deleteByProjectCodeAndTokenIn(savedProject.code, listOf(savedTarget.token)) }
     }
+
+    @Test
+    fun `타겟 등록 단일 해제하기`() {
+        every { targetRepository.deleteByProjectCodeAndToken(savedProject.code, savedTarget.token) } just Runs
+
+        testService.unregisterTarget(
+            projectCode = "savedProject-finally",
+            targetToken = "savedToken",
+        )
+
+        verify(exactly = 1) { targetRepository.deleteByProjectCodeAndToken(savedProject.code, savedTarget.token) }
+    }
 }
