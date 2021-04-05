@@ -60,4 +60,11 @@ class TargetRegistrationService(
             code = projectCode,
             tokens = tokens,
         )
+
+    @Transactional
+    fun unregisterTarget(projectCode: String, targetToken: String) =
+        targetRepository.deleteByProjectCodeAndToken(
+            code = projectCode,
+            token = targetToken,
+        )
 }

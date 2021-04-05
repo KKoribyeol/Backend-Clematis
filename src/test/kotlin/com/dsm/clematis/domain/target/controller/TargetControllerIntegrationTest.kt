@@ -262,6 +262,35 @@ internal class TargetControllerIntegrationTest(
     }
 
     @Test
+    fun `타겟 단일 삭제하기 - 200`() {
+        mock.perform(delete("/target/savedToken")
+            .header("Authorization", "this-is-test-token")
+            .header("projectCode", "savedProject-finally")
+            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .accept(MediaType.APPLICATION_JSON_UTF8)
+            .characterEncoding("UTF-8"))
+            .andExpect(status().isOk)
+    }
+
+    @Test
+    fun `타겟 단일 삭제하기 - 401 INVALID_TOKEN`() {
+        val responseBody = objectMapper.readValue<CommonExceptionResponse>(
+            mock.perform(delete("/target/savedToken")
+                .header("Authorization", "this-is-invalid-token")
+                .header("projectCode", "savedProject-finally")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .characterEncoding("UTF-8"))
+                .andExpect(status().isUnauthorized)
+                .andReturn()
+                .response
+                .contentAsString
+        )
+
+        assertThat(responseBody.code).isEqualTo("INVALID_TOKEN")
+    }
+
+    @Test
     fun `타겟 단일 조회하기 - 200`() {
         val responseBody = objectMapper.readValue<TargetSearchResponse>(
             mock.perform(get("/target/savedToken")

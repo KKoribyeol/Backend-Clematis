@@ -2,6 +2,7 @@ package com.dsm.clematis.global.security.configuration
 
 import com.dsm.clematis.global.exception.entrypoint.InvalidTokenExceptionEntryPoint
 import com.dsm.clematis.global.security.filter.AuthenticationFilter
+import com.dsm.clematis.global.security.filter.LogFilter
 import com.dsm.clematis.global.security.provider.AuthenticationProvider
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
@@ -21,6 +22,7 @@ class SecurityConfiguration(
     private val invalidTokenExceptionEntryPoint: InvalidTokenExceptionEntryPoint,
     private val passwordEncoder: PasswordEncoder,
     private val authenticationFilter: AuthenticationFilter,
+    private val logFilter: LogFilter,
 ) : WebSecurityConfigurerAdapter() {
 
     override fun configure(auth: AuthenticationManagerBuilder) {
@@ -40,10 +42,10 @@ class SecurityConfiguration(
             .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/account").permitAll()
                 .antMatchers(HttpMethod.POST, "/account/login").permitAll()
-//                .antMatchers(HttpMethod.POST, "/account/test").permitAll()
                 .anyRequest().authenticated()
 
         http
+            .addFilterBefore(logFilter, UsernamePasswordAuthenticationFilter::class.java)
             .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
     }
 

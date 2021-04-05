@@ -84,6 +84,23 @@ class TargetController(
         tokens = request.tokens,
     )
 
+    @DeleteMapping("/{token}")
+    fun unregisterTarget(
+        @Pattern(
+            regexp = "[a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}",
+            message = "정규표현식: [a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}"
+        )
+        @NotBlank(message = "<NULL> <EMPTY> <BLANK>")
+        @RequestHeader("projectCode")
+        projectCode: String,
+
+        @PathVariable("token")
+        targetToken: String,
+    ) = registrationService.unregisterTarget(
+        projectCode = projectCode,
+        targetToken = targetToken,
+    )
+
     @GetMapping
     fun searchTarget(
         @Pattern(

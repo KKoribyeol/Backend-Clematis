@@ -77,12 +77,12 @@ internal class TargetSearchServiceTest {
 
     @Test
     fun `타겟 다중 조회하기`() {
-        every { targetRepository.findAll() } returns listOf(savedTarget)
+        every { targetRepository.findByProjectCode(savedProject.code) } returns listOf(savedTarget)
 
-        val findTargetAll = testService.searchAllTarget()
+        val findTargetAll = testService.searchAllTarget(savedProject.code)
 
         assertThat(findTargetAll).isEqualTo(listOf(savedTarget))
 
-        verify(exactly = 1) { targetRepository.findAll() }
+        verify(exactly = 1) { targetRepository.findByProjectCode(savedProject.code) }
     }
 }
