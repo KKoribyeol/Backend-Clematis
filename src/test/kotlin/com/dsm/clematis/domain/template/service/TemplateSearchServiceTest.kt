@@ -46,9 +46,12 @@ internal class TemplateSearchServiceTest {
     @Test
     fun `푸시 템플릿 단일 조회하기 - throw TemplateNotFoundException`() {
         every { templateRepository.findByIdAndProjectCode(1, savedProject.code) } returns savedTemplate
+        every { templateRepository.findByIdAndProjectCode(any(), any()) } returns null
         every { templateRepository.findByIdAndProjectCode(anyLong(), any()) } returns null
 
-        assertThrows<TemplateNotFoundException> { testService.searchTemplate(2, "savedProject-finally") }
+        assertThrows<TemplateNotFoundException> {
+            testService.searchTemplate(2, "savedProject-finally")
+        }
 
         verify(exactly = 1) { templateRepository.findByIdAndProjectCode(2, savedProject.code) }
         verify(exactly = 0) { templateRepository.findByProjectCode(any()) }
