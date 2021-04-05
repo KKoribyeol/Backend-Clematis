@@ -1,18 +1,20 @@
-package com.dsm.clematis.global.filter
+package com.dsm.clematis.global.security.filter
 
-import org.slf4j.LoggerFactory
-import javax.servlet.Filter
+import org.springframework.stereotype.Component
+import org.springframework.web.filter.OncePerRequestFilter
 import javax.servlet.FilterChain
-import javax.servlet.ServletRequest
-import javax.servlet.ServletResponse
 import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
-class LogFilter : Filter {
-    private val logger = LoggerFactory.getLogger(LogFilter::class.java)
+@Component
+class LogFilter : OncePerRequestFilter() {
 
-    override fun doFilter(request: ServletRequest?, response: ServletResponse?, chain: FilterChain?) {
-        val httpServletRequest = request as HttpServletRequest
-        logger.info("[${httpServletRequest.method}] ${httpServletRequest.requestURI}")
-        chain?.doFilter(request, response)
+    override fun doFilterInternal(
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        chain: FilterChain
+    ) {
+        logger.info("[${request.method}] ${request.requestURI}")
+        chain.doFilter(request, response)
     }
 }
