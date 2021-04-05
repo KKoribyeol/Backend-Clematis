@@ -71,4 +71,4 @@ TOAST 푸시 서비스를 사용하면서 느꼈던 불편한 점을 개선하�
 - MongoDB
 
 ## Review
-- [꼬리별] 오류일지 - https://velog.io/@dhwlddjgmanf/series/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%BC%AC%EB%A6%AC%EB%B3%84
+- [꼬리별] 오류일지 - https://velog.io/@dhwlddjgmanf/series/프로젝트-꼬리별
