@@ -11,8 +11,10 @@ class TemplateSearchService(
     private val templateRepository: TemplateRepository,
 ) {
 
-    fun searchTemplate(templateId: Long) =
-        templateRepository.findByIdOrNull(templateId) ?: throw TemplateNotFoundException(templateId)
+    fun searchTemplate(templateId: Long, projectCode: String) =
+        templateRepository.findByIdAndProjectCode(templateId, projectCode)
+            ?: throw TemplateNotFoundException(templateId)
 
-    fun searchAllTemplate(): List<Template> = templateRepository.findAll()
+    fun searchAllTemplate(projectCode: String): List<Template> =
+        templateRepository.findByProjectCode(projectCode)
 }
