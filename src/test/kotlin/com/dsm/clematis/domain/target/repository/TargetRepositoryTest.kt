@@ -36,10 +36,27 @@ internal class TargetRepositoryTest(
     }
 
     @Test
+    fun `findByProjectCode`() {
+        val findTarget = targetRepository.findByProjectCode(
+            code = "savedProject-finally",
+        )
+
+        assertThat(findTarget.map { it.token }).containsAll(listOf("savedToken"))
+    }
+
+    @Test
     fun `deleteByProjectCodeAndTokenIn`() {
         targetRepository.deleteByProjectCodeAndTokenIn(
             code = "savedProject-finally",
             tokens = listOf("savedToken"),
+        )
+    }
+
+    @Test
+    fun `deleteByProjectCodeAndToken`() {
+        targetRepository.deleteByProjectCodeAndToken(
+            code = "savedProject-finally",
+            token = "savedToken",
         )
     }
 
