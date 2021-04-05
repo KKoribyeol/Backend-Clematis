@@ -4,6 +4,7 @@ import com.dsm.clematis.domain.affiliation.controller.request.TargetOfGroupingRe
 import com.dsm.clematis.domain.affiliation.controller.request.TargetOfUngroupingRequest
 import com.dsm.clematis.domain.affiliation.service.TargetGroupingService
 import com.dsm.clematis.domain.affiliation.service.TargetUngroupingService
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 import javax.validation.constraints.NotBlank
@@ -12,6 +13,7 @@ import javax.validation.constraints.Pattern
 
 @RestController
 @RequestMapping("/affiliation")
+@Validated
 class AffiliationController(
     private val groupingService: TargetGroupingService,
     private val ungroupingService: TargetUngroupingService,
@@ -31,11 +33,10 @@ class AffiliationController(
         @NotNull(message = "<NULL>")
         @RequestBody
         request: TargetOfGroupingRequest,
-
-        ) = groupingService.groupTarget(
+    ) = groupingService.groupTarget(
         projectCode = projectCode,
         groupName = request.groupName,
-        targetTokens = request.targetTokens,
+        targetToken = request.targetToken,
     )
 
     @DeleteMapping
@@ -48,14 +49,17 @@ class AffiliationController(
         @RequestHeader("projectCode")
         projectCode: String,
 
-        @Valid
-        @NotNull(message = "<NULL>")
-        @RequestBody
-        request: TargetOfUngroupingRequest,
+        @Pattern(regexp = "^[a-zA-Z0-9-]{1,20}$")
+        @NotBlank(message = "<NULL> <EMPTY> <BLANK>")
+        @RequestParam("group-name")
+        groupName: String,
 
+        @NotBlank(message = "<NULL> <EMPTY> <BLANK>")
+        @RequestParam("target-token")
+        targetToken: String,
     ) = ungroupingService.ungroupTarget(
         projectCode = projectCode,
-        groupName = request.groupName,
-        targetToken = request.targetToken,
+        groupName = groupName,
+        targetToken = targetToken,
     )
 }
