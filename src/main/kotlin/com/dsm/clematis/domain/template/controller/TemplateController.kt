@@ -13,7 +13,9 @@ import com.dsm.clematis.domain.template.service.TemplateSearchService
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
+import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
+import javax.validation.constraints.Pattern
 import javax.validation.constraints.Positive
 
 @RestController
@@ -32,10 +34,18 @@ class TemplateController(
         @RequestBody
         request: TemplateRequest,
 
-        ) = TemplateCreationResponse(
+        @Pattern(
+            regexp = "[a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}",
+            message = "정규표현식: [a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}"
+        )
+        @NotBlank(message = "<NULL> <EMPTY> <BLANK>")
+        @RequestHeader("projectCode")
+        projectCode: String,
+    ) = TemplateCreationResponse(
         creationNumber = creationService.createTemplate(
             templateTitle = request.title,
             templateBody = request.body,
+            projectCode = projectCode,
         )
     )
 
@@ -49,10 +59,18 @@ class TemplateController(
         @RequestBody @Valid
         request: TemplateRequest,
 
-        ) = modificationService.modifyTemplate(
+        @Pattern(
+            regexp = "[a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}",
+            message = "정규표현식: [a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}"
+        )
+        @NotBlank(message = "<NULL> <EMPTY> <BLANK>")
+        @RequestHeader("projectCode")
+        projectCode: String,
+    ) = modificationService.modifyTemplate(
         templateId = templateId,
         templateTitle = request.title,
         templateBody = request.body,
+        projectCode = projectCode,
     )
 
     @DeleteMapping("/{templateId}")
@@ -60,14 +78,30 @@ class TemplateController(
         @NotNull(message = "<NULL>") @Positive(message = "<양수가 아님>")
         @PathVariable("templateId")
         templateId: Long,
+
+        @Pattern(
+            regexp = "[a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}",
+            message = "정규표현식: [a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}"
+        )
+        @NotBlank(message = "<NULL> <EMPTY> <BLANK>")
+        @RequestHeader("projectCode")
+        projectCode: String,
     ) = deletionService.deleteTemplate(
         templateId = templateId,
+        projectCode = projectCode,
     )
 
     @GetMapping
-    fun searchTemplate() =
-        TemplateSearchAllResponse(
-            templates = searchService.searchAllTemplate()
+    fun searchTemplate(
+        @Pattern(
+            regexp = "[a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}",
+            message = "정규표현식: [a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}"
+        )
+        @NotBlank(message = "<NULL> <EMPTY> <BLANK>")
+        @RequestHeader("projectCode")
+        projectCode: String,
+    ) = TemplateSearchAllResponse(
+            templates = searchService.searchAllTemplate(projectCode)
                 .map {
                     TemplateSearchResponse(
                         templateId = it.id ?: throw TemplateSearchException(),
@@ -82,8 +116,20 @@ class TemplateController(
         @NotNull(message = "<NULL>") @Positive(message = "<양수가 아님>")
         @PathVariable("templateId")
         templateId: Long,
+
+        @Pattern(
+            regexp = "[a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}",
+            message = "정규표현식: [a-zA-Z0-9]{1,20}-[a-zA-Z0-9]{7}"
+        )
+        @NotBlank(message = "<NULL> <EMPTY> <BLANK>")
+        @RequestHeader("projectCode")
+        projectCode: String,
     ): TemplateSearchDetailResponse {
-        val findTemplate = searchService.searchTemplate(templateId)
+        val findTemplate = searchService.searchTemplate(
+            templateId = templateId,
+            projectCode = projectCode,
+        )
+
         return TemplateSearchDetailResponse(
             templateId = findTemplate.id ?: throw TemplateSearchException(),
             templateTitle = findTemplate.title,
