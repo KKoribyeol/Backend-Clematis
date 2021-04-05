@@ -10,6 +10,6 @@ data class TargetOfGroupingRequest(
     @get:NotBlank(message = "<NULL> <EMPTY> <BLANK>")
     val groupName: String,
 
-    @get:NotEmpty(message = "<NULL> <EMPTY>")
-    val targetTokens: List<String>,
+    @get:NotBlank(message = "<NULL> <EMPTY> <BLANK>")
+    val targetToken: String,
 )
