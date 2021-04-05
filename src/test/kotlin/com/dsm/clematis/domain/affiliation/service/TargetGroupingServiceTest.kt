@@ -66,60 +66,60 @@ internal class TargetGroupingServiceTest {
     @Test
     fun `타겟을 그룹에 소속시키기`() {
         every {
-            affiliationRepository.existsByGroupProjectCodeAndGroupGroupNameAndTargetTokenIn(
+            affiliationRepository.existsByGroupProjectCodeAndGroupGroupNameAndTargetToken(
                 projectCode = savedProject.code,
                 groupName = savedGroup.groupName,
-                targetTokens = listOf(affiliatedTarget.token),
+                targetToken = affiliatedTarget.token,
             )
         } returns true
         every {
-            affiliationRepository.existsByGroupProjectCodeAndGroupGroupNameAndTargetTokenIn(
+            affiliationRepository.existsByGroupProjectCodeAndGroupGroupNameAndTargetToken(
                 projectCode = any(),
                 groupName = any(),
-                targetTokens = listOf(unaffiliatedTarget.token),
+                targetToken = unaffiliatedTarget.token,
             )
         } returns false
-        every { affiliationRepository.saveAll(listOf(nonExistAffiliation)) } returns listOf(nonExistAffiliation)
-        every { targetRepository.findByProjectCodeAndTokenIn(savedProject.code, listOf(unaffiliatedTarget.token)) } returns listOf(unaffiliatedTarget)
+        every { affiliationRepository.save(nonExistAffiliation) } returns nonExistAffiliation
+        every { targetRepository.findByProjectCodeAndToken(savedProject.code, unaffiliatedTarget.token) } returns unaffiliatedTarget
         every { groupRepository.findByProjectCodeAndAndGroupName(savedProject.code, savedGroup.groupName) } returns savedGroup
         every { groupRepository.findByProjectCodeAndAndGroupName(savedProject.code, nonExistGroup.groupName) } returns null
 
         testService.groupTarget(
             projectCode = "savedProject-finally",
             groupName = "savedName",
-            targetTokens = listOf("unaffiliatedToken"),
+            targetToken = "unaffiliatedToken",
         )
 
         verify(exactly = 1) {
-            affiliationRepository.existsByGroupProjectCodeAndGroupGroupNameAndTargetTokenIn(
+            affiliationRepository.existsByGroupProjectCodeAndGroupGroupNameAndTargetToken(
                 savedProject.code,
                 savedGroup.groupName,
-                listOf(unaffiliatedTarget.token),
+                unaffiliatedTarget.token,
             )
         }
-        verify(exactly = 1) { affiliationRepository.saveAll(listOf(nonExistAffiliation)) }
-        verify(exactly = 1) { targetRepository.findByProjectCodeAndTokenIn(savedProject.code, listOf(unaffiliatedTarget.token)) }
+        verify(exactly = 1) { affiliationRepository.save(nonExistAffiliation) }
+        verify(exactly = 1) { targetRepository.findByProjectCodeAndToken(savedProject.code, unaffiliatedTarget.token) }
         verify(exactly = 1) { groupRepository.findByProjectCodeAndAndGroupName(savedProject.code, savedGroup.groupName) }
     }
 
     @Test
     fun `타겟을 그룹에 소속시키기 - throw AlreadyExistAffiliationException`() {
         every {
-            affiliationRepository.existsByGroupProjectCodeAndGroupGroupNameAndTargetTokenIn(
+            affiliationRepository.existsByGroupProjectCodeAndGroupGroupNameAndTargetToken(
                 projectCode = savedProject.code,
                 groupName = savedGroup.groupName,
-                targetTokens = listOf(affiliatedTarget.token),
+                targetToken = affiliatedTarget.token,
             )
         } returns true
         every {
-            affiliationRepository.existsByGroupProjectCodeAndGroupGroupNameAndTargetTokenIn(
+            affiliationRepository.existsByGroupProjectCodeAndGroupGroupNameAndTargetToken(
                 projectCode = any(),
                 groupName = any(),
-                targetTokens = listOf(unaffiliatedTarget.token),
+                targetToken = unaffiliatedTarget.token,
             )
         } returns false
-        every { affiliationRepository.saveAll(listOf(nonExistAffiliation)) } returns listOf(nonExistAffiliation)
-        every { targetRepository.findByProjectCodeAndTokenIn(savedProject.code, listOf(unaffiliatedTarget.token)) } returns listOf(unaffiliatedTarget)
+        every { affiliationRepository.save(nonExistAffiliation) } returns nonExistAffiliation
+        every { targetRepository.findByProjectCodeAndToken(savedProject.code, unaffiliatedTarget.token) } returns unaffiliatedTarget
         every { groupRepository.findByProjectCodeAndAndGroupName(savedProject.code, savedGroup.groupName) } returns savedGroup
         every { groupRepository.findByProjectCodeAndAndGroupName(savedProject.code, nonExistGroup.groupName) } returns null
 
@@ -127,40 +127,40 @@ internal class TargetGroupingServiceTest {
             testService.groupTarget(
                 projectCode = "savedProject-finally",
                 groupName = "savedName",
-                targetTokens = listOf("affiliatedToken"),
+                targetToken = "affiliatedToken",
             )
         }
 
         verify(exactly = 1) {
-            affiliationRepository.existsByGroupProjectCodeAndGroupGroupNameAndTargetTokenIn(
+            affiliationRepository.existsByGroupProjectCodeAndGroupGroupNameAndTargetToken(
                 savedProject.code,
                 savedGroup.groupName,
-                listOf(affiliatedTarget.token),
+                affiliatedTarget.token,
             )
         }
-        verify(exactly = 0) { affiliationRepository.saveAll(listOf(nonExistAffiliation)) }
-        verify(exactly = 0) { targetRepository.findByProjectCodeAndTokenIn(any(), listOf(affiliatedTarget.token)) }
+        verify(exactly = 0) { affiliationRepository.save(any()) }
+        verify(exactly = 0) { targetRepository.findByProjectCodeAndToken(any(), any()) }
         verify(exactly = 0) { groupRepository.findByProjectCodeAndAndGroupName(any(), any()) }
     }
 
     @Test
     fun `타겟을 그룹에 소속시키기 - throw GroupNotFoundException`() {
         every {
-            affiliationRepository.existsByGroupProjectCodeAndGroupGroupNameAndTargetTokenIn(
+            affiliationRepository.existsByGroupProjectCodeAndGroupGroupNameAndTargetToken(
                 projectCode = savedProject.code,
                 groupName = savedGroup.groupName,
-                targetTokens = listOf(affiliatedTarget.token),
+                targetToken = affiliatedTarget.token,
             )
         } returns true
         every {
-            affiliationRepository.existsByGroupProjectCodeAndGroupGroupNameAndTargetTokenIn(
+            affiliationRepository.existsByGroupProjectCodeAndGroupGroupNameAndTargetToken(
                 projectCode = any(),
                 groupName = any(),
-                targetTokens = listOf(unaffiliatedTarget.token),
+                targetToken = unaffiliatedTarget.token,
             )
         } returns false
-        every { affiliationRepository.saveAll(listOf(nonExistAffiliation)) } returns listOf(nonExistAffiliation)
-        every { targetRepository.findByProjectCodeAndTokenIn(savedProject.code, listOf(unaffiliatedTarget.token)) } returns listOf(unaffiliatedTarget)
+        every { affiliationRepository.save(nonExistAffiliation) } returns nonExistAffiliation
+        every { targetRepository.findByProjectCodeAndToken(savedProject.code, unaffiliatedTarget.token) } returns unaffiliatedTarget
         every { groupRepository.findByProjectCodeAndAndGroupName(savedProject.code, savedGroup.groupName) } returns savedGroup
         every { groupRepository.findByProjectCodeAndAndGroupName(savedProject.code, nonExistGroup.groupName) } returns null
 
@@ -168,19 +168,19 @@ internal class TargetGroupingServiceTest {
             testService.groupTarget(
                 projectCode = "savedProject-finally",
                 groupName = "nonExistName",
-                targetTokens = listOf("unaffiliatedToken"),
+                targetToken = "unaffiliatedToken",
             )
         }
 
         verify(exactly = 1) {
-            affiliationRepository.existsByGroupProjectCodeAndGroupGroupNameAndTargetTokenIn(
+            affiliationRepository.existsByGroupProjectCodeAndGroupGroupNameAndTargetToken(
                 savedProject.code,
                 nonExistGroup.groupName,
-                listOf(unaffiliatedTarget.token),
+                unaffiliatedTarget.token,
             )
         }
-        verify(exactly = 0) { affiliationRepository.saveAll(listOf(nonExistAffiliation)) }
-        verify(exactly = 1) { targetRepository.findByProjectCodeAndTokenIn(any(), listOf(unaffiliatedTarget.token)) }
+        verify(exactly = 0) { affiliationRepository.save(any()) }
+        verify(exactly = 1) { targetRepository.findByProjectCodeAndToken(any(), any()) }
         verify(exactly = 1) { groupRepository.findByProjectCodeAndAndGroupName(any(), any()) }
     }
 }
