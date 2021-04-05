@@ -9,6 +9,8 @@ interface TargetRepository : JpaRepository<Target, String> {
     fun findByProjectCode(code: String): List<Target>
 
     fun deleteByProjectCodeAndTokenIn(code: String, tokens: List<String>)
+    fun deleteByProjectCodeAndToken(code: String, token: String)
+
     fun existsByProjectCodeAndTokenIn(code: String, tokens: List<String>): Boolean
     fun existsByProjectCodeAndNicknameIn(code: String, nicknames: List<String>): Boolean
 }
