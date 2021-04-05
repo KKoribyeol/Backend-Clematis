@@ -88,7 +88,6 @@ class GroupController(
         @NotBlank(message = "<NULL> <EMPTY> <BLANK>")
         @PathVariable("groupName")
         groupName: String?,
-
     ) = groupDeletionService.deleteGroup(
         projectCode = projectCode!!,
         groupName = groupName!!,
