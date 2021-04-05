@@ -5,6 +5,6 @@ data class MultipleGroupResponse(
 ) {
 
     data class GroupResponse(
-        val groupName: String,
+        val name: String,
     )
 }
