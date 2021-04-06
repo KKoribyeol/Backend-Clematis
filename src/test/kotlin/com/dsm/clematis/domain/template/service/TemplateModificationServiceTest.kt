@@ -12,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito.anyLong
-import org.springframework.data.repository.findByIdOrNull
 
 class TemplateModificationServiceTest {
     private val templateRepository = mockk<TemplateRepository>()
