@@ -13,14 +13,23 @@ internal class TemplateRepositoryTest(
 
     @Test
     fun `existsByTitleAndBody - 제목과 내용이 존재합니다`() {
-        val isExistTemplate = templateRepository.existsByTitleAndBody("savedTitle", "savedBody")
+        val isExistTemplate =
+            templateRepository.existsByTitleAndBodyAndProjectCode(
+                title = "savedTitle",
+                body = "savedBody",
+                projectCode = "savedProject-finally",
+            )
 
         assertThat(isExistTemplate).isTrue
     }
     
     @Test
     fun `existsByTitleAndBody - 제목과 내용이 존재하지 않습니다`() {
-        val isExistTemplate = templateRepository.existsByTitleAndBody("nonExistTitle", "nonExistBody")
+        val isExistTemplate = templateRepository.existsByTitleAndBodyAndProjectCode(
+            title = "nonExistTitle",
+            body = "nonExistBody",
+            projectCode = "savedProject-finally",
+        )
 
         assertThat(isExistTemplate).isFalse
     }

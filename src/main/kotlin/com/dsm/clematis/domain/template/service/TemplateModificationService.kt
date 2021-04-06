@@ -12,9 +12,11 @@ class TemplateModificationService(
     private val templateRepository: TemplateRepository,
 ) {
 
-    fun modifyTemplate(templateId: Long, templateTitle: String, templateBody: String) =
-        findTemplateById(templateId).modifyContent(templateTitle, templateBody)
+    fun modifyTemplate(templateId: Long, templateTitle: String, templateBody: String, projectCode: String) =
+        findTemplateById(templateId, projectCode)
+            .modifyContent(templateTitle, templateBody)
 
-    private fun findTemplateById(templateId: Long) =
-        templateRepository.findByIdOrNull(templateId)?: throw TemplateNotFoundException(templateId)
+    private fun findTemplateById(templateId: Long, projectCode: String) =
+        templateRepository.findByIdAndProjectCode(templateId, projectCode)
+            ?: throw TemplateNotFoundException(templateId)
 }

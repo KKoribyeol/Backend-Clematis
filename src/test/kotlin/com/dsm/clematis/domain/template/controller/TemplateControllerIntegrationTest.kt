@@ -40,6 +40,7 @@ internal class TemplateControllerIntegrationTest(
         val responseBody = objectMapper.readValue<TemplateCreationResponse>(
             mock.perform(post("/template")
                 .header("Authorization", "this-is-test-token")
+                .header("projectCode", "savedProject-finally")
                 .content(requestBody)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
@@ -65,6 +66,7 @@ internal class TemplateControllerIntegrationTest(
         val responseBody = objectMapper.readValue<CommonExceptionResponse>(
             mock.perform(post("/template")
                 .header("Authorization", "this-is-invalid-token")
+                .header("projectCode", "savedProject-finally")
                 .content(requestBody)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
@@ -90,6 +92,7 @@ internal class TemplateControllerIntegrationTest(
         val responseBody = objectMapper.readValue<CommonExceptionResponse>(
             mock.perform(post("/template")
                 .header("Authorization", "this-is-test-token")
+                .header("projectCode", "savedProject-finally")
                 .content(requestBody)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
@@ -114,6 +117,7 @@ internal class TemplateControllerIntegrationTest(
 
         mock.perform(patch("/template/1")
             .header("Authorization", "this-is-test-token")
+            .header("projectCode", "savedProject-finally")
             .content(requestBody)
             .contentType(MediaType.APPLICATION_JSON_UTF8)
             .accept(MediaType.APPLICATION_JSON_UTF8)
@@ -133,6 +137,7 @@ internal class TemplateControllerIntegrationTest(
         val responseBody = objectMapper.readValue<CommonExceptionResponse>(
             mock.perform(patch("/template/1")
                 .header("Authorization", "this-is-invalid-token")
+                .header("projectCode", "savedProject-finally")
                 .content(requestBody)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
@@ -158,6 +163,7 @@ internal class TemplateControllerIntegrationTest(
         val responseBody = objectMapper.readValue<CommonExceptionResponse>(
             mock.perform(patch("/template/2")
                 .header("Authorization", "this-is-test-token")
+                .header("projectCode", "savedProject-finally")
                 .content(requestBody)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
@@ -175,6 +181,7 @@ internal class TemplateControllerIntegrationTest(
     fun `템플릿 삭제하기 - 200`() {
         mock.perform(delete("/template/1")
             .header("Authorization", "this-is-test-token")
+            .header("projectCode", "savedProject-finally")
             .contentType(MediaType.APPLICATION_JSON_UTF8)
             .accept(MediaType.APPLICATION_JSON_UTF8)
             .characterEncoding("UTF-8"))
@@ -186,6 +193,7 @@ internal class TemplateControllerIntegrationTest(
         val responseBody = objectMapper.readValue<CommonExceptionResponse>(
             mock.perform(delete("/template/2")
                 .header("Authorization", "this-is-test-token")
+                .header("projectCode", "savedProject-finally")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .characterEncoding("UTF-8"))
@@ -203,6 +211,7 @@ internal class TemplateControllerIntegrationTest(
         val responseBody = objectMapper.readValue<CommonExceptionResponse>(
             mock.perform(delete("/template/1")
                 .header("Authorization", "this-is-invalid-token")
+                .header("projectCode", "savedProject-finally")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .characterEncoding("UTF-8"))
@@ -220,6 +229,7 @@ internal class TemplateControllerIntegrationTest(
         val responseBody = objectMapper.readValue<TemplateSearchAllResponse>(
             mock.perform(get("/template")
                 .header("Authorization", "this-is-test-token")
+                .header("projectCode", "savedProject-finally")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .characterEncoding("UTF-8"))
@@ -247,6 +257,7 @@ internal class TemplateControllerIntegrationTest(
         val responseBody = objectMapper.readValue<CommonExceptionResponse>(
             mock.perform(get("/template")
                 .header("Authorization", "this-is-invalid-token")
+                .header("projectCode", "savedProject-finally")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .characterEncoding("UTF-8"))
@@ -264,6 +275,7 @@ internal class TemplateControllerIntegrationTest(
         val responseBody = objectMapper.readValue<TemplateSearchDetailResponse>(
             mock.perform(get("/template/1")
                 .header("Authorization", "this-is-test-token")
+                .header("projectCode", "savedProject-finally")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .characterEncoding("UTF-8"))
@@ -283,6 +295,7 @@ internal class TemplateControllerIntegrationTest(
         val responseBody = objectMapper.readValue<CommonExceptionResponse>(
             mock.perform(get("/template/2")
                 .header("Authorization", "this-is-test-token")
+                .header("projectCode", "savedProject-finally")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .characterEncoding("UTF-8"))
@@ -300,6 +313,7 @@ internal class TemplateControllerIntegrationTest(
         val responseBody = objectMapper.readValue<CommonExceptionResponse>(
             mock.perform(get("/template/1")
                 .header("Authorization", "this-is-invalid-token")
+                .header("projectCode", "savedProject-finally")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .characterEncoding("UTF-8"))

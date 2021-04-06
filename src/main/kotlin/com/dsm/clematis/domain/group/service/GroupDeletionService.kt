@@ -3,8 +3,10 @@ package com.dsm.clematis.domain.group.service
 import com.dsm.clematis.domain.group.exception.GroupNotFoundException
 import com.dsm.clematis.domain.group.repository.TargetGroupRepository
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
+@Transactional
 class GroupDeletionService(
     private val groupRepository: TargetGroupRepository,
 ) {

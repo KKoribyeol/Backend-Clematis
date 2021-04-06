@@ -12,23 +12,26 @@ internal class TemplateDeletionServiceTest {
 
     @Test
     fun `푸시 템플릿 삭제하기`() {
-        every { templateRepository.existsById(1) } returns true
-        every { templateRepository.deleteById(1) } just Runs
+        every { templateRepository.existsByIdAndProjectCode(1, "savedProject-finally") } returns true
+        every { templateRepository.deleteByIdAndProjectCode(1, "savedProject-finally") } just Runs
 
-        testService.deleteTemplate(1)
+        testService.deleteTemplate(1, "savedProject-finally")
 
-        verify(exactly = 1) { templateRepository.existsById(1) }
-        verify(exactly = 1) { templateRepository.deleteById(1) }
+        verify(exactly = 1) { templateRepository.existsByIdAndProjectCode(1, "savedProject-finally") }
+        verify(exactly = 1) { templateRepository.deleteByIdAndProjectCode(1, "savedProject-finally") }
     }
 
     @Test
     fun `푸시 템플릿 삭제하기 - throw TemplateNotFoundException`() {
-        every { templateRepository.existsById(1) } returns true
-        every { templateRepository.existsById(any()) } returns false
+        every { templateRepository.existsByIdAndProjectCode(1, "savedProject-finally") } returns true
+        every { templateRepository.existsByIdAndProjectCode(any(), any()) } returns false
+        every { templateRepository.deleteByIdAndProjectCode(1, "savedProject-finally") } just Runs
 
-        assertThrows<TemplateNotFoundException> { testService.deleteTemplate(2) }
+        assertThrows<TemplateNotFoundException> {
+            testService.deleteTemplate(2, "savedProject-finally")
+        }
 
-        verify(exactly = 1) { templateRepository.existsById(2) }
-        verify(exactly = 0) { templateRepository.deleteById(any()) }
+        verify(exactly = 1) { templateRepository.existsByIdAndProjectCode(2, "savedProject-finally") }
+        verify(exactly = 0) { templateRepository.deleteByIdAndProjectCode(any(), any()) }
     }
 }

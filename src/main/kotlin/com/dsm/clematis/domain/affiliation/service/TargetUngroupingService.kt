@@ -3,8 +3,10 @@ package com.dsm.clematis.domain.affiliation.service
 import com.dsm.clematis.domain.affiliation.exception.AffiliationNotFoundException
 import com.dsm.clematis.domain.affiliation.repository.TargetAffiliationRepository
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
+@Transactional
 class TargetUngroupingService(
     private val affiliationRepository: TargetAffiliationRepository,
 ) {

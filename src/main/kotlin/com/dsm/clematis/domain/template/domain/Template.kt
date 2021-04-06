@@ -1,5 +1,6 @@
 package com.dsm.clematis.domain.template.domain
 
+import com.dsm.clematis.domain.project.domain.Project
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
@@ -12,6 +13,7 @@ import javax.persistence.*
 class Template(
     title: String,
     body: String,
+    project: Project,
 ) {
 
     @Id
@@ -26,6 +28,10 @@ class Template(
     @Column(name = "body", length = 255, nullable = false)
     var body = body
         private set
+
+    @ManyToOne
+    @JoinColumn(name = "project_code", referencedColumnName = "code")
+    val project = project
 
     @CreatedDate
     @Column(name = "created_at")
