@@ -24,7 +24,8 @@ class AccountController(
 
     @PostMapping
     fun join(
-        @RequestBody @Valid
+        @Valid
+        @RequestBody
         request: JoinRequest
     ) = accountCreationService.createAccount(
         accountId = request.accountId,
@@ -34,7 +35,8 @@ class AccountController(
 
     @PostMapping("/login")
     fun login(
-        @RequestBody @Valid
+        @Valid
+        @RequestBody
         request: LoginRequest
     ): LoginResponse {
         accountCreationService.validateAccount(
@@ -50,7 +52,8 @@ class AccountController(
 
     @PatchMapping("/password")
     fun modifyPassword(
-        @RequestBody @Valid
+        @Valid
+        @RequestBody
         request: AccountPasswordModificationRequest,
     ) = accountModificationService.modifyAccountPassword(
         accountId = authenticationProvider.getAccountIdByAuthentication(),
@@ -60,7 +63,8 @@ class AccountController(
 
     @PatchMapping("/name")
     fun modifyName(
-        @RequestBody @Valid
+        @Valid
+        @RequestBody
         request: AccountNameModificationRequest,
     ) = accountModificationService.modifyAccountName(
         accountId = authenticationProvider.getAccountIdByAuthentication(),

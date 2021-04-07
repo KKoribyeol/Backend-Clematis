@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("org.springframework.boot") version "2.4.1"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
+    id("jacoco")
     kotlin("jvm") version "1.4.21"
     kotlin("plugin.spring") version "1.4.21"
     kotlin("plugin.jpa") version "1.4.21"
@@ -38,8 +39,9 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-jackson:2.9.0")
 
-    testImplementation("io.mockk:mockk:1.9.3")
+    implementation("org.jacoco:org.jacoco.core:0.8.5")
 
+    testImplementation("io.mockk:mockk:1.9.3")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("com.h2database:h2")
 }
@@ -53,4 +55,57 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+    finalizedBy("jacocoTestReport")
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.isEnabled = false
+        csv.isEnabled = false
+        html.isEnabled = true
+        html.destination = file("$buildDir/reports/coverage")
+    }
+    finalizedBy("jacocoTestCoverageVerification")
+}
+
+tasks.jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            enabled = true
+            element = "CLASS"
+            limit {
+                counter = "METHOD"
+                value = "COVEREDRATIO"
+                minimum = "0.9".toBigDecimal()
+            }
+            excludes = mutableListOf(
+                "com.dsm.clematis.global.*",
+                "com.dsm.clematis.domain.account.controller.request.*",
+                "com.dsm.clematis.domain.account.controller.response.*",
+                "com.dsm.clematis.domain.account.domain.*",
+                "com.dsm.clematis.domain.account.exception.*",
+                "com.dsm.clematis.domain.affiliation.controller.request.*",
+                "com.dsm.clematis.domain.affiliation.controller.response.*",
+                "com.dsm.clematis.domain.affiliation.domain.*",
+                "com.dsm.clematis.domain.affiliation.exception.*",
+                "com.dsm.clematis.domain.group.controller.request.*",
+                "com.dsm.clematis.domain.group.controller.response.*",
+                "com.dsm.clematis.domain.group.domain.*",
+                "com.dsm.clematis.domain.group.exception.*",
+                "com.dsm.clematis.domain.project.controller.request.*",
+                "com.dsm.clematis.domain.project.controller.response.*",
+                "com.dsm.clematis.domain.project.domain.*",
+                "com.dsm.clematis.domain.project.exception.*",
+                "com.dsm.clematis.domain.target.controller.request.*",
+                "com.dsm.clematis.domain.target.controller.response.*",
+                "com.dsm.clematis.domain.target.domain.*",
+                "com.dsm.clematis.domain.target.exception.*",
+                "com.dsm.clematis.domain.template.controller.request.*",
+                "com.dsm.clematis.domain.template.controller.response.*",
+                "com.dsm.clematis.domain.template.domain.*",
+                "com.dsm.clematis.domain.template.exception.*",
+                "com.dsm.clematis.ClematisApplicationKt"
+            )
+        }
+    }
 }
