@@ -26,6 +26,9 @@ jobs:
 
       - name: run build
         run: ./gradlew clean build -x test
+        
+      - name: codecov
+        run: codecov
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
