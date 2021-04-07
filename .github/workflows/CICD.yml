@@ -28,9 +28,6 @@ jobs:
 
       - name: run build
         run: ./gradlew clean build -x test
-        
-      - name: codecov
-        run: codecov
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
@@ -38,6 +35,9 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./build/reports/jacoco/test/jacocoTestReport.xml
 
+      - name: codecov
+        run: codecov
+        
   CD:
     runs-on: ubuntu-latest
     needs: CI
