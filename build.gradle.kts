@@ -61,9 +61,8 @@ tasks.withType<Test> {
 tasks.jacocoTestReport {
     reports {
         xml.isEnabled = true
-        csv.isEnabled = true
+        csv.isEnabled = false
         html.isEnabled = true
-//        html.destination = file("$buildDir/reports/coverage")
     }
     finalizedBy("jacocoTestCoverageVerification")
 }
@@ -76,7 +75,7 @@ tasks.jacocoTestCoverageVerification {
             limit {
                 counter = "METHOD"
                 value = "COVEREDRATIO"
-                minimum = "0.9".toBigDecimal()
+                minimum = "1.0".toBigDecimal()
             }
             excludes = mutableListOf(
                 "com.dsm.clematis.global.*",
