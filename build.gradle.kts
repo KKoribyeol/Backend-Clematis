@@ -60,10 +60,10 @@ tasks.withType<Test> {
 
 tasks.jacocoTestReport {
     reports {
-        xml.isEnabled = false
-        csv.isEnabled = false
+        xml.isEnabled = true
+        csv.isEnabled = true
         html.isEnabled = true
-        html.destination = file("$buildDir/reports/coverage")
+//        html.destination = file("$buildDir/reports/coverage")
     }
     finalizedBy("jacocoTestCoverageVerification")
 }
