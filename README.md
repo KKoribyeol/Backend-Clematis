@@ -1,6 +1,7 @@
 # 꼬리별 [KKoribyeol]
 ## 백엔드 (Clematis)  
-[![codecov](https://codecov.io/gh/Lee-Jin-Hyeok/Backend-Clematis/branch/main/graph/badge.svg?token=9MMT20ZJ68)](https://codecov.io/gh/Lee-Jin-Hyeok/Backend-Clematis)  
+[![codecov](https://codecov.io/gh/Lee-Jin-Hyeok/Backend-Clematis/branch/main/graph/badge.svg?token=9MMT20ZJ68)](https://codecov.io/gh/Lee-Jin-Hyeok/Backend-Clematis)
+![CI/CD](https://github.com/DSM-PICK/pick-server-Saturn/workflows/CI/CD/badge.svg)  
 ![Clematis](https://user-images.githubusercontent.com/48639421/111264452-e1ed1b00-866a-11eb-98a1-9fc39db9aaee.png)  
 
 푸시 서비스가 필요해서 사용해본 NHN Cloud의 TOAST 푸시 서비스,  
