@@ -9,6 +9,7 @@ import com.dsm.clematis.domain.account.controller.response.LoginResponse
 import com.dsm.clematis.domain.account.service.AccountDeletionService
 import com.dsm.clematis.domain.account.service.AccountModificationService
 import com.dsm.clematis.domain.account.service.AccountCreationService
+import com.dsm.clematis.domain.account.service.RedisAuthenticationService
 import com.dsm.clematis.global.security.provider.AuthenticationProvider
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
@@ -20,6 +21,7 @@ class AccountController(
     private val accountModificationService: AccountModificationService,
     private val accountDeletionService: AccountDeletionService,
     private val authenticationProvider: AuthenticationProvider,
+    private val authenticationService: RedisAuthenticationService,
 ) {
 
     @PostMapping
@@ -82,4 +84,8 @@ class AccountController(
         AccountNameResponse(
             name = authenticationProvider.getAccountName(),
         )
+
+    @PostMapping("/test")
+    fun test() =
+        authenticationService.test()
 }
