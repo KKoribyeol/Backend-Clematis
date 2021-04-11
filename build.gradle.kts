@@ -45,6 +45,8 @@ dependencies {
     testImplementation("io.mockk:mockk:1.9.3")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("com.h2database:h2")
+//    compile group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
+    testImplementation("it.ozimov:embedded-redis:0.7.2")
 }
 
 tasks.withType<KotlinCompile> {
@@ -88,6 +90,10 @@ tasks.jacocoTestCoverageVerification {
                 "com.dsm.clematis.domain.affiliation.controller.response.*",
                 "com.dsm.clematis.domain.affiliation.domain.*",
                 "com.dsm.clematis.domain.affiliation.exception.*",
+                "com.dsm.clematis.domain.authentication.controller.request.*",
+                "com.dsm.clematis.domain.authentication.controller.response.*",
+                "com.dsm.clematis.domain.authentication.domain.*",
+                "com.dsm.clematis.domain.authentication.exception.*",
                 "com.dsm.clematis.domain.group.controller.request.*",
                 "com.dsm.clematis.domain.group.controller.response.*",
                 "com.dsm.clematis.domain.group.domain.*",
