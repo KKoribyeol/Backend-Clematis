@@ -35,7 +35,7 @@ class AuthenticationCreationService(
 
     private fun saveRefreshToken(accountId: String, refreshToken: String) {
         val redisValue = RefreshToken(
-            accountEmail = accountId,
+            accountId = accountId,
             refreshToken = refreshToken,
         )
         redisRepository.save(redisValue)
