@@ -6,7 +6,7 @@ import com.dsm.clematis.domain.account.exception.AccountNotFoundException
 import com.dsm.clematis.domain.project.exception.AlreadyExistProjectException
 import com.dsm.clematis.domain.account.repository.AccountRepository
 import com.dsm.clematis.domain.project.repository.ProjectRepository
-import com.dsm.clematis.domain.project.service.provider.RandomProjectCodeProvider
+import com.dsm.clematis.global.security.provider.RandomProjectCodeProvider
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

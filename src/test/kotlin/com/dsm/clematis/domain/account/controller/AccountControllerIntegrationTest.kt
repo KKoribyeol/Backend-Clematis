@@ -1,12 +1,9 @@
 package com.dsm.clematis.domain.account.controller
 
 import com.dsm.clematis.domain.account.controller.request.JoinRequest
-import com.dsm.clematis.domain.account.controller.request.LoginRequest
 import com.dsm.clematis.domain.account.controller.request.AccountNameModificationRequest
 import com.dsm.clematis.domain.account.controller.request.AccountPasswordModificationRequest
 import com.dsm.clematis.domain.account.controller.response.AccountNameResponse
-import com.dsm.clematis.domain.account.controller.response.LoginResponse
-import com.dsm.clematis.global.exception.entrypoint.InvalidTokenExceptionEntryPoint
 import com.dsm.clematis.global.exception.response.CommonExceptionResponse
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -72,79 +69,6 @@ internal class AccountControllerIntegrationTest(
         )
 
         assertThat(responseBody.code).isEqualTo("ALREADY_EXIST_ACCOUNT")
-    }
-
-    @Test
-    fun `로그인 - 200`() {
-        val requestBody = objectMapper.writeValueAsString(
-            LoginRequest(
-                accountId = "savedIdId",
-                accountPassword = "savedPassword",
-            )
-        )
-
-        val responseBody = objectMapper.readValue<LoginResponse>(
-            mock.perform(post("/account/login")
-                .content(requestBody)
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .accept(MediaType.APPLICATION_JSON_UTF8)
-                .characterEncoding("UTF-8"))
-                .andExpect(status().isOk)
-                .andReturn()
-                .response
-                .contentAsString
-        )
-
-        assertThat(responseBody.accessToken).isEqualTo("this-is-test-token")
-        assertThat(responseBody.refreshToken).isEqualTo("this-is-test-token")
-    }
-
-    @Test
-    fun `로그인 - 404 ACCOUNT_NOT_FOUND`() {
-        val requestBody = objectMapper.writeValueAsString(
-            LoginRequest(
-                accountId = "nonExistId",
-                accountPassword = "nonExistPassword",
-            )
-        )
-
-        val responseBody = objectMapper.readValue<CommonExceptionResponse>(
-            mock.perform(post("/account/login")
-                .content(requestBody)
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .accept(MediaType.APPLICATION_JSON_UTF8)
-                .characterEncoding("UTF-8"))
-                .andExpect(status().isNotFound)
-                .andReturn()
-                .response
-                .contentAsString
-        )
-
-        assertThat(responseBody.code).isEqualTo("ACCOUNT_NOT_FOUND")
-    }
-
-    @Test
-    fun `로그인 - 400 PASSWORD_MISMATCH`() {
-        val requestBody = objectMapper.writeValueAsString(
-            LoginRequest(
-                accountId = "savedIdId",
-                accountPassword = "nonExistPassword",
-            )
-        )
-
-        val responseBody = objectMapper.readValue<CommonExceptionResponse>(
-            mock.perform(post("/account/login")
-                .content(requestBody)
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .accept(MediaType.APPLICATION_JSON_UTF8)
-                .characterEncoding("UTF-8"))
-                .andExpect(status().isBadRequest)
-                .andReturn()
-                .response
-                .contentAsString
-        )
-
-        assertThat(responseBody.code).isEqualTo("PASSWORD_MISMATCH")
     }
 
     @Test
@@ -303,7 +227,7 @@ internal class AccountControllerIntegrationTest(
     @Test
     fun `이름 반환 - 401 INVALID_TOKEN`() {
         val responseBody = objectMapper.readValue<CommonExceptionResponse>(
-            mock.perform(get("/account/name")
+            mock.perform(get("/auth/name")
                 .header("Authorization", "this-is-invalid-token")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .accept(MediaType.APPLICATION_JSON_UTF8)

@@ -41,7 +41,9 @@ class SecurityConfiguration(
                 .and()
             .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/account").permitAll()
-                .antMatchers(HttpMethod.POST, "/account/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/auth").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/auth").permitAll()
+                .antMatchers(HttpMethod.POST, "/auth/token").permitAll()
                 .anyRequest().authenticated()
 
         http

@@ -1,8 +1,6 @@
-package com.dsm.clematis.domain.project.service.provider
+package com.dsm.clematis.global.security.provider
 
 import com.dsm.clematis.global.attribute.Token
-import com.dsm.clematis.global.security.provider.AuthenticationProvider
-import com.dsm.clematis.global.security.provider.TokenProvider
 import org.springframework.context.annotation.Primary
 import org.springframework.stereotype.Component
 
@@ -16,10 +14,15 @@ class TestTokenProvider(
         "this-is-test-token"
 
     override fun getData(token: String): String {
-        validateToken(token)
+        validateToken(token, Token.ACCESS)
         return "savedIdId"
     }
 
-    override fun validateToken(token: String) =
+    override fun validateToken(token: String, tokenType: Token) =
+        token == "this-is-test-token"
+                || token == "this-is-access-token"
+                || token == "this-is-refresh-token"
+
+    override fun isToken(token: String, tokenType: Token) =
         token == "this-is-test-token"
 }

@@ -1,5 +1,6 @@
-package com.dsm.clematis.global.exception
+package com.dsm.clematis.domain.account.exception
 
+import com.dsm.clematis.global.exception.CommonException
 import org.springframework.http.HttpStatus
 
 class PasswordMismatchException(

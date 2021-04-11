@@ -1,11 +1,9 @@
 package com.dsm.clematis.domain.account.controller
 
 import com.dsm.clematis.domain.account.controller.request.JoinRequest
-import com.dsm.clematis.domain.account.controller.request.LoginRequest
 import com.dsm.clematis.domain.account.controller.request.AccountNameModificationRequest
 import com.dsm.clematis.domain.account.controller.request.AccountPasswordModificationRequest
 import com.dsm.clematis.domain.account.controller.response.AccountNameResponse
-import com.dsm.clematis.domain.account.controller.response.LoginResponse
 import com.dsm.clematis.domain.account.service.AccountDeletionService
 import com.dsm.clematis.domain.account.service.AccountModificationService
 import com.dsm.clematis.domain.account.service.AccountCreationService
@@ -32,23 +30,6 @@ class AccountController(
         accountPassword = request.accountPassword,
         accountName = request.accountName,
     )
-
-    @PostMapping("/login")
-    fun login(
-        @Valid
-        @RequestBody
-        request: LoginRequest
-    ): LoginResponse {
-        accountCreationService.validateAccount(
-            accountId = request.accountId,
-            accountPassword = request.accountPassword,
-        )
-
-        return LoginResponse(
-            accessToken = accountCreationService.createAccessToken(request.accountId),
-            refreshToken = accountCreationService.createRefreshToken(request.accountId),
-        )
-    }
 
     @PatchMapping("/password")
     fun modifyPassword(

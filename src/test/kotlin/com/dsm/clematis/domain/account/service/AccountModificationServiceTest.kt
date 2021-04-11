@@ -2,7 +2,7 @@ package com.dsm.clematis.domain.account.service
 
 import com.dsm.clematis.domain.account.domain.Account
 import com.dsm.clematis.domain.account.exception.AccountNotFoundException
-import com.dsm.clematis.global.exception.PasswordMismatchException
+import com.dsm.clematis.domain.account.exception.PasswordMismatchException
 import com.dsm.clematis.domain.account.repository.AccountRepository
 import io.mockk.every
 import io.mockk.mockk

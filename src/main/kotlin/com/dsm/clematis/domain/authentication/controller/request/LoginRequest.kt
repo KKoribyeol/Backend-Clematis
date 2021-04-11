@@ -1,4 +1,4 @@
-package com.dsm.clematis.domain.account.controller.request
+package com.dsm.clematis.domain.authentication.controller.request
 
 import javax.validation.constraints.NotBlank
 
