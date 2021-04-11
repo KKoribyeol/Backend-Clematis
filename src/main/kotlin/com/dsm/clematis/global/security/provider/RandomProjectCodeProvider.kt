@@ -1,4 +1,4 @@
-package com.dsm.clematis.domain.project.service.provider
+package com.dsm.clematis.global.security.provider
 
 import org.springframework.stereotype.Component
 import kotlin.random.Random
