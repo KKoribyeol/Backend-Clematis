@@ -1,6 +1,6 @@
-package com.dsm.clematis.domain.account.repository
+package com.dsm.clematis.domain.authentication.repository
 
-import com.dsm.clematis.domain.account.domain.RefreshToken
+import com.dsm.clematis.domain.authentication.domain.RefreshToken
 import org.springframework.data.repository.CrudRepository
 
 interface RedisRepository : CrudRepository<RefreshToken, String>
