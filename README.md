@@ -61,7 +61,7 @@ TOAST 푸시 서비스를 사용하면서 느꼈던 불편한 점을 개선하�
 - Gradle 6.7.1
 - Spring Security
 - Spring Data JPA
-- Spring Data Mongo
+- Spring Data Redis
 - Retrofit 2.9.0
 - Kotlin Coroutine 1.4.2
 - Firebase Admin 6.8.1
