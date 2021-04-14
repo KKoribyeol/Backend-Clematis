@@ -13,7 +13,9 @@ import javax.persistence.*
 class Template(
     title: String,
     body: String,
-    project: Project,
+
+    @ManyToOne @JoinColumn(name = "project_code", referencedColumnName = "code")
+    val project: Project,
 ) {
 
     @Id
@@ -28,10 +30,6 @@ class Template(
     @Column(name = "body", length = 255, nullable = false)
     var body = body
         private set
-
-    @ManyToOne
-    @JoinColumn(name = "project_code", referencedColumnName = "code")
-    val project = project
 
     @CreatedDate
     @Column(name = "created_at")
