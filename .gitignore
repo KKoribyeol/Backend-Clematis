@@ -153,3 +153,5 @@ gradle-app.setting
 # End of https://www.toptal.com/developers/gitignore/api/intellij,kotlin,gradle
 
 .DS_Store
+
+src/main/resources/firebase/kkoribyeol_firebase_secret.json

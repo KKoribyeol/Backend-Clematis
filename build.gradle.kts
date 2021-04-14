@@ -32,6 +32,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("io.jsonwebtoken:jjwt:0.9.1")
 
+    implementation("io.springfox:springfox-swagger2:2.9.2")
+    implementation("io.springfox:springfox-swagger-ui:2.9.2")
+
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -40,12 +43,14 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-jackson:2.9.0")
 
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.4.2")
+
     implementation("org.jacoco:org.jacoco.core:0.8.5")
 
     testImplementation("io.mockk:mockk:1.9.3")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("com.h2database:h2")
-//    compile group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
     testImplementation("it.ozimov:embedded-redis:0.7.2")
 }
 
@@ -102,6 +107,13 @@ tasks.jacocoTestCoverageVerification {
                 "com.dsm.clematis.domain.project.controller.response.*",
                 "com.dsm.clematis.domain.project.domain.*",
                 "com.dsm.clematis.domain.project.exception.*",
+                "com.dsm.clematis.domain.push.controller.request.*",
+                "com.dsm.clematis.domain.push.controller.response.*",
+                "com.dsm.clematis.domain.push.domain.*",
+                "com.dsm.clematis.domain.push.exception.*",
+                "com.dsm.clematis.domain.push.scheduler.*",
+                "com.dsm.clematis.domain.push.external.*",
+                "com.dsm.clematis.domain.push.controller.*",
                 "com.dsm.clematis.domain.target.controller.request.*",
                 "com.dsm.clematis.domain.target.controller.response.*",
                 "com.dsm.clematis.domain.target.domain.*",
