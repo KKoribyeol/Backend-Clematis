@@ -5,3 +5,7 @@ INSERT INTO target (id, token, project_code, nickname, name) VALUES (2, 'unaffil
 INSERT INTO target_group (id, name, project_code) VALUES (1, 'savedName', 'savedProject-finally');
 INSERT INTO affiliation (id, target_id, group_id) VALUES (1, 1, 1);
 INSERT INTO template (id, title, body, project_code, created_at, updated_at) VALUES (1, 'savedTitle', 'savedBody', 'savedProject-finally', NOW(), NOW());
+INSERT INTO push_notification_history (id, title, body, project_code, created_at, completed_at, reserved_at) VALUES (1, 'savedTitle', 'savedBody', 'savedProject-finally', '2003-08-16T11:11:11', null, null);
+INSERT INTO push_notification_history (id, title, body, project_code, created_at, completed_at, reserved_at) VALUES (2, 'savedTitle', 'savedBody', 'savedProject-finally', '2003-08-16T11:11:11', null, NOW());
+INSERT INTO push_result (id, target_id, history_id, status) VALUES (1, 1, 1, 'SUCCESS');
+INSERT INTO push_result (id, target_id, history_id, status) VALUES (2, 1, 2, 'WAITING');

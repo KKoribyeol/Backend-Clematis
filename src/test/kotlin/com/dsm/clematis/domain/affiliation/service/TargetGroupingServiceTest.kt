@@ -4,7 +4,6 @@ import com.dsm.clematis.domain.account.domain.Account
 import com.dsm.clematis.domain.affiliation.domain.TargetAffiliation
 import com.dsm.clematis.domain.affiliation.exception.AlreadyExistAffiliationException
 import com.dsm.clematis.domain.affiliation.repository.TargetAffiliationRepository
-import com.dsm.clematis.domain.affiliation.repository.TargetAffiliationRepositoryTest
 import com.dsm.clematis.domain.group.domain.TargetGroup
 import com.dsm.clematis.domain.group.exception.GroupNotFoundException
 import com.dsm.clematis.domain.group.repository.TargetGroupRepository

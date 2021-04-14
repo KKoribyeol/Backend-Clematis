@@ -12,7 +12,7 @@ class LogFilter : OncePerRequestFilter() {
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
-        chain: FilterChain
+        chain: FilterChain,
     ) {
         logger.info("[${request.method}] ${request.requestURI}")
         chain.doFilter(request, response)
