@@ -7,7 +7,7 @@ import kotlin.reflect.KClass
 @Retention(AnnotationRetention.RUNTIME)
 @Constraint(validatedBy = [NotDuplicateValidator::class])
 annotation class NotDuplicate(
-    val message: String = "request = null",
+    val message: String = "중복된 값이 있을 수 없습니다.",
     val groups: Array<KClass<*>> = [],
     val payload: Array<KClass<*>> = [],
 )
