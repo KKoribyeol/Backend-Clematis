@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest
 class TokenProvider(
     @Value("\${TOKEN_SECRET_KEY:spring-security-love}")
     private val secretKey: String,
-    private val userDetailsService: UserDetailsService,
+    private val userDetailsService: AuthenticationProvider,
 ) {
     private val encodedSecretKey = Base64.getEncoder().encodeToString(secretKey.toByteArray())
 
