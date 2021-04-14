@@ -8,6 +8,7 @@ interface TargetAffiliationRepository : JpaRepository<TargetAffiliation, Long> {
     fun existsByGroupProjectCodeAndGroupGroupNameAndTargetToken(projectCode: String, groupName: String, targetToken: String): Boolean
 
     fun findByGroupProjectCodeAndGroupGroupName(projectCode: String, groupName: String): List<TargetAffiliation>
+    fun findByGroupProjectCodeAndGroupGroupNameIn(projectCode: String, groupNames: List<String>): List<TargetAffiliation>
 
     fun deleteByGroupProjectCodeAndGroupGroupNameAndTargetToken(projectCode: String, groupName: String, targetToken: String)
 }
