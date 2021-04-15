@@ -48,6 +48,86 @@ TOAST 푸시 서비스를 사용하면서 느꼈던 불편한 점을 개선하�
 - Spring Boot에서 관리하는 MethodArgumentNotValidException 에러를 제외한 비지니스 에러는 CommonException으로 관리한다.
 - 이에 해당하지 않는 경우 Internal Server Error [500]을 띄우고 서버 로그에는 stack trace를 남긴다.
 
+# Project Structure
+```
+  src
+    ㄴmain
+    |   ㄴkotlin
+    |   |   ㄴcom
+    |   |       ㄴdsm
+    |   |           ㄴclematis
+    |   |               ㄴdomain
+    |   |               |   ㄴaccount
+    |   |               |   |   ㄴcontroller
+    |   |               |   |   |   ㄴrequest
+    |   |               |   |   |   ㄴresponse
+    |   |               |   |   ㄴdomain
+    |   |               |   |   ㄴexception
+    |   |               |   |   ㄴrepository
+    |   |               |   |   ㄴservice
+    |   |               |   ㄴaffiliation
+    |   |               |   |   ㄴ...
+    |   |               |   ㄴauthentication
+    |   |               |   |   ㄴ...
+    |   |               |   ㄴgroup
+    |   |               |   |   ㄴ...
+    |   |               |   ㄴproject
+    |   |               |   |   ㄴ...
+    |   |               |   ㄴpush
+    |   |               |   |   ㄴ...
+    |   |               |   ㄴtarget
+    |   |               |   |   ㄴ...
+    |   |               |   ㄴtemplate
+    |   |               |       ㄴ...
+    |   |               ㄴglobal
+    |   |               |   ㄴattribute
+    |   |               |   ㄴconfiguration
+    |   |               |   ㄴconverter
+    |   |               |   ㄴexception
+    |   |               |   |   ㄴentrypoint
+    |   |               |   |   ㄴhandler
+    |   |               |   |   ㄴresponse
+    |   |               |   ㄴsecurity
+    |   |               |   |   ㄴconfiguration
+    |   |               |   |   ㄴfilter
+    |   |               |   |   ㄴprovider
+    |   |               |   ㄴvalidation
+    |   |               ㄴClematisApplicationKt.kt
+    |   ㄴresources
+    |       ㄴapplication.yml
+    ㄴtest
+        ㄴkotlin
+        |   ㄴcom
+        |       ㄴdsm
+        |           ㄴclematis
+        |               ㄴdomain
+        |               |   ㄴaccount
+        |               |   |   ㄴcontrolle - Integration Test
+        |               |   |   ㄴrepository - Repository Layer Unit Test
+        |               |   |   ㄴservice - Service Layer Unit Test
+        |               |   ㄴaffiliation
+        |               |   |   ㄴ...
+        |               |   ㄴauthentication
+        |               |   |   ㄴ...
+        |               |   ㄴgroup
+        |               |   |   ㄴ...
+        |               |   ㄴproject
+        |               |   |   ㄴ...
+        |               |   ㄴpush
+        |               |   |   ㄴ...
+        |               |   ㄴtarget
+        |               |   |   ㄴ...
+        |               |   ㄴtemplate
+        |               |       ㄴ...
+        |               ㄴglobal
+        |                   ㄴconfiguration
+        |                   ㄴsecurity
+        |                       ㄴprovider
+        ㄴresources
+            ㄴapplication.yml
+            ㄴdata.sql
+```
+
 # Reference
 - Kotlin Document [Coding Convention] (https://kotlinlang.org/docs/coding-conventions.html)
 - Kotlin Document [Private set field in Constructor] (https://discuss.kotlinlang.org/t/private-setter-for-var-in-primary-constructor/3640)
