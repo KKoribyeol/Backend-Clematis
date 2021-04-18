@@ -146,8 +146,9 @@ TOAST 푸시 서비스를 사용하면서 느꼈던 불편한 점을 개선하�
 - Kotlin Coroutine 1.4.2
 - Firebase Admin 6.8.1
 
-## Database
+## Storage
 - MySQL
+- Redis
 
 ## Review
 - [꼬리별] 오류일지 - https://velog.io/@dhwlddjgmanf/series/프로젝트-꼬리별
