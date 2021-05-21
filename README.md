@@ -129,8 +129,8 @@ TOAST 푸시 서비스를 사용하면서 느꼈던 불편한 점을 개선하�
 ```
 
 # Reference
-- Kotlin Document [Coding Convention] (https://kotlinlang.org/docs/coding-conventions.html)
-- Kotlin Document [Private set field in Constructor] (https://discuss.kotlinlang.org/t/private-setter-for-var-in-primary-constructor/3640)
+- Kotlin Document [Coding Convention](https://kotlinlang.org/docs/coding-conventions.html)
+- Kotlin Document [Private set field in Constructor](https://discuss.kotlinlang.org/t/private-setter-for-var-in-primary-constructor/3640)
 
 ## External API
 - Firebase Cloud Messaging
