@@ -151,4 +151,4 @@ TOAST 푸시 서비스를 사용하면서 느꼈던 불편한 점을 개선하�
 - Redis
 
 ## Review
-- [꼬리별] 오류일지 - https://velog.io/@dhwlddjgmanf/series/프로젝트-꼬리별
+- [꼬리별 오류일지](https://velog.io/@dhwlddjgmanf/series/프로젝트-꼬리별)
