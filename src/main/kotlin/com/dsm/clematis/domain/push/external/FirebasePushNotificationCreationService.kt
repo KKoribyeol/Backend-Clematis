@@ -13,10 +13,10 @@ import com.dsm.clematis.domain.target.exception.TargetNotFoundException
 import com.dsm.clematis.domain.target.repository.TargetRepository
 import com.dsm.clematis.global.attribute.PushStatus
 import com.google.auth.oauth2.GoogleCredentials
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
+//import kotlinx.coroutines.CoroutineScope
+//import kotlinx.coroutines.Dispatchers
+//import kotlinx.coroutines.async
+//import kotlinx.coroutines.awaitAll
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.io.ClassPathResource
 import org.springframework.data.repository.findByIdOrNull
@@ -38,7 +38,7 @@ class FirebasePushNotificationCreationService(
 ) : PushNotificationCreationService {
 
     private val googleCredentialApiUrl = "https://www.googleapis.com/auth/cloud-platform"
-    private val coroutineScope = CoroutineScope(Dispatchers.IO)
+//    private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     override suspend fun sendAllPushNotification(
         targetTokens: List<String>,
@@ -54,14 +54,15 @@ class FirebasePushNotificationCreationService(
         )
 
         val pushResults = targetTokens.map {
-            coroutineScope.async {
+//            coroutineScope.async {
                 sendPushNotification(
                     targetToken = it,
                     title = title,
                     body = body,
                 )
-            }
-        }.awaitAll()
+//            }
+        }
+//            .awaitAll()
             .map {
                 PushResult(
                     history = history,

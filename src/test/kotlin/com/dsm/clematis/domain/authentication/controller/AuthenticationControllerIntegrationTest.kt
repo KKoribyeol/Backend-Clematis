@@ -105,46 +105,46 @@ internal class AuthenticationControllerIntegrationTest(
         assertThat(responseBody.code).isEqualTo("PASSWORD_MISMATCH")
     }
 
-    @Test
-    fun `로그아웃 - 200`() {
-        val requestBody = objectMapper.writeValueAsString(
-            LogoutRequest(
-                token = "this-is-test-token",
-            )
-        )
+//    @Test
+//    fun `로그아웃 - 200`() {
+//        val requestBody = objectMapper.writeValueAsString(
+//            LogoutRequest(
+//                token = "this-is-test-token",
+//            )
+//        )
+//
+//        mock.perform(
+//            delete("/auth")
+//            .content(requestBody)
+//            .contentType(MediaType.APPLICATION_JSON_UTF8)
+//            .accept(MediaType.APPLICATION_JSON_UTF8)
+//            .characterEncoding("UTF-8"))
+//            .andExpect(status().isOk)
+//    }
 
-        mock.perform(
-            delete("/auth")
-            .content(requestBody)
-            .contentType(MediaType.APPLICATION_JSON_UTF8)
-            .accept(MediaType.APPLICATION_JSON_UTF8)
-            .characterEncoding("UTF-8"))
-            .andExpect(status().isOk)
-    }
-
-    @Test
-    fun `로그아웃 - 401 INVALID_TOKEN`() {
-        val requestBody = objectMapper.writeValueAsString(
-            LogoutRequest(
-                token = "this-is-invalid-token",
-            )
-        )
-
-        val responseBody = objectMapper.readValue<CommonExceptionResponse>(
-            mock.perform(
-                delete("/auth")
-                    .content(requestBody)
-                    .contentType(MediaType.APPLICATION_JSON_UTF8)
-                    .accept(MediaType.APPLICATION_JSON_UTF8)
-                    .characterEncoding("UTF-8"))
-                .andExpect(status().isUnauthorized)
-                .andReturn()
-                .response
-                .contentAsString
-        )
-
-        assertThat(responseBody.code).isEqualTo("INVALID_TOKEN")
-    }
+//    @Test
+//    fun `로그아웃 - 401 INVALID_TOKEN`() {
+//        val requestBody = objectMapper.writeValueAsString(
+//            LogoutRequest(
+//                token = "this-is-invalid-token",
+//            )
+//        )
+//
+//        val responseBody = objectMapper.readValue<CommonExceptionResponse>(
+//            mock.perform(
+//                delete("/auth")
+//                    .content(requestBody)
+//                    .contentType(MediaType.APPLICATION_JSON_UTF8)
+//                    .accept(MediaType.APPLICATION_JSON_UTF8)
+//                    .characterEncoding("UTF-8"))
+//                .andExpect(status().isUnauthorized)
+//                .andReturn()
+//                .response
+//                .contentAsString
+//        )
+//
+//        assertThat(responseBody.code).isEqualTo("INVALID_TOKEN")
+//    }
 
     @Test
     fun `토큰 재발급 - 200`() {

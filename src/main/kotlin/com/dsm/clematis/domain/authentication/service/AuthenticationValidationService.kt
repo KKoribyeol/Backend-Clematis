@@ -1,7 +1,7 @@
 package com.dsm.clematis.domain.authentication.service
 
 import com.dsm.clematis.domain.authentication.exception.TokenNotFoundException
-import com.dsm.clematis.domain.authentication.repository.RedisRepository
+//import com.dsm.clematis.domain.authentication.repository.RedisRepository
 import com.dsm.clematis.global.attribute.Token
 import com.dsm.clematis.global.exception.InvalidTokenException
 import com.dsm.clematis.global.security.provider.TokenProvider
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class AuthenticationValidationService(
-    private val redisRepository: RedisRepository,
+//    private val redisRepository: RedisRepository,
     private val tokenProvider: TokenProvider,
 ) {
 
@@ -26,10 +26,11 @@ class AuthenticationValidationService(
         val isValidToken = tokenProvider.isToken(
             token = token,
             tokenType = tokenType
-        ) && if (tokenType == Token.REFRESH)
-            isExistRefreshTokenInRedis(
-                refreshToken = token
-            ) else true
+        )
+//                && if (tokenType == Token.REFRESH)
+//            isExistRefreshTokenInRedis(
+//                refreshToken = token
+//            ) else true
 
         if (!isValidToken)
             throw InvalidTokenException()
@@ -37,11 +38,11 @@ class AuthenticationValidationService(
         return isValidToken
     }
 
-    private fun isExistRefreshTokenInRedis(refreshToken: String): Boolean {
-        val accountId = tokenProvider.getData(refreshToken)
-        val redisValue = redisRepository.findByIdOrNull(accountId)
-            ?: throw TokenNotFoundException(accountId)
-
-        return redisValue.refreshToken == refreshToken
-    }
+//    private fun isExistRefreshTokenInRedis(refreshToken: String): Boolean {
+//        val accountId = tokenProvider.getData(refreshToken)
+//        val redisValue = redisRepository.findByIdOrNull(accountId)
+//            ?: throw TokenNotFoundException(accountId)
+//
+//        return redisValue.refreshToken == refreshToken
+//    }
 }

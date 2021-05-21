@@ -7,7 +7,7 @@ import com.dsm.clematis.domain.authentication.controller.request.LogoutRequest
 import com.dsm.clematis.domain.authentication.controller.request.ReissueTokenRequest
 import com.dsm.clematis.domain.authentication.controller.response.TokenResponse
 import com.dsm.clematis.domain.authentication.service.AuthenticationCreationService
-import com.dsm.clematis.domain.authentication.service.AuthenticationDeletionService
+//import com.dsm.clematis.domain.authentication.service.AuthenticationDeletionService
 import com.dsm.clematis.domain.authentication.service.AuthenticationValidationService
 import com.dsm.clematis.global.attribute.Token
 import com.dsm.clematis.global.security.provider.TokenProvider
@@ -19,7 +19,7 @@ import javax.validation.Valid
 class AuthenticationController(
     private val accountValidationService: AccountValidationService,
     private val authenticationCreationService: AuthenticationCreationService,
-    private val authenticationDeletionService: AuthenticationDeletionService,
+//    private val authenticationDeletionService: AuthenticationDeletionService,
     private val authenticationValidationService: AuthenticationValidationService,
     private val tokenProvider: TokenProvider,
 ) {
@@ -41,21 +41,21 @@ class AuthenticationController(
         )
     }
 
-    @DeleteMapping
-    fun logout(
-        @Valid
-        @RequestBody
-        request: LogoutRequest,
-    ) {
-        authenticationValidationService.validateToken(
-            token = request.token,
-            tokenType = Token.REFRESH,
-        )
-
-        authenticationDeletionService.deleteToken(
-            accountId = tokenProvider.getData(request.token),
-        )
-    }
+//    @DeleteMapping
+//    fun logout(
+//        @Valid
+//        @RequestBody
+//        request: LogoutRequest,
+//    ) {
+//        authenticationValidationService.validateToken(
+//            token = request.token,
+//            tokenType = Token.REFRESH,
+//        )
+//
+//        authenticationDeletionService.deleteToken(
+//            accountId = tokenProvider.getData(request.token),
+//        )
+//    }
 
     @PostMapping("/token")
     fun reissueAccessToken(
